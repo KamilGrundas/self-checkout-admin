@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useI18n } from "@/i18n"
 import DeleteCategory from "./DeleteCategory"
 import EditCategory from "./EditCategory"
 
@@ -18,6 +19,7 @@ interface CategoryActionsMenuProps {
 
 export const CategoryActionsMenu = ({ category }: CategoryActionsMenuProps) => {
   const [open, setOpen] = useState(false)
+  const { t } = useI18n()
   const isDefault = category.key === "other"
 
   return (
@@ -31,7 +33,7 @@ export const CategoryActionsMenu = ({ category }: CategoryActionsMenuProps) => {
         {isDefault ? (
           <DropdownMenuItem disabled>
             <LockKeyhole />
-            Default category
+            {t("defaultCategoryLocked")}
           </DropdownMenuItem>
         ) : (
           <>

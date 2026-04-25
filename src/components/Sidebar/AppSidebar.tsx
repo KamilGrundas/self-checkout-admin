@@ -1,4 +1,4 @@
-import { Home, Package, Tags, Users } from "lucide-react"
+import { Home, MonitorCog, Package, Tags, Users } from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
@@ -9,20 +9,30 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar"
 import useAuth from "@/hooks/useAuth"
+import { useI18n } from "@/i18n"
 import { type Item, Main } from "./Main"
 import { User } from "./User"
 
-const baseItems: Item[] = [
-  { icon: Home, title: "Dashboard", path: "/" },
-  { icon: Package, title: "Products", path: "/products" },
-  { icon: Tags, title: "Categories", path: "/categories" },
-]
-
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
+  const { t } = useI18n()
+
+  const baseItems: Item[] = [
+    { icon: Home, title: t("dashboard"), path: "/" },
+    { icon: Package, title: t("products"), path: "/products" },
+    { icon: Tags, title: t("categories"), path: "/categories" },
+  ]
 
   const items = currentUser?.is_superuser
-    ? [...baseItems, { icon: Users, title: "Admin", path: "/admin" }]
+    ? [
+        ...baseItems,
+        {
+          icon: MonitorCog,
+          title: t("checkoutCounters"),
+          path: "/checkout-counters",
+        },
+        { icon: Users, title: t("admin"), path: "/admin" },
+      ]
     : baseItems
 
   return (

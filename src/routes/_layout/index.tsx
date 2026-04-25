@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { Package, Tags } from "lucide-react"
+import { MonitorCog, Package, Tags } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import useAuth from "@/hooks/useAuth"
+import { useI18n } from "@/i18n"
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
@@ -17,15 +18,16 @@ export const Route = createFileRoute("/_layout/")({
 
 function Dashboard() {
   const { user: currentUser } = useAuth()
+  const { t } = useI18n()
 
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="max-w-sm truncate text-2xl font-bold tracking-tight">
-          Catalog dashboard
+          {t("catalogDashboard")}
         </h1>
         <p className="text-muted-foreground">
-          Signed in as {currentUser?.full_name || currentUser?.email}.
+          {t("signedInAs")} {currentUser?.full_name || currentUser?.email}.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
@@ -34,11 +36,11 @@ function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Package className="size-5" />
-                Products
+                {t("products")}
               </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              Manage product names, prices, units, categories and images.
+              {t("productCatalogDescription")}
             </CardContent>
           </Card>
         </Link>
@@ -47,14 +49,29 @@ function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Tags className="size-5" />
-                Categories
+                {t("categories")}
               </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              Maintain catalog groups used by products and the kiosk client.
+              {t("productGroupsDescription")}
             </CardContent>
           </Card>
         </Link>
+        {currentUser?.is_superuser && (
+          <Link to="/checkout-counters">
+            <Card className="transition-colors hover:bg-muted/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MonitorCog className="size-5" />
+                  {t("checkoutCounters")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                {t("checkoutCountersDescription")}
+              </CardContent>
+            </Card>
+          </Link>
+        )}
       </div>
     </div>
   )

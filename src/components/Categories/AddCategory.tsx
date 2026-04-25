@@ -28,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
+import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
@@ -40,6 +41,7 @@ const AddCategory = () => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const { t } = useI18n()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -51,7 +53,7 @@ const AddCategory = () => {
     mutationFn: (data: CategoryCreate) =>
       CategoriesService.createCategory({ requestBody: data }),
     onSuccess: () => {
-      showSuccessToast("Category created successfully")
+      showSuccessToast(t("categoryCreated"))
       form.reset()
       setIsOpen(false)
     },
@@ -68,15 +70,13 @@ const AddCategory = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Category
+          {t("addCategory")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add Category</DialogTitle>
-          <DialogDescription>
-            Create a product category used by the checkout catalog.
-          </DialogDescription>
+          <DialogTitle>{t("addCategory")}</DialogTitle>
+          <DialogDescription>{t("categoryDescription")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -87,7 +87,7 @@ const AddCategory = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      {t("name")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Fruit" type="text" {...field} />
@@ -100,11 +100,11 @@ const AddCategory = () => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("save")}
               </LoadingButton>
             </DialogFooter>
           </form>

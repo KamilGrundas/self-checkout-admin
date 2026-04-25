@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { CategoriesService } from "@/client"
+import { CheckoutCountersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,12 +20,15 @@ import useCustomToast from "@/hooks/useCustomToast"
 import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
-interface DeleteCategoryProps {
+interface DeleteCheckoutCounterProps {
   id: string
   onSuccess: () => void
 }
 
-const DeleteCategory = ({ id, onSuccess }: DeleteCategoryProps) => {
+const DeleteCheckoutCounter = ({
+  id,
+  onSuccess,
+}: DeleteCheckoutCounterProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -33,15 +36,15 @@ const DeleteCategory = ({ id, onSuccess }: DeleteCategoryProps) => {
   const { handleSubmit } = useForm()
 
   const mutation = useMutation({
-    mutationFn: () => CategoriesService.deleteCategory({ id }),
+    mutationFn: () => CheckoutCountersService.deleteCheckoutCounter({ id }),
     onSuccess: () => {
-      showSuccessToast(t("categoryDeleted"))
+      showSuccessToast(t("counterDeleted"))
       setIsOpen(false)
       onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] })
+      queryClient.invalidateQueries({ queryKey: ["checkout-counters"] })
     },
   })
 
@@ -55,14 +58,14 @@ const DeleteCategory = ({ id, onSuccess }: DeleteCategoryProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        {t("deleteCategory")}
+        {t("deleteCounter")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>{t("deleteCategory")}</DialogTitle>
+            <DialogTitle>{t("deleteCounter")}</DialogTitle>
             <DialogDescription>
-              {t("categoryDeleteDescription")}
+              {t("counterDeleteDescription")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4">
@@ -76,7 +79,7 @@ const DeleteCategory = ({ id, onSuccess }: DeleteCategoryProps) => {
               type="submit"
               loading={mutation.isPending}
             >
-              {t("deleteCategory")}
+              {t("deleteCounter")}
             </LoadingButton>
           </DialogFooter>
         </form>
@@ -85,4 +88,4 @@ const DeleteCategory = ({ id, onSuccess }: DeleteCategoryProps) => {
   )
 }
 
-export default DeleteCategory
+export default DeleteCheckoutCounter

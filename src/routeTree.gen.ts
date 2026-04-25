@@ -17,6 +17,7 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
+import { Route as LayoutCheckoutCountersRouteImport } from './routes/_layout/checkout-counters'
 import { Route as LayoutCategoriesRouteImport } from './routes/_layout/categories'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 
@@ -59,6 +60,11 @@ const LayoutProductsRoute = LayoutProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutCheckoutCountersRoute = LayoutCheckoutCountersRouteImport.update({
+  id: '/checkout-counters',
+  path: '/checkout-counters',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutCategoriesRoute = LayoutCategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
+  '/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
 }
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
+  '/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/categories': typeof LayoutCategoriesRoute
+  '/_layout/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/categories'
+    | '/checkout-counters'
     | '/products'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/categories'
+    | '/checkout-counters'
     | '/products'
     | '/settings'
     | '/'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_layout/admin'
     | '/_layout/categories'
+    | '/_layout/checkout-counters'
     | '/_layout/products'
     | '/_layout/settings'
     | '/_layout/'
@@ -208,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProductsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/checkout-counters': {
+      id: '/_layout/checkout-counters'
+      path: '/checkout-counters'
+      fullPath: '/checkout-counters'
+      preLoaderRoute: typeof LayoutCheckoutCountersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/categories': {
       id: '/_layout/categories'
       path: '/categories'
@@ -228,6 +247,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutCategoriesRoute: typeof LayoutCategoriesRoute
+  LayoutCheckoutCountersRoute: typeof LayoutCheckoutCountersRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -236,6 +256,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutCategoriesRoute: LayoutCategoriesRoute,
+  LayoutCheckoutCountersRoute: LayoutCheckoutCountersRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,

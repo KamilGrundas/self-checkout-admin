@@ -40,6 +40,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
+import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
@@ -56,6 +57,7 @@ const AddProduct = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const { t } = useI18n()
 
   const { data: categories } = useQuery({
     queryFn: () => CategoriesService.readCategories(),
@@ -91,7 +93,7 @@ const AddProduct = () => {
       return product
     },
     onSuccess: () => {
-      showSuccessToast("Product created successfully")
+      showSuccessToast(t("productCreated"))
       form.reset()
       setImageFile(null)
       setIsOpen(false)
@@ -109,15 +111,13 @@ const AddProduct = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Product
+          {t("addProduct")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>Add Product</DialogTitle>
-          <DialogDescription>
-            Add a product that can be sold at the self-checkout kiosk.
-          </DialogDescription>
+          <DialogTitle>{t("addProduct")}</DialogTitle>
+          <DialogDescription>{t("productDescription")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -128,7 +128,7 @@ const AddProduct = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      {t("name")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Banana" type="text" {...field} />
@@ -144,7 +144,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Price <span className="text-destructive">*</span>
+                        {t("price")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input min="0" step="0.01" type="number" {...field} />
@@ -159,7 +159,7 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Unit <span className="text-destructive">*</span>
+                        {t("unit")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -167,7 +167,7 @@ const AddProduct = () => {
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select unit" />
+                            <SelectValue placeholder={t("selectUnit")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -185,11 +185,13 @@ const AddProduct = () => {
                 name="category_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>{t("category")}</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Use backend default category" />
+                          <SelectValue
+                            placeholder={t("useBackendDefaultCategory")}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -205,7 +207,7 @@ const AddProduct = () => {
                 )}
               />
               <div className="grid gap-2">
-                <FormLabel htmlFor="product-image">Image</FormLabel>
+                <FormLabel htmlFor="product-image">{t("image")}</FormLabel>
                 <Input
                   id="product-image"
                   accept="image/*"
@@ -219,11 +221,11 @@ const AddProduct = () => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("save")}
               </LoadingButton>
             </DialogFooter>
           </form>

@@ -7,7 +7,8 @@ import { ProductsService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import PendingCatalog from "@/components/Pending/PendingCatalog"
 import AddProduct from "@/components/Products/AddProduct"
-import { columns } from "@/components/Products/columns"
+import { getProductColumns } from "@/components/Products/columns"
+import { useI18n } from "@/i18n"
 
 function getProductsQueryOptions() {
   return {
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/_layout/products")({
 
 function ProductsTableContent() {
   const { data: products } = useSuspenseQuery(getProductsQueryOptions())
+  const { t } = useI18n()
 
   if (products.data.length === 0) {
     return (
@@ -36,23 +38,29 @@ function ProductsTableContent() {
         <div className="mb-4 rounded-full bg-muted p-4">
           <PackageSearch className="size-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold">No products yet</h3>
-        <p className="text-muted-foreground">
-          Add the first product to start building the catalog.
-        </p>
+        <h3 className="text-lg font-semibold">{t("noProducts")}</h3>
+        <p className="text-muted-foreground">{t("noProductsDescription")}</p>
       </div>
     )
   }
 
-  return <DataTable columns={columns} data={products.data} />
+  return <DataTable columns={getProductColumns(t)} data={products.data} />
 }
 
 function ProductsTable() {
+  const { t } = useI18n()
+
   return (
     <Suspense
       fallback={
         <PendingCatalog
-          columns={["Image", "Name", "Price", "Unit", "Category", "ID"]}
+          columns={[
+            t("image"),
+            t("name"),
+            t("price"),
+            t("unit"),
+            t("category"),
+          ]}
         />
       }
     >
@@ -62,14 +70,14 @@ function ProductsTable() {
 }
 
 function Products() {
+  const { t } = useI18n()
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Products</h1>
-          <p className="text-muted-foreground">
-            Manage prices, units, images and product categories.
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">{t("products")}</h1>
+          <p className="text-muted-foreground">{t("productsDescription")}</p>
         </div>
         <AddProduct />
       </div>

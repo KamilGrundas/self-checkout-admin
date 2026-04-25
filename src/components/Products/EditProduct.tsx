@@ -41,6 +41,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
+import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
@@ -62,6 +63,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const { t } = useI18n()
 
   const { data: categories } = useQuery({
     queryFn: () => CategoriesService.readCategories(),
@@ -100,7 +102,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
       return updatedProduct
     },
     onSuccess: () => {
-      showSuccessToast("Product updated successfully")
+      showSuccessToast(t("productUpdated"))
       setImageFile(null)
       setIsOpen(false)
       onSuccess()
@@ -120,15 +122,15 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Product
+        {t("editProduct")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Edit Product</DialogTitle>
+              <DialogTitle>{t("editProduct")}</DialogTitle>
               <DialogDescription>
-                Update product details below.
+                {t("updateProductDescription")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -138,7 +140,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      {t("name")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Banana" type="text" {...field} />
@@ -154,7 +156,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Price <span className="text-destructive">*</span>
+                        {t("price")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input min="0" step="0.01" type="number" {...field} />
@@ -169,7 +171,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Unit <span className="text-destructive">*</span>
+                        {t("unit")} <span className="text-destructive">*</span>
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -177,7 +179,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select unit" />
+                            <SelectValue placeholder={t("selectUnit")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -196,12 +198,13 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Category <span className="text-destructive">*</span>
+                      {t("category")}{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder={t("selectCategory")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -218,7 +221,7 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
               />
               <div className="grid gap-2">
                 <FormLabel htmlFor={`product-image-${product.id}`}>
-                  Replace image
+                  {t("replaceImage")}
                 </FormLabel>
                 <Input
                   id={`product-image-${product.id}`}
@@ -233,11 +236,11 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("save")}
               </LoadingButton>
             </DialogFooter>
           </form>

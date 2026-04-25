@@ -17,6 +17,7 @@ import {
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
+import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
 interface DeleteProductProps {
@@ -28,12 +29,13 @@ const DeleteProduct = ({ id, onSuccess }: DeleteProductProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const { t } = useI18n()
   const { handleSubmit } = useForm()
 
   const mutation = useMutation({
     mutationFn: () => ProductsService.deleteProduct({ id }),
     onSuccess: () => {
-      showSuccessToast("Product deleted successfully")
+      showSuccessToast(t("productDeleted"))
       setIsOpen(false)
       onSuccess()
     },
@@ -53,20 +55,20 @@ const DeleteProduct = ({ id, onSuccess }: DeleteProductProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Product
+        {t("deleteProduct")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>Delete Product</DialogTitle>
+            <DialogTitle>{t("deleteProduct")}</DialogTitle>
             <DialogDescription>
-              This product will be permanently removed from the catalog.
+              {t("productDeleteDescription")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={mutation.isPending}>
-                Cancel
+                {t("cancel")}
               </Button>
             </DialogClose>
             <LoadingButton
@@ -74,7 +76,7 @@ const DeleteProduct = ({ id, onSuccess }: DeleteProductProps) => {
               type="submit"
               loading={mutation.isPending}
             >
-              Delete
+              {t("deleteProduct")}
             </LoadingButton>
           </DialogFooter>
         </form>

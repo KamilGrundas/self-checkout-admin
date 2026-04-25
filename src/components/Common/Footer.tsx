@@ -1,9 +1,13 @@
 import { Link } from "@tanstack/react-router"
 
 import { Separator } from "@/components/ui/separator"
+import useAuth from "@/hooks/useAuth"
+import { useI18n } from "@/i18n"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const { t } = useI18n()
+  const { user: currentUser } = useAuth()
 
   return (
     <footer className="mt-auto px-6 py-4 md:px-8">
@@ -17,14 +21,22 @@ export function Footer() {
             to="/products"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Products
+            {t("products")}
           </Link>
           <Link
             to="/categories"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Categories
+            {t("categories")}
           </Link>
+          {currentUser?.is_superuser && (
+            <Link
+              to="/checkout-counters"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              {t("checkoutCounters")}
+            </Link>
+          )}
         </div>
       </div>
     </footer>

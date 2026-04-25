@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { UsersService, type UserUpdateMe } from "@/client"
+import { LanguageSwitcher } from "@/components/Common/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 import useAuth from "@/hooks/useAuth"
 import useCustomToast from "@/hooks/useCustomToast"
+import { useI18n } from "@/i18n"
 import { cn } from "@/lib/utils"
 import { handleError } from "@/utils"
 
@@ -33,6 +35,7 @@ const UserInformation = () => {
   const { showSuccessToast, showErrorToast } = useCustomToast()
   const [editMode, setEditMode] = useState(false)
   const { user: currentUser } = useAuth()
+  const { t } = useI18n()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -52,7 +55,7 @@ const UserInformation = () => {
     mutationFn: (data: UserUpdateMe) =>
       UsersService.updateUserMe({ requestBody: data }),
     onSuccess: () => {
-      showSuccessToast("User updated successfully")
+      showSuccessToast(t("userUpdatedSuccessfully"))
       toggleEditMode()
     },
     onError: handleError.bind(showErrorToast),
@@ -82,7 +85,7 @@ const UserInformation = () => {
 
   return (
     <div className="max-w-md">
-      <h3 className="text-lg font-semibold py-4">User Information</h3>
+      <h3 className="text-lg font-semibold py-4">{t("userInformation")}</h3>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -94,7 +97,7 @@ const UserInformation = () => {
             render={({ field }) =>
               editMode ? (
                 <FormItem>
-                  <FormLabel>Full name</FormLabel>
+                  <FormLabel>{t("fullName")}</FormLabel>
                   <FormControl>
                     <Input type="text" {...field} />
                   </FormControl>
@@ -102,7 +105,7 @@ const UserInformation = () => {
                 </FormItem>
               ) : (
                 <FormItem>
-                  <FormLabel>Full name</FormLabel>
+                  <FormLabel>{t("fullName")}</FormLabel>
                   <p
                     className={cn(
                       "py-2 truncate max-w-sm",
@@ -122,7 +125,7 @@ const UserInformation = () => {
             render={({ field }) =>
               editMode ? (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input type="email" {...field} />
                   </FormControl>
@@ -130,7 +133,7 @@ const UserInformation = () => {
                 </FormItem>
               ) : (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <p className="py-2 truncate max-w-sm">{field.value}</p>
                 </FormItem>
               )
@@ -145,7 +148,7 @@ const UserInformation = () => {
                   loading={mutation.isPending}
                   disabled={!form.formState.isDirty}
                 >
-                  Save
+                  {t("save")}
                 </LoadingButton>
                 <Button
                   type="button"
@@ -153,17 +156,27 @@ const UserInformation = () => {
                   onClick={onCancel}
                   disabled={mutation.isPending}
                 >
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </>
             ) : (
               <Button type="button" onClick={toggleEditMode}>
-                Edit
+                {t("edit")}
               </Button>
             )}
           </div>
         </form>
       </Form>
+
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold pb-4">{t("preferences")}</h3>
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-medium">{t("language")}</p>
+          <div className="max-w-[200px]">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

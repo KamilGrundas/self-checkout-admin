@@ -5,9 +5,10 @@ import { Suspense } from "react"
 
 import { CategoriesService } from "@/client"
 import AddCategory from "@/components/Categories/AddCategory"
-import { columns } from "@/components/Categories/columns"
+import { getCategoryColumns } from "@/components/Categories/columns"
 import { DataTable } from "@/components/Common/DataTable"
 import PendingCatalog from "@/components/Pending/PendingCatalog"
+import { useI18n } from "@/i18n"
 
 function getCategoriesQueryOptions() {
   return {
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/_layout/categories")({
 
 function CategoriesTableContent() {
   const { data: categories } = useSuspenseQuery(getCategoriesQueryOptions())
+  const { t } = useI18n()
 
   if (categories.data.length === 0) {
     return (
@@ -36,34 +38,36 @@ function CategoriesTableContent() {
         <div className="mb-4 rounded-full bg-muted p-4">
           <Tags className="size-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold">No categories yet</h3>
-        <p className="text-muted-foreground">
-          Add a category before organizing products.
-        </p>
+        <h3 className="text-lg font-semibold">{t("noCategories")}</h3>
+        <p className="text-muted-foreground">{t("noCategoriesDescription")}</p>
       </div>
     )
   }
 
-  return <DataTable columns={columns} data={categories.data} />
+  return <DataTable columns={getCategoryColumns(t)} data={categories.data} />
 }
 
 function CategoriesTable() {
+  const { t } = useI18n()
+
   return (
-    <Suspense fallback={<PendingCatalog columns={["Name", "Key", "ID"]} />}>
+    <Suspense fallback={<PendingCatalog columns={[t("name"), t("key")]} />}>
       <CategoriesTableContent />
     </Suspense>
   )
 }
 
 function Categories() {
+  const { t } = useI18n()
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Categories</h1>
-          <p className="text-muted-foreground">
-            Manage product groups used by the checkout catalog.
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">
+            {t("categories")}
+          </h1>
+          <p className="text-muted-foreground">{t("categoriesDescription")}</p>
         </div>
         <AddCategory />
       </div>

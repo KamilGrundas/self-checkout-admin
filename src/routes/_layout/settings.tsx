@@ -5,12 +5,7 @@ import DeleteAccount from "@/components/UserSettings/DeleteAccount"
 import UserInformation from "@/components/UserSettings/UserInformation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import useAuth from "@/hooks/useAuth"
-
-const tabsConfig = [
-  { value: "my-profile", title: "My profile", component: UserInformation },
-  { value: "password", title: "Password", component: ChangePassword },
-  { value: "danger-zone", title: "Danger zone", component: DeleteAccount },
-]
+import { useI18n } from "@/i18n"
 
 export const Route = createFileRoute("/_layout/settings")({
   component: UserSettings,
@@ -25,6 +20,14 @@ export const Route = createFileRoute("/_layout/settings")({
 
 function UserSettings() {
   const { user: currentUser } = useAuth()
+  const { t } = useI18n()
+
+  const tabsConfig = [
+    { value: "my-profile", title: t("myProfile"), component: UserInformation },
+    { value: "password", title: t("password"), component: ChangePassword },
+    { value: "danger-zone", title: t("dangerZone"), component: DeleteAccount },
+  ]
+
   const finalTabs = currentUser?.is_superuser
     ? tabsConfig.slice(0, 3)
     : tabsConfig
@@ -36,10 +39,8 @@ function UserSettings() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">User Settings</h1>
-        <p className="text-muted-foreground">
-          Manage your account settings and preferences
-        </p>
+        <h1 className="text-2xl font-bold tracking-tight">{t("userSettings")}</h1>
+        <p className="text-muted-foreground">{t("userSettingsDescription")}</p>
       </div>
 
       <Tabs defaultValue="my-profile">

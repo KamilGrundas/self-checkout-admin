@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Pencil } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { CategoriesService, type CategoryPublic } from "@/client"
+import { type CheckoutCounterCreate, CheckoutCountersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,8 +15,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import {
   Form,
   FormControl,
@@ -32,17 +32,13 @@ import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "Category name is required" }),
+  name: z.string().min(1, { message: "Counter name is required" }),
+  password: z.string().min(1, { message: "Password is required" }),
 })
 
 type FormData = z.infer<typeof formSchema>
 
-interface EditCategoryProps {
-  category: CategoryPublic
-  onSuccess: () => void
-}
-
-const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
+const AddCheckoutCounter = () => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -51,24 +47,20 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: { name: category.name },
+    defaultValues: { name: "", password: "" },
   })
 
   const mutation = useMutation({
-    mutationFn: (data: FormData) =>
-      CategoriesService.updateCategory({
-        id: category.id,
-        requestBody: data,
-      }),
+    mutationFn: (data: CheckoutCounterCreate) =>
+      CheckoutCountersService.createCheckoutCounter({ requestBody: data }),
     onSuccess: () => {
-      showSuccessToast(t("categoryUpdated"))
+      showSuccessToast(t("counterCreated"))
+      form.reset()
       setIsOpen(false)
-      onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] })
-      queryClient.invalidateQueries({ queryKey: ["products"] })
+      queryClient.invalidateQueries({ queryKey: ["checkout-counters"] })
     },
   })
 
@@ -76,22 +68,19 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuItem
-        onSelect={(e) => e.preventDefault()}
-        onClick={() => setIsOpen(true)}
-      >
-        <Pencil />
-        {t("editCategory")}
-      </DropdownMenuItem>
+      <DialogTrigger asChild>
+        <Button className="my-4">
+          <Plus className="mr-2" />
+          {t("addCounter")}
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{t("addCounter")}</DialogTitle>
+          <DialogDescription>{t("counterDescription")}</DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>{t("editCategory")}</DialogTitle>
-              <DialogDescription>
-                {t("updateCategoryDescription")}
-              </DialogDescription>
-            </DialogHeader>
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}
@@ -102,7 +91,27 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
                       {t("name")} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Fruit" type="text" {...field} />
+                      <Input
+                        placeholder="Main counter"
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      {t("password")}{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -126,4 +135,4 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
   )
 }
 
-export default EditCategory
+export default AddCheckoutCounter
