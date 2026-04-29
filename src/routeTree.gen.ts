@@ -20,6 +20,7 @@ import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
 import { Route as LayoutCheckoutCountersRouteImport } from './routes/_layout/checkout-counters'
 import { Route as LayoutCategoriesRouteImport } from './routes/_layout/categories'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
+import { Route as LayoutMlRouteImport } from './routes/_layout/ml'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -75,6 +76,11 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutMlRoute = LayoutMlRouteImport.update({
+  id: '/ml',
+  path: '/ml',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
 }
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/categories': typeof LayoutCategoriesRoute
   '/_layout/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/_layout/ml': typeof LayoutMlRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/checkout-counters'
+    | '/ml'
     | '/products'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/checkout-counters'
+    | '/ml'
     | '/products'
     | '/settings'
     | '/'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/_layout/admin'
     | '/_layout/categories'
     | '/_layout/checkout-counters'
+    | '/_layout/ml'
     | '/_layout/products'
     | '/_layout/settings'
     | '/_layout/'
@@ -241,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/ml': {
+      id: '/_layout/ml'
+      path: '/ml'
+      fullPath: '/ml'
+      preLoaderRoute: typeof LayoutMlRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
@@ -248,6 +267,7 @@ interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutCategoriesRoute: typeof LayoutCategoriesRoute
   LayoutCheckoutCountersRoute: typeof LayoutCheckoutCountersRoute
+  LayoutMlRoute: typeof LayoutMlRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -257,6 +277,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutCategoriesRoute: LayoutCategoriesRoute,
   LayoutCheckoutCountersRoute: LayoutCheckoutCountersRoute,
+  LayoutMlRoute: LayoutMlRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,

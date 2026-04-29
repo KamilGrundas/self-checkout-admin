@@ -1,4 +1,4 @@
-import { Home, MonitorCog, Package, Tags, Users } from "lucide-react"
+import { BrainCircuit, Home, MonitorCog, Package, Tags, Users } from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
@@ -32,6 +32,7 @@ export function AppSidebar() {
           path: "/checkout-counters",
         },
         { icon: Users, title: t("admin"), path: "/admin" },
+        { icon: BrainCircuit, title: t("ml"), path: "/ml" },
       ]
     : baseItems
 
