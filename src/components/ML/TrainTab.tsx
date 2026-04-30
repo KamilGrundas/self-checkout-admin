@@ -72,7 +72,10 @@ export function TrainTab() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 pt-4 max-w-lg">
       <div className="flex flex-col gap-3">
-        <Label>{t("yoloDatasets")}</Label>
+        <div className="flex flex-col gap-1">
+          <Label>{t("datasets")}</Label>
+          <p className="text-xs text-muted-foreground">{t("trainDatasetsDescription")}</p>
+        </div>
         {datasets.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             {t("noDatasetsDescription")}
