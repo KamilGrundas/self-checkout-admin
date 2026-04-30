@@ -38,9 +38,15 @@ export type CheckoutCounterCreate = {
     password: string;
 };
 
+export type CheckoutMlMode = 'off' | 'label' | 'on';
+
 export type CheckoutCounterPublic = {
     name: string;
     id: string;
+    ml_mode: CheckoutMlMode;
+    shelf_camera_device_id?: (string | null);
+    scale_camera_device_id?: (string | null);
+    language: string;
     created_at?: (string | null);
 };
 
@@ -52,6 +58,10 @@ export type CheckoutCountersPublic = {
 export type CheckoutCounterUpdate = {
     name?: (string | null);
     password?: (string | null);
+    ml_mode?: (CheckoutMlMode | null);
+    shelf_camera_device_id?: (string | null);
+    scale_camera_device_id?: (string | null);
+    language?: (string | null);
 };
 
 export type CheckoutSessionCartItem = {
