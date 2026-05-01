@@ -17,10 +17,12 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
+import { Route as LayoutMlRouteImport } from './routes/_layout/ml'
+import { Route as LayoutLiveSessionsRouteImport } from './routes/_layout/live-sessions'
 import { Route as LayoutCheckoutCountersRouteImport } from './routes/_layout/checkout-counters'
 import { Route as LayoutCategoriesRouteImport } from './routes/_layout/categories'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
-import { Route as LayoutMlRouteImport } from './routes/_layout/ml'
+import { Route as LayoutLiveSessionsSessionIdRouteImport } from './routes/_layout/live-sessions_.$sessionId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -61,6 +63,16 @@ const LayoutProductsRoute = LayoutProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutMlRoute = LayoutMlRouteImport.update({
+  id: '/ml',
+  path: '/ml',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutLiveSessionsRoute = LayoutLiveSessionsRouteImport.update({
+  id: '/live-sessions',
+  path: '/live-sessions',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutCheckoutCountersRoute = LayoutCheckoutCountersRouteImport.update({
   id: '/checkout-counters',
   path: '/checkout-counters',
@@ -76,11 +88,12 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutMlRoute = LayoutMlRouteImport.update({
-  id: '/ml',
-  path: '/ml',
-  getParentRoute: () => LayoutRoute,
-} as any)
+const LayoutLiveSessionsSessionIdRoute =
+  LayoutLiveSessionsSessionIdRouteImport.update({
+    id: '/live-sessions_/$sessionId',
+    path: '/live-sessions/$sessionId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -91,9 +104,11 @@ export interface FileRoutesByFullPath {
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/live-sessions': typeof LayoutLiveSessionsRoute
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/live-sessions/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -103,10 +118,12 @@ export interface FileRoutesByTo {
   '/admin': typeof LayoutAdminRoute
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/live-sessions': typeof LayoutLiveSessionsRoute
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
+  '/live-sessions/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -118,10 +135,12 @@ export interface FileRoutesById {
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/categories': typeof LayoutCategoriesRoute
   '/_layout/checkout-counters': typeof LayoutCheckoutCountersRoute
+  '/_layout/live-sessions': typeof LayoutLiveSessionsRoute
   '/_layout/ml': typeof LayoutMlRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/live-sessions_/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -134,9 +153,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/checkout-counters'
+    | '/live-sessions'
     | '/ml'
     | '/products'
     | '/settings'
+    | '/live-sessions/$sessionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -146,10 +167,12 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/checkout-counters'
+    | '/live-sessions'
     | '/ml'
     | '/products'
     | '/settings'
     | '/'
+    | '/live-sessions/$sessionId'
   id:
     | '__root__'
     | '/_layout'
@@ -160,10 +183,12 @@ export interface FileRouteTypes {
     | '/_layout/admin'
     | '/_layout/categories'
     | '/_layout/checkout-counters'
+    | '/_layout/live-sessions'
     | '/_layout/ml'
     | '/_layout/products'
     | '/_layout/settings'
     | '/_layout/'
+    | '/_layout/live-sessions_/$sessionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,6 +257,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProductsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/ml': {
+      id: '/_layout/ml'
+      path: '/ml'
+      fullPath: '/ml'
+      preLoaderRoute: typeof LayoutMlRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/live-sessions': {
+      id: '/_layout/live-sessions'
+      path: '/live-sessions'
+      fullPath: '/live-sessions'
+      preLoaderRoute: typeof LayoutLiveSessionsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/checkout-counters': {
       id: '/_layout/checkout-counters'
       path: '/checkout-counters'
@@ -253,11 +292,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/ml': {
-      id: '/_layout/ml'
-      path: '/ml'
-      fullPath: '/ml'
-      preLoaderRoute: typeof LayoutMlRouteImport
+    '/_layout/live-sessions_/$sessionId': {
+      id: '/_layout/live-sessions_/$sessionId'
+      path: '/live-sessions/$sessionId'
+      fullPath: '/live-sessions/$sessionId'
+      preLoaderRoute: typeof LayoutLiveSessionsSessionIdRouteImport
       parentRoute: typeof LayoutRoute
     }
   }
@@ -267,20 +306,24 @@ interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutCategoriesRoute: typeof LayoutCategoriesRoute
   LayoutCheckoutCountersRoute: typeof LayoutCheckoutCountersRoute
+  LayoutLiveSessionsRoute: typeof LayoutLiveSessionsRoute
   LayoutMlRoute: typeof LayoutMlRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutLiveSessionsSessionIdRoute: typeof LayoutLiveSessionsSessionIdRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutCategoriesRoute: LayoutCategoriesRoute,
   LayoutCheckoutCountersRoute: LayoutCheckoutCountersRoute,
+  LayoutLiveSessionsRoute: LayoutLiveSessionsRoute,
   LayoutMlRoute: LayoutMlRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutLiveSessionsSessionIdRoute: LayoutLiveSessionsSessionIdRoute,
 }
 
 const LayoutRouteWithChildren =

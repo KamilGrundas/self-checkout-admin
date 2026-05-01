@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { CategoriesReadCategoriesResponse, CategoriesCreateCategoryData, CategoriesCreateCategoryResponse, CategoriesUpdateCategoryData, CategoriesUpdateCategoryResponse, CategoriesDeleteCategoryData, CategoriesDeleteCategoryResponse, CheckoutCountersReadCheckoutCountersResponse, CheckoutCountersCreateCheckoutCounterData, CheckoutCountersCreateCheckoutCounterResponse, CheckoutCountersUpdateCheckoutCounterData, CheckoutCountersUpdateCheckoutCounterResponse, CheckoutCountersDeleteCheckoutCounterData, CheckoutCountersDeleteCheckoutCounterResponse, CheckoutSessionsConnectCheckoutSessionData, CheckoutSessionsConnectCheckoutSessionResponse, CheckoutSessionsUpdateCheckoutSessionCartData, CheckoutSessionsUpdateCheckoutSessionCartResponse, CheckoutSessionsPayCheckoutSessionData, CheckoutSessionsPayCheckoutSessionResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProductsReadProductsData, ProductsReadProductsResponse, ProductsCreateProductData, ProductsCreateProductResponse, ProductsReadProductData, ProductsReadProductResponse, ProductsUpdateProductData, ProductsUpdateProductResponse, ProductsDeleteProductData, ProductsDeleteProductResponse, ProductsUploadProductImageData, ProductsUploadProductImageResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { CategoriesReadCategoriesResponse, CategoriesCreateCategoryData, CategoriesCreateCategoryResponse, CategoriesUpdateCategoryData, CategoriesUpdateCategoryResponse, CategoriesDeleteCategoryData, CategoriesDeleteCategoryResponse, CheckoutCountersReadCheckoutCountersResponse, CheckoutCountersCreateCheckoutCounterData, CheckoutCountersCreateCheckoutCounterResponse, CheckoutCountersUpdateCheckoutCounterData, CheckoutCountersUpdateCheckoutCounterResponse, CheckoutCountersDeleteCheckoutCounterData, CheckoutCountersDeleteCheckoutCounterResponse, CheckoutSessionsReadActiveCheckoutSessionsResponse, CheckoutSessionsConnectCheckoutSessionData, CheckoutSessionsConnectCheckoutSessionResponse, CheckoutSessionsUpdateCheckoutSessionCartData, CheckoutSessionsUpdateCheckoutSessionCartResponse, CheckoutSessionsPayCheckoutSessionData, CheckoutSessionsPayCheckoutSessionResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProductsReadProductsData, ProductsReadProductsResponse, ProductsCreateProductData, ProductsCreateProductResponse, ProductsReadProductData, ProductsReadProductResponse, ProductsUpdateProductData, ProductsUpdateProductResponse, ProductsDeleteProductData, ProductsDeleteProductResponse, ProductsUploadProductImageData, ProductsUploadProductImageResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
 
 export class CategoriesService {
     /**
@@ -158,6 +158,18 @@ export class CheckoutCountersService {
 }
 
 export class CheckoutSessionsService {
+    /**
+     * List Active Checkout Sessions
+     * @returns CheckoutSessionsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readActiveCheckoutSessions(): CancelablePromise<CheckoutSessionsReadActiveCheckoutSessionsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/checkout-sessions/active'
+        });
+    }
+
     /**
      * Connect Checkout Session
      * @param data The data for the request.

@@ -96,6 +96,13 @@ export type CheckoutSessionPayment = {
 
 export type CheckoutSessionPaymentStatus = 'pending' | 'paid';
 
+export type CheckoutSessionCounterSettings = {
+    ml_mode: CheckoutMlMode;
+    shelf_camera_device_id?: (string | null);
+    scale_camera_device_id?: (string | null);
+    language: string;
+};
+
 export type CheckoutSessionPublic = {
     client_id: string;
     closed?: boolean;
@@ -103,9 +110,15 @@ export type CheckoutSessionPublic = {
     id: string;
     counter_id: string;
     cart: Array<CheckoutSessionCartItem>;
+    counter_settings?: (CheckoutSessionCounterSettings | null);
     created_at?: (string | null);
     updated_at?: (string | null);
     closed_at?: (string | null);
+};
+
+export type CheckoutSessionsPublic = {
+    data: Array<CheckoutSessionPublic>;
+    count: number;
 };
 
 export type HTTPValidationError = {
@@ -288,6 +301,8 @@ export type CheckoutCountersDeleteCheckoutCounterData = {
 };
 
 export type CheckoutCountersDeleteCheckoutCounterResponse = (Message);
+
+export type CheckoutSessionsReadActiveCheckoutSessionsResponse = (CheckoutSessionsPublic);
 
 export type CheckoutSessionsConnectCheckoutSessionData = {
     requestBody: CheckoutSessionConnect;
