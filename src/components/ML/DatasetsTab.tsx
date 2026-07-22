@@ -3,7 +3,6 @@ import { DatabaseZap, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import mlApi, { mlErrorMessage } from "@/mlClient"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -25,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useI18n } from "@/i18n"
+import mlApi, { mlErrorMessage } from "@/mlClient"
 
 export interface DatasetManifest {
   project_slug: string
@@ -141,9 +141,7 @@ export function DatasetsTab() {
               <TableCell>{ds.export_type ?? "—"}</TableCell>
               <TableCell>{ds.sample_count ?? "—"}</TableCell>
               <TableCell>
-                {ds.created_at
-                  ? new Date(ds.created_at).toLocaleString()
-                  : "—"}
+                {ds.created_at ? new Date(ds.created_at).toLocaleString() : "—"}
               </TableCell>
               <TableCell>
                 <DeleteDataset dataset={ds} />

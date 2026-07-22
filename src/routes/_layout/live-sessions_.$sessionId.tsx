@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { Link, createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { ArrowLeft, Pencil, Plus, Trash2 } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
@@ -108,8 +108,7 @@ function LiveSessionDetail() {
     }
   }, [])
 
-  const removeItem = (index: number) =>
-    send({ command: "remove_item", index })
+  const removeItem = (index: number) => send({ command: "remove_item", index })
   const updateItemQuantity = (index: number, quantity: number) =>
     send({ command: "update_item_quantity", index, quantity })
   const addItem = (productId: string, quantity: number) =>
@@ -444,9 +443,7 @@ function EditQuantityDialog({
             <DialogDescription>{target.item.name}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-2 py-4">
-            <Label htmlFor="qty">
-              Quantity ({isKg ? "kg" : "szt"})
-            </Label>
+            <Label htmlFor="qty">Quantity ({isKg ? "kg" : "szt"})</Label>
             <Input
               id="qty"
               type="number"

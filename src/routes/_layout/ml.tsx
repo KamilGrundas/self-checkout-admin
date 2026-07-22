@@ -3,7 +3,6 @@ import { createFileRoute, redirect } from "@tanstack/react-router"
 import { WifiOff } from "lucide-react"
 
 import { UsersService } from "@/client"
-import mlApi from "@/mlClient"
 import { DatasetsTab } from "@/components/ML/DatasetsTab"
 import { LabelStudioTab } from "@/components/ML/LabelStudioTab"
 import { ModelsTab } from "@/components/ML/ModelsTab"
@@ -11,6 +10,7 @@ import { TrainTab } from "@/components/ML/TrainTab"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/i18n"
+import mlApi from "@/mlClient"
 
 export const Route = createFileRoute("/_layout/ml")({
   component: ML,

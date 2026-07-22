@@ -2,13 +2,13 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import mlApi, { mlErrorMessage } from "@/mlClient"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { useI18n } from "@/i18n"
-import { getDatasetsQueryOptions, type DatasetManifest } from "./DatasetsTab"
+import mlApi, { mlErrorMessage } from "@/mlClient"
+import { type DatasetManifest, getDatasetsQueryOptions } from "./DatasetsTab"
 
 interface TrainRequest {
   yolo_datasets: string[]
@@ -74,7 +74,9 @@ export function TrainTab() {
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
           <Label>{t("datasets")}</Label>
-          <p className="text-xs text-muted-foreground">{t("trainDatasetsDescription")}</p>
+          <p className="text-xs text-muted-foreground">
+            {t("trainDatasetsDescription")}
+          </p>
         </div>
         {datasets.length === 0 ? (
           <p className="text-sm text-muted-foreground">
