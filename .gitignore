@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 openapi.json
+.env
+.env.*
+!.env.example
+.cache/
+.vite/
+coverage/
 
 # Editor directories and files
 .vscode/*
