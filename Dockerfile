@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build-stage
+FROM node:22.23.1-alpine3.23 AS build-stage
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:1
+FROM nginx:1.31.3
 
 COPY --from=build-stage /app/dist/ /usr/share/nginx/html
 
