@@ -15,5 +15,9 @@ export default mlApi
 
 export function mlErrorMessage(err: unknown): string {
   const axiosErr = err as AxiosError<{ detail?: string }>
-  return axiosErr.response?.data?.detail ?? axiosErr.message ?? "Something went wrong"
+  return (
+    axiosErr.response?.data?.detail ??
+    axiosErr.message ??
+    "Something went wrong"
+  )
 }

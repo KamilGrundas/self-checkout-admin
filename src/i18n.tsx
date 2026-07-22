@@ -173,8 +173,7 @@ const translations = {
     models: "Models",
     modelsDescription: "Reload ML models from the registry. Requires MLflow.",
     noDatasets: "No datasets yet",
-    noDatasetsDescription:
-      "Export a dataset from Label Studio to get started.",
+    noDatasetsDescription: "Export a dataset from Label Studio to get started.",
     noYoloDatasetsSelected: "Select at least one YOLO dataset",
     projectTitle: "Project Title",
     refreshClassifier: "Refresh Classifier",
@@ -320,7 +319,8 @@ const translations = {
     classifierRefreshed: "Model klasyfikatora odświeżony",
     modelActivated: "Model aktywowany",
     noModels: "Brak modeli",
-    noModelsDescription: "Najpierw wytrenuj model, aby zobaczyć dostępne wersje.",
+    noModelsDescription:
+      "Najpierw wytrenuj model, aby zobaczyć dostępne wersje.",
     version: "Wersja",
     datasetDeleted: "Dataset usunięty",
     datasetDeleteDescription: "Ten dataset zostanie trwale usunięty.",
@@ -344,8 +344,7 @@ const translations = {
     models: "Modele",
     modelsDescription: "Przeładuj modele ML z rejestru. Wymaga MLflow.",
     noDatasets: "Brak datasetów",
-    noDatasetsDescription:
-      "Wyeksportuj dataset z Label Studio, aby zacząć.",
+    noDatasetsDescription: "Wyeksportuj dataset z Label Studio, aby zacząć.",
     noYoloDatasetsSelected: "Wybierz co najmniej jeden dataset YOLO",
     projectTitle: "Tytuł projektu",
     refreshClassifier: "Odśwież klasyfikator",

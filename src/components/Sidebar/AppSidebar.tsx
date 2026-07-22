@@ -1,4 +1,12 @@
-import { BrainCircuit, Home, MonitorCog, Package, Radio, Tags, Users } from "lucide-react"
+import {
+  BrainCircuit,
+  Home,
+  MonitorCog,
+  Package,
+  Radio,
+  Tags,
+  Users,
+} from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"

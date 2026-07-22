@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import mlApi, { mlErrorMessage } from "@/mlClient"
 import {
   Card,
   CardContent,
@@ -21,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useI18n } from "@/i18n"
+import mlApi, { mlErrorMessage } from "@/mlClient"
 
 interface LabelStudioProject {
   id: number

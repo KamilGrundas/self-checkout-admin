@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { BrainCircuit } from "lucide-react"
 import { toast } from "sonner"
 
-import mlApi, { mlErrorMessage } from "@/mlClient"
 import { Badge } from "@/components/ui/badge"
 import { LoadingButton } from "@/components/ui/loading-button"
 import {
@@ -14,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useI18n } from "@/i18n"
+import mlApi, { mlErrorMessage } from "@/mlClient"
 
 interface ModelVersion {
   name: string
@@ -28,7 +28,7 @@ interface ModelVersion {
 function formatTs(ts: string | null): string {
   if (!ts) return "—"
   const ms = Number(ts)
-  return new Date(isNaN(ms) ? ts : ms).toLocaleString()
+  return new Date(Number.isNaN(ms) ? ts : ms).toLocaleString()
 }
 
 function ModelTable({
