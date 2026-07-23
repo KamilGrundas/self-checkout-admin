@@ -25,6 +25,9 @@ The default API URL is configured in `.env`:
 VITE_API_URL=http://localhost:8000
 ```
 
+Create it from the tracked template with `cp .env.example .env`; local `.env`
+files are intentionally ignored.
+
 ## Build And Checks
 
 ```bash
