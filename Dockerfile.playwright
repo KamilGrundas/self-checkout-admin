@@ -2,20 +2,12 @@ FROM mcr.microsoft.com/playwright:v1.61.1-noble
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y unzip \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:$PATH"
-
-COPY package.json bun.lock /app/
-
-COPY frontend/package.json /app/frontend/
-
-WORKDIR /app/frontend
-
-RUN bun install
-
-COPY ./frontend /app/frontend
+COPY package.json package-lock.json ./
+RUN npm install --global npm@12.0.1 \
+    && npm ci
+COPY . .
 
 ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
+CMD ["npm", "test"]

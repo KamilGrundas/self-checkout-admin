@@ -2,10 +2,6 @@ FROM mcr.microsoft.com/playwright:v1.61.1-noble
 
 WORKDIR /workspace
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:$PATH"
+RUN npm install --global npm@12.0.1
 
 CMD ["bash", "-lc", "npm ci && npm test"]

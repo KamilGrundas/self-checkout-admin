@@ -9,7 +9,8 @@ Authentication, user settings and superuser user management are kept from the te
 
 ## Requirements
 
-- Node.js
+- Node.js 24.18.0 LTS
+- npm 12.0.1
 
 ## Local Development
 
