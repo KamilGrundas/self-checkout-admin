@@ -1,4 +1,4 @@
-FROM node:24.18.0-alpine3.23 AS build-stage
+FROM node:24.18.0-alpine3.23@sha256:595398b0081eacda8e1c4c5b97b76cd1020e4d58a8ebcb4843b9bca1e79e7436 AS build-stage
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN npm install --global npm@12.0.1 \
 COPY . .
 RUN npm run build
 
-FROM nginx:1.31.3
+FROM nginx:1.31.3@sha256:5a88c9c45479443d7be2eadc894b4ed0a9801bae03d97a5760ae13b5c2005942
 
 COPY --from=build-stage /app/dist/ /usr/share/nginx/html
 
