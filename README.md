@@ -9,7 +9,8 @@ Authentication, user settings and superuser user management are kept from the te
 
 ## Requirements
 
-- Node.js
+- Node.js 24.18.0 LTS
+- npm 12.0.1
 
 ## Local Development
 
@@ -23,6 +24,9 @@ The default API URL is configured in `.env`:
 ```env
 VITE_API_URL=http://localhost:8000
 ```
+
+Create it from the tracked template with `cp .env.example .env`; local `.env`
+files are intentionally ignored.
 
 ## Build And Checks
 
