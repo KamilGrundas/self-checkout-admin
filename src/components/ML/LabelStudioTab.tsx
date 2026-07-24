@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -27,26 +27,52 @@ interface LabelStudioProject {
   title: string
 }
 
-function useProjects() {
-  return useQuery({
-    queryKey: ["ls-projects"],
-    queryFn: () =>
-      mlApi
-        .get<LabelStudioProject[]>("/label-studio/projects")
-        .then((r) => r.data),
-    retry: false,
-  })
+function labelStudioRequestConfig(apiKey: string) {
+  return {
+    headers: {
+      "X-Label-Studio-Api-Key": apiKey,
+    },
+  }
 }
 
 export function LabelStudioTab() {
   const { t } = useI18n()
-  const { data: projects = [] } = useProjects()
 
+  const [apiKey, setApiKey] = useState("")
+  const [connectedApiKey, setConnectedApiKey] = useState("")
+  const [projects, setProjects] = useState<LabelStudioProject[]>([])
   const [projectTitle, setProjectTitle] = useState("")
   const [releaseName, setReleaseName] = useState("")
 
+  const connectMutation = useMutation({
+    mutationFn: (key: string) =>
+      mlApi
+        .get<LabelStudioProject[]>(
+          "/label-studio/projects",
+          labelStudioRequestConfig(key),
+        )
+        .then((r) => r.data),
+    onSuccess: (data, key) => {
+      setConnectedApiKey(key)
+      setProjects(data)
+      toast.success(t("labelStudioConnected"))
+    },
+    onError: (err) => {
+      setConnectedApiKey("")
+      setProjects([])
+      toast.error("Error", { description: mlErrorMessage(err) })
+    },
+  })
+
   const syncMutation = useMutation({
-    mutationFn: () => mlApi.post("/label-studio/sync").then((r) => r.data),
+    mutationFn: () =>
+      mlApi
+        .post(
+          "/label-studio/sync",
+          null,
+          labelStudioRequestConfig(connectedApiKey),
+        )
+        .then((r) => r.data),
     onSuccess: () => toast.success(t("imagesSynced")),
     onError: (err) =>
       toast.error("Error", { description: mlErrorMessage(err) }),
@@ -56,6 +82,7 @@ export function LabelStudioTab() {
     mutationFn: () =>
       mlApi
         .post("/label-studio/export", null, {
+          ...labelStudioRequestConfig(connectedApiKey),
           params: {
             project_title: projectTitle,
             ...(releaseName ? { release_name: releaseName } : {}),
@@ -72,8 +99,55 @@ export function LabelStudioTab() {
     exportMutation.mutate()
   }
 
+  const handleConnect = (e: React.FormEvent) => {
+    e.preventDefault()
+    connectMutation.mutate(apiKey.trim())
+  }
+
+  const handleApiKeyChange = (value: string) => {
+    setApiKey(value)
+    setConnectedApiKey("")
+    setProjects([])
+  }
+
+  const isConnected = connectedApiKey.length > 0
+
   return (
     <div className="grid gap-4 md:grid-cols-2 pt-4">
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle>{t("labelStudioApiKey")}</CardTitle>
+          <CardDescription>{t("labelStudioApiKeyDescription")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={handleConnect}
+            className="flex flex-col gap-3 sm:flex-row sm:items-end"
+          >
+            <div className="flex flex-1 flex-col gap-2">
+              <Label htmlFor="label-studio-api-key">
+                {t("labelStudioApiKey")}
+              </Label>
+              <Input
+                id="label-studio-api-key"
+                type="password"
+                autoComplete="off"
+                value={apiKey}
+                onChange={(e) => handleApiKeyChange(e.target.value)}
+                required
+              />
+            </div>
+            <LoadingButton
+              type="submit"
+              loading={connectMutation.isPending}
+              disabled={!apiKey.trim()}
+            >
+              {t("connect")}
+            </LoadingButton>
+          </form>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>{t("syncImages")}</CardTitle>
@@ -83,6 +157,7 @@ export function LabelStudioTab() {
           <LoadingButton
             loading={syncMutation.isPending}
             onClick={() => syncMutation.mutate()}
+            disabled={!isConnected}
           >
             {t("syncImages")}
           </LoadingButton>
@@ -134,7 +209,7 @@ export function LabelStudioTab() {
               <LoadingButton
                 type="submit"
                 loading={exportMutation.isPending}
-                disabled={!projectTitle}
+                disabled={!isConnected || !projectTitle}
               >
                 {t("exportDataset")}
               </LoadingButton>

@@ -106,6 +106,7 @@ const translations = {
     appearance: "Appearance",
     changePassword: "Change Password",
     confirm: "Confirm",
+    connect: "Connect",
     confirmationRequired: "Confirmation Required",
     confirmPassword: "Confirm Password",
     currentPassword: "Current Password",
@@ -164,6 +165,10 @@ const translations = {
     imageSize: "Image Size",
     imagesSynced: "Images synced",
     labelStudio: "Label Studio",
+    labelStudioApiKey: "Label Studio API Key",
+    labelStudioApiKeyDescription:
+      "Enter a personal access token to connect. The key is kept only in this browser tab and is not saved.",
+    labelStudioConnected: "Connected to Label Studio",
     labelStudioDescription:
       "Sync images and export annotated datasets. Requires Label Studio.",
     ml: "Machine Learning",
@@ -276,6 +281,7 @@ const translations = {
     appearance: "Wygląd",
     changePassword: "Zmień hasło",
     confirm: "Potwierdź",
+    connect: "Połącz",
     confirmationRequired: "Wymagane potwierdzenie",
     confirmPassword: "Potwierdź hasło",
     currentPassword: "Aktualne hasło",
@@ -335,6 +341,10 @@ const translations = {
     imageSize: "Rozmiar obrazu",
     imagesSynced: "Obrazy zsynchronizowane",
     labelStudio: "Label Studio",
+    labelStudioApiKey: "Klucz API Label Studio",
+    labelStudioApiKeyDescription:
+      "Podaj osobisty token dostępu, aby się połączyć. Klucz pozostaje tylko w tej karcie przeglądarki i nie jest zapisywany.",
+    labelStudioConnected: "Połączono z Label Studio",
     labelStudioDescription:
       "Synchronizuj obrazy i eksportuj datasety. Wymaga Label Studio.",
     ml: "Machine Learning",
