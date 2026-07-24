@@ -23,6 +23,7 @@ The default API URL is configured in `.env`:
 
 ```env
 VITE_API_URL=http://localhost:8000
+VITE_ML_API_URL=http://localhost:8001
 ```
 
 Create it from the tracked template with `cp .env.example .env`; local `.env`
