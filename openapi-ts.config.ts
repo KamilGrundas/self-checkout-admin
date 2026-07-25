@@ -5,24 +5,39 @@ export default defineConfig({
   output: "./src/client",
 
   plugins: [
-    "legacy/axios",
+    "@hey-api/typescript",
+    {
+      name: "@hey-api/client-fetch",
+      throwOnError: true,
+    },
     {
       name: "@hey-api/sdk",
-      // NOTE: this doesn't allow tree-shaking
-      asClass: true,
-      operationId: true,
-      classNameBuilder: "{{name}}Service",
-      methodNameBuilder: (operation) => {
-        // @ts-expect-error
-        let name: string = operation.name
-        // @ts-expect-error
-        const service: string = operation.service
-
-        if (service && name.toLowerCase().startsWith(service.toLowerCase())) {
-          name = name.slice(service.length)
-        }
-
-        return name.charAt(0).toLowerCase() + name.slice(1)
+      client: true,
+      paramsStructure: "flat",
+      responseStyle: "data",
+      operations: {
+        strategy: "byTags",
+        containerName: "{{name}}Service",
+        methodName: (name) => {
+          const servicePrefixes = [
+            "categories",
+            "checkoutCounters",
+            "checkoutSessions",
+            "items",
+            "login",
+            "private",
+            "products",
+            "users",
+            "utils",
+          ]
+          for (const prefix of servicePrefixes) {
+            if (name.startsWith(prefix) && name.length > prefix.length) {
+              const method = name.slice(prefix.length)
+              return method.charAt(0).toLowerCase() + method.slice(1)
+            }
+          }
+          return name
+        },
       },
     },
     {

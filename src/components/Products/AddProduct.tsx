@@ -83,11 +83,13 @@ const AddProduct = () => {
         unit: data.unit as ProductUnit,
         category_id: data.category_id || undefined,
       }
-      const product = await ProductsService.createProduct({ requestBody })
+      const product = await ProductsService.createProduct({
+        productCreate: requestBody,
+      })
       if (imageFile) {
         return ProductsService.uploadProductImage({
           id: product.id,
-          formData: { file: imageFile },
+          bodyProductsUploadProductImage: { file: imageFile },
         })
       }
       return product

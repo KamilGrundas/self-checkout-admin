@@ -58,7 +58,7 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
     mutationFn: (data: FormData) =>
       CategoriesService.updateCategory({
         id: category.id,
-        requestBody: data,
+        categoryUpdate: data,
       }),
     onSuccess: () => {
       showSuccessToast(t("categoryUpdated"))

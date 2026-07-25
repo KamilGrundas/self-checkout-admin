@@ -52,7 +52,9 @@ const AddCheckoutCounter = () => {
 
   const mutation = useMutation({
     mutationFn: (data: CheckoutCounterCreate) =>
-      CheckoutCountersService.createCheckoutCounter({ requestBody: data }),
+      CheckoutCountersService.checkoutCountersCreateCheckoutCounter({
+        checkoutCounterCreate: data,
+      }),
     onSuccess: () => {
       showSuccessToast(t("counterCreated"))
       form.reset()

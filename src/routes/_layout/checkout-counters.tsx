@@ -12,7 +12,8 @@ import { useI18n } from "@/i18n"
 
 function getCheckoutCountersQueryOptions() {
   return {
-    queryFn: () => CheckoutCountersService.readCheckoutCounters(),
+    queryFn: () =>
+      CheckoutCountersService.checkoutCountersReadCheckoutCounters(),
     queryKey: ["checkout-counters"],
   }
 }
