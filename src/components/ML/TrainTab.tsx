@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
 import { Checkbox } from "@/components/ui/checkbox"
@@ -19,6 +19,20 @@ interface TrainRequest {
   validation_ratio: number
 }
 
+interface TrainingJob {
+  job_id: string
+  status: "queued" | "running" | "completed" | "failed"
+  stage: string
+  message: string
+  progress: number
+  current_epoch?: number | null
+  total_epochs: number
+  metrics?: Record<string, number> | null
+  error?: string | null
+}
+
+const TRAINING_JOB_STORAGE_KEY = "self-checkout-training-job-id"
+
 export function TrainTab() {
   const { t } = useI18n()
   const { data: datasets = [] } = useQuery(getDatasetsQueryOptions())
@@ -28,6 +42,10 @@ export function TrainTab() {
   const [epochs, setEpochs] = useState(12)
   const [batchSize, setBatchSize] = useState(16)
   const [validationRatio, setValidationRatio] = useState(0.2)
+  const [jobId, setJobId] = useState<string | null>(() =>
+    localStorage.getItem(TRAINING_JOB_STORAGE_KEY),
+  )
+  const notifiedStatus = useRef<string | null>(null)
 
   const toggleDataset = (prefix: string) => {
     setSelected((prev) => {
@@ -40,11 +58,80 @@ export function TrainTab() {
 
   const trainMutation = useMutation({
     mutationFn: (body: TrainRequest) =>
-      mlApi.post("/train/classifier", body).then((r) => r.data),
-    onSuccess: () => toast.success(t("trainingStarted")),
+      mlApi.post<TrainingJob>("/train/classifier", body).then((r) => r.data),
+    onSuccess: (job) => {
+      setJobId(job.job_id)
+      localStorage.setItem(TRAINING_JOB_STORAGE_KEY, job.job_id)
+      toast.success(t("trainingStarted"))
+    },
     onError: (err) =>
       toast.error("Error", { description: mlErrorMessage(err) }),
   })
+
+  const { data: trainingJob } = useQuery({
+    queryKey: ["training-job", jobId],
+    queryFn: () =>
+      mlApi
+        .get<TrainingJob>(`/train/classifier/${jobId}`)
+        .then((response) => response.data),
+    enabled: Boolean(jobId),
+    refetchInterval: (query) => {
+      const status = (query.state.data as TrainingJob | undefined)?.status
+      return status === "completed" || status === "failed" ? false : 1000
+    },
+    retry: false,
+  })
+
+  useEffect(() => {
+    if (!trainingJob) return
+    const notificationKey = `${trainingJob.job_id}:${trainingJob.status}`
+    if (notifiedStatus.current === notificationKey) return
+
+    if (trainingJob.status === "completed") {
+      notifiedStatus.current = notificationKey
+      toast.success(t("trainingCompleted"))
+    } else if (trainingJob.status === "failed") {
+      notifiedStatus.current = notificationKey
+      toast.error(t("trainingFailed"), {
+        description: trainingJob.error ?? trainingJob.message,
+      })
+    }
+  }, [t, trainingJob])
+
+  const trainingMessage = (() => {
+    if (!trainingJob) return null
+    switch (trainingJob.stage) {
+      case "queued":
+        return t("trainingQueued")
+      case "checking_mlflow":
+        return t("trainingCheckingMlflow")
+      case "downloading":
+        return t("trainingDownloading")
+      case "loading":
+        return t("trainingLoading")
+      case "preparing":
+        return t("trainingPreparing")
+      case "training":
+        return trainingJob.current_epoch
+          ? `${t("trainingEpoch")} ${trainingJob.current_epoch} / ${trainingJob.total_epochs}`
+          : t("trainingStarting")
+      case "evaluating":
+        return t("trainingEvaluating")
+      case "registering":
+        return t("trainingRegistering")
+      case "completed":
+        return t("trainingCompleted")
+      case "failed":
+        return trainingJob.error ?? t("trainingFailed")
+      default:
+        return trainingJob.message
+    }
+  })()
+
+  const isTraining =
+    trainMutation.isPending ||
+    trainingJob?.status === "queued" ||
+    trainingJob?.status === "running"
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -155,10 +242,46 @@ export function TrainTab() {
       </div>
 
       <div>
-        <LoadingButton type="submit" loading={trainMutation.isPending}>
+        <LoadingButton
+          type="submit"
+          loading={trainMutation.isPending}
+          disabled={isTraining}
+        >
           {t("trainClassifier")}
         </LoadingButton>
       </div>
+
+      {trainingJob && trainingMessage && (
+        <div className="rounded-lg border bg-muted/30 p-4">
+          <div className="mb-2 flex items-center justify-between gap-4 text-sm">
+            <span className="font-medium">{trainingMessage}</span>
+            <span className="tabular-nums text-muted-foreground">
+              {Math.round(trainingJob.progress)}%
+            </span>
+          </div>
+          <div
+            role="progressbar"
+            aria-label={t("trainingProgress")}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(trainingJob.progress)}
+            className="h-2 overflow-hidden rounded-full bg-muted"
+          >
+            <div
+              className="h-full rounded-full bg-primary transition-[width] duration-500"
+              style={{
+                width: `${Math.min(100, Math.max(0, trainingJob.progress))}%`,
+              }}
+            />
+          </div>
+          {trainingJob.metrics?.accuracy !== undefined && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              {t("trainingAccuracy")}:{" "}
+              {(trainingJob.metrics.accuracy * 100).toFixed(1)}%
+            </p>
+          )}
+        </div>
+      )}
     </form>
   )
 }
