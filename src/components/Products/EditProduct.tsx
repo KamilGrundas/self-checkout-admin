@@ -91,12 +91,12 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
       }
       const updatedProduct = await ProductsService.updateProduct({
         id: product.id,
-        requestBody,
+        productUpdate: requestBody,
       })
       if (imageFile) {
         return ProductsService.uploadProductImage({
           id: updatedProduct.id,
-          formData: { file: imageFile },
+          bodyProductsUploadProductImage: { file: imageFile },
         })
       }
       return updatedProduct

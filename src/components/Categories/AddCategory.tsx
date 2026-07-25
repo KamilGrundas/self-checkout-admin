@@ -51,7 +51,7 @@ const AddCategory = () => {
 
   const mutation = useMutation({
     mutationFn: (data: CategoryCreate) =>
-      CategoriesService.createCategory({ requestBody: data }),
+      CategoriesService.createCategory({ categoryCreate: data }),
     onSuccess: () => {
       showSuccessToast(t("categoryCreated"))
       form.reset()

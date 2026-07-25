@@ -31,7 +31,8 @@ const formatDate = (value?: string | null) => {
 function LiveSessions() {
   const { data, isLoading } = useQuery({
     queryKey: ["checkout-sessions", "active"],
-    queryFn: () => CheckoutSessionsService.readActiveCheckoutSessions(),
+    queryFn: () =>
+      CheckoutSessionsService.checkoutSessionsListActiveCheckoutSessions(),
     refetchInterval: 3000,
   })
 

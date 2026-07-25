@@ -90,9 +90,9 @@ const EditCheckoutCounter = ({
         scale_camera_device_id: data.scale_camera_device_id?.trim() || null,
         language: data.language,
       }
-      return CheckoutCountersService.updateCheckoutCounter({
+      return CheckoutCountersService.checkoutCountersUpdateCheckoutCounter({
         id: counter.id,
-        requestBody,
+        checkoutCounterUpdate: requestBody,
       })
     },
     onSuccess: () => {

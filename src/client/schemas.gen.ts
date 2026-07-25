@@ -53,7 +53,10 @@ export const Body_login_login_access_tokenSchema = {
         }
     },
     type: 'object',
-    required: ['username', 'password'],
+    required: [
+        'username',
+        'password'
+    ],
     title: 'Body_login-login_access_token'
 } as const;
 
@@ -61,12 +64,14 @@ export const Body_products_upload_product_imageSchema = {
     properties: {
         file: {
             type: 'string',
-            format: 'binary',
+            contentMediaType: 'application/octet-stream',
             title: 'File'
         }
     },
     type: 'object',
-    required: ['file'],
+    required: [
+        'file'
+    ],
     title: 'Body_products-upload_product_image'
 } as const;
 
@@ -74,7 +79,7 @@ export const CategoriesPublicSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/CategoryPublic'
+                $ref: '#/components/schemas/CategoryPublic'
             },
             type: 'array',
             title: 'Data'
@@ -85,7 +90,10 @@ export const CategoriesPublicSchema = {
         }
     },
     type: 'object',
-    required: ['data', 'count'],
+    required: [
+        'data',
+        'count'
+    ],
     title: 'CategoriesPublic'
 } as const;
 
@@ -99,7 +107,9 @@ export const CategoryCreateSchema = {
         }
     },
     type: 'object',
-    required: ['name'],
+    required: [
+        'name'
+    ],
     title: 'CategoryCreate'
 } as const;
 
@@ -136,7 +146,11 @@ export const CategoryPublicSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'key', 'id'],
+    required: [
+        'name',
+        'key',
+        'id'
+    ],
     title: 'CategoryPublic'
 } as const;
 
@@ -176,12 +190,50 @@ export const CheckoutCounterCreateSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'password'],
+    required: [
+        'name',
+        'password'
+    ],
     title: 'CheckoutCounterCreate'
 } as const;
 
 export const CheckoutCounterPublicSchema = {
     properties: {
+        ml_mode: {
+            $ref: '#/components/schemas/CheckoutMlMode',
+            default: 'off'
+        },
+        shelf_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shelf Camera Device Id'
+        },
+        scale_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scale Camera Device Id'
+        },
+        language: {
+            type: 'string',
+            maxLength: 8,
+            minLength: 2,
+            title: 'Language',
+            default: 'pl'
+        },
         name: {
             type: 'string',
             maxLength: 255,
@@ -207,8 +259,122 @@ export const CheckoutCounterPublicSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'id'],
+    required: [
+        'name',
+        'id'
+    ],
     title: 'CheckoutCounterPublic'
+} as const;
+
+export const CheckoutCounterSelfSettingsUpdateSchema = {
+    properties: {
+        counter_id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Counter Id'
+        },
+        password: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Password'
+        },
+        ml_mode: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/CheckoutMlMode'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        shelf_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shelf Camera Device Id'
+        },
+        scale_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scale Camera Device Id'
+        },
+        language: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 8,
+                    minLength: 2
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Language'
+        }
+    },
+    type: 'object',
+    required: [
+        'counter_id',
+        'password'
+    ],
+    title: 'CheckoutCounterSelfSettingsUpdate'
+} as const;
+
+export const CheckoutCounterSettingsBaseSchema = {
+    properties: {
+        ml_mode: {
+            $ref: '#/components/schemas/CheckoutMlMode',
+            default: 'off'
+        },
+        shelf_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shelf Camera Device Id'
+        },
+        scale_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scale Camera Device Id'
+        },
+        language: {
+            type: 'string',
+            maxLength: 8,
+            minLength: 2,
+            title: 'Language',
+            default: 'pl'
+        }
+    },
+    type: 'object',
+    title: 'CheckoutCounterSettingsBase'
 } as const;
 
 export const CheckoutCounterUpdateSchema = {
@@ -238,6 +404,53 @@ export const CheckoutCounterUpdateSchema = {
                 }
             ],
             title: 'Password'
+        },
+        ml_mode: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/CheckoutMlMode'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        shelf_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shelf Camera Device Id'
+        },
+        scale_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scale Camera Device Id'
+        },
+        language: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 8,
+                    minLength: 2
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Language'
         }
     },
     type: 'object',
@@ -248,7 +461,7 @@ export const CheckoutCountersPublicSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/CheckoutCounterPublic'
+                $ref: '#/components/schemas/CheckoutCounterPublic'
             },
             type: 'array',
             title: 'Data'
@@ -259,8 +472,21 @@ export const CheckoutCountersPublicSchema = {
         }
     },
     type: 'object',
-    required: ['data', 'count'],
+    required: [
+        'data',
+        'count'
+    ],
     title: 'CheckoutCountersPublic'
+} as const;
+
+export const CheckoutMlModeSchema = {
+    type: 'string',
+    enum: [
+        'off',
+        'label',
+        'on'
+    ],
+    title: 'CheckoutMlMode'
 } as const;
 
 export const CheckoutSessionCartItemSchema = {
@@ -275,7 +501,7 @@ export const CheckoutSessionCartItemSchema = {
             title: 'Name'
         },
         unit: {
-            '$ref': '#/components/schemas/ProductUnit'
+            $ref: '#/components/schemas/ProductUnit'
         },
         price: {
             type: 'number',
@@ -312,7 +538,15 @@ export const CheckoutSessionCartItemSchema = {
         }
     },
     type: 'object',
-    required: ['product_id', 'name', 'unit', 'price', 'quantity', 'quantity_label', 'line_total'],
+    required: [
+        'product_id',
+        'name',
+        'unit',
+        'price',
+        'quantity',
+        'quantity_label',
+        'line_total'
+    ],
     title: 'CheckoutSessionCartItem'
 } as const;
 
@@ -337,14 +571,18 @@ export const CheckoutSessionCartUpdateSchema = {
         },
         cart: {
             items: {
-                '$ref': '#/components/schemas/CheckoutSessionCartItem'
+                $ref: '#/components/schemas/CheckoutSessionCartItem'
             },
             type: 'array',
             title: 'Cart'
         }
     },
     type: 'object',
-    required: ['counter_id', 'password', 'client_id'],
+    required: [
+        'counter_id',
+        'password',
+        'client_id'
+    ],
     title: 'CheckoutSessionCartUpdate'
 } as const;
 
@@ -369,7 +607,11 @@ export const CheckoutSessionConnectSchema = {
         }
     },
     type: 'object',
-    required: ['counter_id', 'password', 'client_id'],
+    required: [
+        'counter_id',
+        'password',
+        'client_id'
+    ],
     title: 'CheckoutSessionConnect'
 } as const;
 
@@ -394,13 +636,20 @@ export const CheckoutSessionPaymentSchema = {
         }
     },
     type: 'object',
-    required: ['counter_id', 'password', 'client_id'],
+    required: [
+        'counter_id',
+        'password',
+        'client_id'
+    ],
     title: 'CheckoutSessionPayment'
 } as const;
 
 export const CheckoutSessionPaymentStatusSchema = {
     type: 'string',
-    enum: ['pending', 'paid'],
+    enum: [
+        'pending',
+        'paid'
+    ],
     title: 'CheckoutSessionPaymentStatus'
 } as const;
 
@@ -418,7 +667,7 @@ export const CheckoutSessionPublicSchema = {
             default: false
         },
         payment_status: {
-            '$ref': '#/components/schemas/CheckoutSessionPaymentStatus',
+            $ref: '#/components/schemas/CheckoutSessionPaymentStatus',
             default: 'pending'
         },
         id: {
@@ -433,10 +682,13 @@ export const CheckoutSessionPublicSchema = {
         },
         cart: {
             items: {
-                '$ref': '#/components/schemas/CheckoutSessionCartItem'
+                $ref: '#/components/schemas/CheckoutSessionCartItem'
             },
             type: 'array',
             title: 'Cart'
+        },
+        counter_settings: {
+            $ref: '#/components/schemas/CheckoutCounterSettingsBase'
         },
         created_at: {
             anyOf: [
@@ -476,15 +728,43 @@ export const CheckoutSessionPublicSchema = {
         }
     },
     type: 'object',
-    required: ['client_id', 'id', 'counter_id', 'cart'],
+    required: [
+        'client_id',
+        'id',
+        'counter_id',
+        'cart',
+        'counter_settings'
+    ],
     title: 'CheckoutSessionPublic'
+} as const;
+
+export const CheckoutSessionsPublicSchema = {
+    properties: {
+        data: {
+            items: {
+                $ref: '#/components/schemas/CheckoutSessionPublic'
+            },
+            type: 'array',
+            title: 'Data'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: [
+        'data',
+        'count'
+    ],
+    title: 'CheckoutSessionsPublic'
 } as const;
 
 export const HTTPValidationErrorSchema = {
     properties: {
         detail: {
             items: {
-                '$ref': '#/components/schemas/ValidationError'
+                $ref: '#/components/schemas/ValidationError'
             },
             type: 'array',
             title: 'Detail'
@@ -516,7 +796,9 @@ export const ItemCreateSchema = {
         }
     },
     type: 'object',
-    required: ['title'],
+    required: [
+        'title'
+    ],
     title: 'ItemCreate'
 } as const;
 
@@ -564,7 +846,11 @@ export const ItemPublicSchema = {
         }
     },
     type: 'object',
-    required: ['title', 'id', 'owner_id'],
+    required: [
+        'title',
+        'id',
+        'owner_id'
+    ],
     title: 'ItemPublic'
 } as const;
 
@@ -604,7 +890,7 @@ export const ItemsPublicSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/ItemPublic'
+                $ref: '#/components/schemas/ItemPublic'
             },
             type: 'array',
             title: 'Data'
@@ -615,8 +901,41 @@ export const ItemsPublicSchema = {
         }
     },
     type: 'object',
-    required: ['data', 'count'],
+    required: [
+        'data',
+        'count'
+    ],
     title: 'ItemsPublic'
+} as const;
+
+export const LabelStudioSettingsPublicSchema = {
+    properties: {
+        api_key_configured: {
+            type: 'boolean',
+            title: 'Api Key Configured'
+        }
+    },
+    type: 'object',
+    required: [
+        'api_key_configured'
+    ],
+    title: 'LabelStudioSettingsPublic'
+} as const;
+
+export const LabelStudioSettingsUpdateSchema = {
+    properties: {
+        api_key: {
+            type: 'string',
+            maxLength: 2048,
+            minLength: 1,
+            title: 'Api Key'
+        }
+    },
+    type: 'object',
+    required: [
+        'api_key'
+    ],
+    title: 'LabelStudioSettingsUpdate'
 } as const;
 
 export const MessageSchema = {
@@ -627,7 +946,9 @@ export const MessageSchema = {
         }
     },
     type: 'object',
-    required: ['message'],
+    required: [
+        'message'
+    ],
     title: 'Message'
 } as const;
 
@@ -645,7 +966,10 @@ export const NewPasswordSchema = {
         }
     },
     type: 'object',
-    required: ['token', 'new_password'],
+    required: [
+        'token',
+        'new_password'
+    ],
     title: 'NewPassword'
 } as const;
 
@@ -670,7 +994,11 @@ export const PrivateUserCreateSchema = {
         }
     },
     type: 'object',
-    required: ['email', 'password', 'full_name'],
+    required: [
+        'email',
+        'password',
+        'full_name'
+    ],
     title: 'PrivateUserCreate'
 } as const;
 
@@ -696,7 +1024,7 @@ export const ProductCreateSchema = {
             title: 'Price'
         },
         unit: {
-            '$ref': '#/components/schemas/ProductUnit'
+            $ref: '#/components/schemas/ProductUnit'
         },
         image_url: {
             anyOf: [
@@ -709,6 +1037,18 @@ export const ProductCreateSchema = {
                 }
             ],
             title: 'Image Url'
+        },
+        thumbnail_url: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 2048
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Thumbnail Url'
         },
         category_id: {
             anyOf: [
@@ -724,7 +1064,11 @@ export const ProductCreateSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'price', 'unit'],
+    required: [
+        'name',
+        'price',
+        'unit'
+    ],
     title: 'ProductCreate'
 } as const;
 
@@ -742,7 +1086,7 @@ export const ProductPublicSchema = {
             title: 'Price'
         },
         unit: {
-            '$ref': '#/components/schemas/ProductUnit'
+            $ref: '#/components/schemas/ProductUnit'
         },
         image_url: {
             anyOf: [
@@ -755,6 +1099,18 @@ export const ProductPublicSchema = {
                 }
             ],
             title: 'Image Url'
+        },
+        thumbnail_url: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 2048
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Thumbnail Url'
         },
         id: {
             type: 'string',
@@ -788,13 +1144,24 @@ export const ProductPublicSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'price', 'unit', 'id', 'category_id', 'category_name', 'category_key'],
+    required: [
+        'name',
+        'price',
+        'unit',
+        'id',
+        'category_id',
+        'category_name',
+        'category_key'
+    ],
     title: 'ProductPublic'
 } as const;
 
 export const ProductUnitSchema = {
     type: 'string',
-    enum: ['kg', 'pcs'],
+    enum: [
+        'kg',
+        'pcs'
+    ],
     title: 'ProductUnit'
 } as const;
 
@@ -832,7 +1199,7 @@ export const ProductUpdateSchema = {
         unit: {
             anyOf: [
                 {
-                    '$ref': '#/components/schemas/ProductUnit'
+                    $ref: '#/components/schemas/ProductUnit'
                 },
                 {
                     type: 'null'
@@ -872,7 +1239,7 @@ export const ProductsPublicSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/ProductPublic'
+                $ref: '#/components/schemas/ProductPublic'
             },
             type: 'array',
             title: 'Data'
@@ -883,7 +1250,10 @@ export const ProductsPublicSchema = {
         }
     },
     type: 'object',
-    required: ['data', 'count'],
+    required: [
+        'data',
+        'count'
+    ],
     title: 'ProductsPublic'
 } as const;
 
@@ -900,7 +1270,9 @@ export const TokenSchema = {
         }
     },
     type: 'object',
-    required: ['access_token'],
+    required: [
+        'access_token'
+    ],
     title: 'Token'
 } as const;
 
@@ -920,7 +1292,10 @@ export const UpdatePasswordSchema = {
         }
     },
     type: 'object',
-    required: ['current_password', 'new_password'],
+    required: [
+        'current_password',
+        'new_password'
+    ],
     title: 'UpdatePassword'
 } as const;
 
@@ -962,7 +1337,10 @@ export const UserCreateSchema = {
         }
     },
     type: 'object',
-    required: ['email', 'password'],
+    required: [
+        'email',
+        'password'
+    ],
     title: 'UserCreate'
 } as const;
 
@@ -1015,7 +1393,10 @@ export const UserPublicSchema = {
         }
     },
     type: 'object',
-    required: ['email', 'id'],
+    required: [
+        'email',
+        'id'
+    ],
     title: 'UserPublic'
 } as const;
 
@@ -1047,7 +1428,10 @@ export const UserRegisterSchema = {
         }
     },
     type: 'object',
-    required: ['email', 'password'],
+    required: [
+        'email',
+        'password'
+    ],
     title: 'UserRegister'
 } as const;
 
@@ -1142,7 +1526,7 @@ export const UsersPublicSchema = {
     properties: {
         data: {
             items: {
-                '$ref': '#/components/schemas/UserPublic'
+                $ref: '#/components/schemas/UserPublic'
             },
             type: 'array',
             title: 'Data'
@@ -1153,7 +1537,10 @@ export const UsersPublicSchema = {
         }
     },
     type: 'object',
-    required: ['data', 'count'],
+    required: [
+        'data',
+        'count'
+    ],
     title: 'UsersPublic'
 } as const;
 
@@ -1190,6 +1577,10 @@ export const ValidationErrorSchema = {
         }
     },
     type: 'object',
-    required: ['loc', 'msg', 'type'],
+    required: [
+        'loc',
+        'msg',
+        'type'
+    ],
     title: 'ValidationError'
 } as const;

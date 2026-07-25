@@ -36,7 +36,8 @@ const DeleteCheckoutCounter = ({
   const { handleSubmit } = useForm()
 
   const mutation = useMutation({
-    mutationFn: () => CheckoutCountersService.deleteCheckoutCounter({ id }),
+    mutationFn: () =>
+      CheckoutCountersService.checkoutCountersDeleteCheckoutCounter({ id }),
     onSuccess: () => {
       showSuccessToast(t("counterDeleted"))
       setIsOpen(false)
