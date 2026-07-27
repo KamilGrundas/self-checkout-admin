@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import {
+  type CheckoutCameraInfo,
   type CheckoutCounterPublic,
   CheckoutCountersService,
   type CheckoutCounterUpdate,
@@ -42,6 +43,8 @@ import useCustomToast from "@/hooks/useCustomToast"
 import { useI18n } from "@/i18n"
 import { handleError } from "@/utils"
 
+const NO_CAMERA_VALUE = "__none__"
+
 const formSchema = z.object({
   name: z.string().min(1, { message: "Counter name is required" }),
   password: z.string().optional(),
@@ -52,6 +55,62 @@ const formSchema = z.object({
 })
 
 type FormData = z.infer<typeof formSchema>
+
+interface CameraSelectProps {
+  cameras: CheckoutCameraInfo[]
+  configuredDeviceId: string | null | undefined
+  value: string | undefined
+  onChange: (value: string) => void
+  label: string
+  noCameraLabel: string
+  unavailableLabel: string
+}
+
+const CameraSelect = ({
+  cameras,
+  configuredDeviceId,
+  value,
+  onChange,
+  label,
+  noCameraLabel,
+  unavailableLabel,
+}: CameraSelectProps) => {
+  const configuredCameraIsUnavailable =
+    configuredDeviceId &&
+    !cameras.some((camera) => camera.device_id === configuredDeviceId)
+
+  return (
+    <FormItem>
+      <FormLabel>{label}</FormLabel>
+      <Select
+        value={value || NO_CAMERA_VALUE}
+        onValueChange={(nextValue) =>
+          onChange(nextValue === NO_CAMERA_VALUE ? "" : nextValue)
+        }
+      >
+        <FormControl>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          <SelectItem value={NO_CAMERA_VALUE}>{noCameraLabel}</SelectItem>
+          {configuredCameraIsUnavailable && (
+            <SelectItem value={configuredDeviceId}>
+              {configuredDeviceId} ({unavailableLabel})
+            </SelectItem>
+          )}
+          {cameras.map((camera) => (
+            <SelectItem key={camera.device_id} value={camera.device_id}>
+              {camera.label} ({camera.device_id})
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <FormMessage />
+    </FormItem>
+  )
+}
 
 interface EditCheckoutCounterProps {
   counter: CheckoutCounterPublic
@@ -65,7 +124,8 @@ const EditCheckoutCounter = ({
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { t } = useI18n()
+  const { language, t } = useI18n()
+  const availableCameras = counter.available_cameras ?? []
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -191,28 +251,46 @@ const EditCheckoutCounter = ({
                 control={form.control}
                 name="shelf_camera_device_id"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Shelf camera device ID</FormLabel>
-                    <FormControl>
-                      <Input type="text" placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <CameraSelect
+                    cameras={availableCameras}
+                    configuredDeviceId={counter.shelf_camera_device_id}
+                    value={field.value}
+                    onChange={field.onChange}
+                    label={t("shelfCamera")}
+                    noCameraLabel={t("noCamera")}
+                    unavailableLabel={t("cameraUnavailable")}
+                  />
                 )}
               />
               <FormField
                 control={form.control}
                 name="scale_camera_device_id"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Scale camera device ID</FormLabel>
-                    <FormControl>
-                      <Input type="text" placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <CameraSelect
+                    cameras={availableCameras}
+                    configuredDeviceId={counter.scale_camera_device_id}
+                    value={field.value}
+                    onChange={field.onChange}
+                    label={t("scaleCamera")}
+                    noCameraLabel={t("noCamera")}
+                    unavailableLabel={t("cameraUnavailable")}
+                  />
                 )}
               />
+              <div className="rounded-md border bg-muted/40 p-3 text-xs text-muted-foreground">
+                <p>
+                  {counter.available_cameras_updated_at
+                    ? `${t("camerasLastReported")}: ${new Intl.DateTimeFormat(
+                        language,
+                        {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        },
+                      ).format(new Date(counter.available_cameras_updated_at))}`
+                    : t("camerasNotReported")}
+                </p>
+                <p className="mt-1">{t("settingsApplyNextSession")}</p>
+              </div>
               <FormField
                 control={form.control}
                 name="language"

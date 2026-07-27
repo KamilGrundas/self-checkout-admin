@@ -4,6 +4,7 @@ import { WifiOff } from "lucide-react"
 
 import { UsersService } from "@/client"
 import { DatasetsTab } from "@/components/ML/DatasetsTab"
+import { ImagesTab } from "@/components/ML/ImagesTab"
 import { LabelStudioTab } from "@/components/ML/LabelStudioTab"
 import { ModelsTab } from "@/components/ML/ModelsTab"
 import { TrainTab } from "@/components/ML/TrainTab"
@@ -58,6 +59,7 @@ function MLContent() {
         <TabsTrigger value="label-studio">{t("labelStudio")}</TabsTrigger>
         <TabsTrigger value="datasets">{t("datasets")}</TabsTrigger>
         <TabsTrigger value="train">{t("train")}</TabsTrigger>
+        <TabsTrigger value="images">{t("images")}</TabsTrigger>
       </TabsList>
       <TabsContent value="models">
         <ModelsTab />
@@ -70,6 +72,9 @@ function MLContent() {
       </TabsContent>
       <TabsContent value="train">
         <TrainTab />
+      </TabsContent>
+      <TabsContent value="images">
+        <ImagesTab />
       </TabsContent>
     </Tabs>
   )

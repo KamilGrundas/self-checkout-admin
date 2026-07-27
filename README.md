@@ -1,11 +1,28 @@
 # Self Checkout Admin
 
-React/Vite admin panel for the self-checkout backend. It is based on `full-stack-fastapi-template/frontend` and currently exposes catalog management only:
+React/Vite admin panel for the self-checkout platform. It is based on
+`full-stack-fastapi-template/frontend` and exposes:
 
 - Products
 - Categories
+- Checkout counters, active sessions, and per-counter camera/mode settings
+- Machine Learning datasets, models, training, Label Studio, and scale images
+- Superuser-managed local VLM configuration and scale-image autolabel batches
 
-Authentication, user settings and superuser user management are kept from the template because the backend protects catalog mutations with the existing auth flow.
+Authentication, user settings, and superuser user management are kept from the
+template. Camera inventory, inference configuration, thumbnails, and
+autolabeling actions are restricted by the backend/ML superuser checks.
+
+The checkout-counter page polls for the latest camera inventory reported by the
+native client. Camera selections and mode/language edits are stored on the
+counter and take effect from the next checkout session.
+
+`Machine Learning → Images` currently supports only `scale` images. It loads
+thumbnails as authenticated blobs through ML, keeps manual labels separate from
+LLM results, requires confirmation before relabeling manually labeled images,
+and polls durable RQ batch progress. Batch creation uses an idempotency key that
+works even when `crypto.randomUUID` is unavailable on a non-secure development
+origin.
 
 ## Requirements
 
@@ -34,7 +51,12 @@ files are intentionally ignored.
 ```bash
 npm run lint
 npm run build
+npm test
 ```
+
+`npm run lint` writes formatting changes. Use the non-mutating Biome command
+from `AGENTS.md` for review-only validation. Browser tests and Docker builds run
+through the workspace-controlled dev workflow.
 
 ## Regenerate API Client
 

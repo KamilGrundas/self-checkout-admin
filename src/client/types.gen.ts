@@ -5,6 +5,58 @@ export type ClientOptions = {
 };
 
 /**
+ * AutolabelSettingsPublic
+ */
+export type AutolabelSettingsPublic = {
+    /**
+     * Endpoint Url
+     */
+    endpoint_url?: string | null;
+    /**
+     * Max Tokens
+     */
+    max_tokens?: number;
+    /**
+     * Connect Timeout Seconds
+     */
+    connect_timeout_seconds?: number;
+    /**
+     * Read Timeout Seconds
+     */
+    read_timeout_seconds?: number;
+    /**
+     * Configured
+     */
+    configured: boolean;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+};
+
+/**
+ * AutolabelSettingsUpdate
+ */
+export type AutolabelSettingsUpdate = {
+    /**
+     * Endpoint Url
+     */
+    endpoint_url?: string | null;
+    /**
+     * Max Tokens
+     */
+    max_tokens?: number;
+    /**
+     * Connect Timeout Seconds
+     */
+    connect_timeout_seconds?: number;
+    /**
+     * Read Timeout Seconds
+     */
+    read_timeout_seconds?: number;
+};
+
+/**
  * Body_login-login_access_token
  */
 export type BodyLoginLoginAccessToken = {
@@ -101,6 +153,24 @@ export type CategoryUpdate = {
 };
 
 /**
+ * CheckoutCameraInfo
+ */
+export type CheckoutCameraInfo = {
+    /**
+     * Device Id
+     */
+    device_id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Index
+     */
+    index: number;
+};
+
+/**
  * CheckoutCounterCreate
  */
 export type CheckoutCounterCreate = {
@@ -143,6 +213,14 @@ export type CheckoutCounterPublic = {
      * Created At
      */
     created_at?: string | null;
+    /**
+     * Available Cameras
+     */
+    available_cameras?: Array<CheckoutCameraInfo>;
+    /**
+     * Available Cameras Updated At
+     */
+    available_cameras_updated_at?: string | null;
 };
 
 /**
@@ -298,6 +376,14 @@ export type CheckoutSessionCartUpdate = {
  * CheckoutSessionConnect
  */
 export type CheckoutSessionConnect = {
+    /**
+     * Available Cameras
+     */
+    available_cameras?: Array<CheckoutCameraInfo>;
+    /**
+     * Camera Discovery Succeeded
+     */
+    camera_discovery_succeeded?: boolean;
     /**
      * Counter Id
      */
@@ -1627,6 +1713,47 @@ export type ProductsUploadProductImageResponses = {
 };
 
 export type ProductsUploadProductImageResponse = ProductsUploadProductImageResponses[keyof ProductsUploadProductImageResponses];
+
+export type SystemSettingsReadAutolabelSettingsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/system-settings/autolabel';
+};
+
+export type SystemSettingsReadAutolabelSettingsResponses = {
+    /**
+     * Successful Response
+     */
+    200: AutolabelSettingsPublic;
+};
+
+export type SystemSettingsReadAutolabelSettingsResponse = SystemSettingsReadAutolabelSettingsResponses[keyof SystemSettingsReadAutolabelSettingsResponses];
+
+export type SystemSettingsUpdateAutolabelSettingsData = {
+    body: AutolabelSettingsUpdate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/system-settings/autolabel';
+};
+
+export type SystemSettingsUpdateAutolabelSettingsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type SystemSettingsUpdateAutolabelSettingsError = SystemSettingsUpdateAutolabelSettingsErrors[keyof SystemSettingsUpdateAutolabelSettingsErrors];
+
+export type SystemSettingsUpdateAutolabelSettingsResponses = {
+    /**
+     * Successful Response
+     */
+    200: AutolabelSettingsPublic;
+};
+
+export type SystemSettingsUpdateAutolabelSettingsResponse = SystemSettingsUpdateAutolabelSettingsResponses[keyof SystemSettingsUpdateAutolabelSettingsResponses];
 
 export type CategoriesReadCategoriesData = {
     body?: never;
