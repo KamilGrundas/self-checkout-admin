@@ -15,6 +15,7 @@ function getCheckoutCountersQueryOptions() {
     queryFn: () =>
       CheckoutCountersService.checkoutCountersReadCheckoutCounters(),
     queryKey: ["checkout-counters"],
+    refetchInterval: 5000,
   }
 }
 
