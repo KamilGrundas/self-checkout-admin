@@ -18,11 +18,12 @@ import mlApi, { mlErrorMessage } from "@/mlClient"
 interface ModelVersion {
   name: string
   version: number
-  run_id: string
+  model_id: string
   status: string
   description: string | null
   created_at: string | null
   is_active: boolean
+  metrics: Record<string, number>
 }
 
 function formatTs(ts: string | null): string {
@@ -81,7 +82,9 @@ function ModelTable({
           <TableHeader>
             <TableRow>
               <TableHead>{t("version")}</TableHead>
-              <TableHead>Run ID</TableHead>
+              <TableHead>Model ID</TableHead>
+              <TableHead>{t("accuracy")}</TableHead>
+              <TableHead>{t("validationAccuracy")}</TableHead>
               <TableHead>{t("createdAt")}</TableHead>
               <TableHead>{t("status")}</TableHead>
               <TableHead>{t("actions")}</TableHead>
@@ -92,7 +95,17 @@ function ModelTable({
               <TableRow key={v.version}>
                 <TableCell className="font-medium">v{v.version}</TableCell>
                 <TableCell className="font-mono text-xs text-muted-foreground">
-                  {v.run_id.slice(0, 8)}…
+                  {v.model_id.slice(0, 8)}…
+                </TableCell>
+                <TableCell>
+                  {v.metrics.accuracy === undefined
+                    ? "—"
+                    : `${(v.metrics.accuracy * 100).toFixed(1)}%`}
+                </TableCell>
+                <TableCell>
+                  {v.metrics.val_accuracy === undefined
+                    ? "—"
+                    : `${(v.metrics.val_accuracy * 100).toFixed(1)}%`}
                 </TableCell>
                 <TableCell>{formatTs(v.created_at)}</TableCell>
                 <TableCell>

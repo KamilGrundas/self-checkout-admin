@@ -1069,36 +1069,6 @@ export const ItemsPublicSchema = {
     title: 'ItemsPublic'
 } as const;
 
-export const LabelStudioSettingsPublicSchema = {
-    properties: {
-        api_key_configured: {
-            type: 'boolean',
-            title: 'Api Key Configured'
-        }
-    },
-    type: 'object',
-    required: [
-        'api_key_configured'
-    ],
-    title: 'LabelStudioSettingsPublic'
-} as const;
-
-export const LabelStudioSettingsUpdateSchema = {
-    properties: {
-        api_key: {
-            type: 'string',
-            maxLength: 2048,
-            minLength: 1,
-            title: 'Api Key'
-        }
-    },
-    type: 'object',
-    required: [
-        'api_key'
-    ],
-    title: 'LabelStudioSettingsUpdate'
-} as const;
-
 export const MessageSchema = {
     properties: {
         message: {
