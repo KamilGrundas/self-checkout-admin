@@ -4,8 +4,8 @@ import { WifiOff } from "lucide-react"
 
 import { UsersService } from "@/client"
 import { DatasetsTab } from "@/components/ML/DatasetsTab"
-import { ImagesTab } from "@/components/ML/ImagesTab"
-import { LabelStudioTab } from "@/components/ML/LabelStudioTab"
+import { LabelTab } from "@/components/ML/ImagesTab"
+import { LabeledImagesTab } from "@/components/ML/LabeledImagesTab"
 import { ModelsTab } from "@/components/ML/ModelsTab"
 import { TrainTab } from "@/components/ML/TrainTab"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -56,25 +56,25 @@ function MLContent() {
     <Tabs defaultValue="models">
       <TabsList>
         <TabsTrigger value="models">{t("models")}</TabsTrigger>
-        <TabsTrigger value="label-studio">{t("labelStudio")}</TabsTrigger>
+        <TabsTrigger value="label">{t("label")}</TabsTrigger>
+        <TabsTrigger value="images">{t("images")}</TabsTrigger>
         <TabsTrigger value="datasets">{t("datasets")}</TabsTrigger>
         <TabsTrigger value="train">{t("train")}</TabsTrigger>
-        <TabsTrigger value="images">{t("images")}</TabsTrigger>
       </TabsList>
       <TabsContent value="models">
         <ModelsTab />
       </TabsContent>
-      <TabsContent value="label-studio">
-        <LabelStudioTab />
+      <TabsContent value="label">
+        <LabelTab />
+      </TabsContent>
+      <TabsContent value="images">
+        <LabeledImagesTab />
       </TabsContent>
       <TabsContent value="datasets">
         <DatasetsTab />
       </TabsContent>
       <TabsContent value="train">
         <TrainTab />
-      </TabsContent>
-      <TabsContent value="images">
-        <ImagesTab />
       </TabsContent>
     </Tabs>
   )

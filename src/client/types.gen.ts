@@ -554,26 +554,6 @@ export type ItemsPublic = {
 };
 
 /**
- * LabelStudioSettingsPublic
- */
-export type LabelStudioSettingsPublic = {
-    /**
-     * Api Key Configured
-     */
-    api_key_configured: boolean;
-};
-
-/**
- * LabelStudioSettingsUpdate
- */
-export type LabelStudioSettingsUpdate = {
-    /**
-     * Api Key
-     */
-    api_key: string;
-};
-
-/**
  * Message
  */
 export type Message = {
@@ -1181,47 +1161,6 @@ export type UsersUpdatePasswordMeResponses = {
 };
 
 export type UsersUpdatePasswordMeResponse = UsersUpdatePasswordMeResponses[keyof UsersUpdatePasswordMeResponses];
-
-export type UsersReadLabelStudioSettingsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/v1/users/me/label-studio';
-};
-
-export type UsersReadLabelStudioSettingsResponses = {
-    /**
-     * Successful Response
-     */
-    200: LabelStudioSettingsPublic;
-};
-
-export type UsersReadLabelStudioSettingsResponse = UsersReadLabelStudioSettingsResponses[keyof UsersReadLabelStudioSettingsResponses];
-
-export type UsersUpdateLabelStudioSettingsData = {
-    body: LabelStudioSettingsUpdate;
-    path?: never;
-    query?: never;
-    url: '/api/v1/users/me/label-studio';
-};
-
-export type UsersUpdateLabelStudioSettingsErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type UsersUpdateLabelStudioSettingsError = UsersUpdateLabelStudioSettingsErrors[keyof UsersUpdateLabelStudioSettingsErrors];
-
-export type UsersUpdateLabelStudioSettingsResponses = {
-    /**
-     * Successful Response
-     */
-    200: LabelStudioSettingsPublic;
-};
-
-export type UsersUpdateLabelStudioSettingsResponse = UsersUpdateLabelStudioSettingsResponses[keyof UsersUpdateLabelStudioSettingsResponses];
 
 export type UsersRegisterUserData = {
     body: UserRegister;

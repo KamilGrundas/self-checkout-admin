@@ -6,7 +6,7 @@ React/Vite admin panel for the self-checkout platform. It is based on
 - Products
 - Categories
 - Checkout counters, active sessions, and per-counter camera/mode settings
-- Machine Learning datasets, models, training, Label Studio, and scale images
+- Native image labeling, labeled-image import, datasets, model metrics, and training
 - Superuser-managed local VLM configuration and scale-image autolabel batches
 
 Authentication, user settings, and superuser user management are kept from the

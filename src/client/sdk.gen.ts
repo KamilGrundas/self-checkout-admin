@@ -2,7 +2,7 @@
 
 import { buildClientParams, type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCounterSelfSettingsUpdate, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors, CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPayment, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LabelStudioSettingsUpdate, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, PrivateCreateUserErrors, PrivateCreateUserResponses, PrivateUserCreate, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersReadLabelStudioSettingsResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdateLabelStudioSettingsErrors, UsersUpdateLabelStudioSettingsResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses } from './types.gen';
+import type { AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCounterSelfSettingsUpdate, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors, CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPayment, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, PrivateCreateUserErrors, PrivateCreateUserResponses, PrivateUserCreate, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -221,39 +221,6 @@ export class UsersService {
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }],
             url: '/api/v1/users/me/password',
-            ...options,
-            ...params,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options?.headers,
-                ...params.headers
-            }
-        });
-    }
-
-    /**
-     * Read Label Studio Settings
-     */
-    public static readLabelStudioSettings<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<UsersReadLabelStudioSettingsResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<UsersReadLabelStudioSettingsResponses, unknown, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/users/me/label-studio',
-            ...options
-        });
-    }
-
-    /**
-     * Update Label Studio Settings
-     */
-    public static updateLabelStudioSettings<ThrowOnError extends boolean = true>(parameters: {
-        labelStudioSettingsUpdate: LabelStudioSettingsUpdate;
-    }, options?: Options<never, ThrowOnError>): RequestResult<UsersUpdateLabelStudioSettingsResponses, UsersUpdateLabelStudioSettingsErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'labelStudioSettingsUpdate', map: 'body' }] }]);
-        return (options?.client ?? client).put<UsersUpdateLabelStudioSettingsResponses, UsersUpdateLabelStudioSettingsErrors, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/users/me/label-studio',
             ...options,
             ...params,
             headers: {

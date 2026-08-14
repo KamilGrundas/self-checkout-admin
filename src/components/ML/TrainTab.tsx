@@ -103,8 +103,6 @@ export function TrainTab() {
     switch (trainingJob.stage) {
       case "queued":
         return t("trainingQueued")
-      case "checking_mlflow":
-        return t("trainingCheckingMlflow")
       case "downloading":
         return t("trainingDownloading")
       case "loading":
@@ -117,7 +115,7 @@ export function TrainTab() {
           : t("trainingStarting")
       case "evaluating":
         return t("trainingEvaluating")
-      case "registering":
+      case "saving":
         return t("trainingRegistering")
       case "completed":
         return t("trainingCompleted")
