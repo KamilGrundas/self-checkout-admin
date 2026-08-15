@@ -31,7 +31,7 @@ function MLContent() {
   const { data: health, isError } = useQuery({
     queryKey: ["ml-health"],
     queryFn: () =>
-      mlApi.get("/utils/health-check", { timeout: 3000 }).then((r) => r.data),
+      mlApi.get("/utils/health-check/", { timeout: 3000 }).then((r) => r.data),
     retry: false,
     refetchOnWindowFocus: false,
   })

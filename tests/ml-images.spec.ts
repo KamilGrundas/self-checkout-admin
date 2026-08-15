@@ -92,7 +92,7 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
       configurable: true,
     })
   })
-  await page.route(/\/api\/v1\/utils\/health-check$/, (route) =>
+  await page.route(/\/api\/v1\/utils\/health-check\/$/, (route) =>
     route.fulfill({ json: { status: "ok" } }),
   )
   await page.route(/\/api\/v1\/products\//, (route) =>
@@ -131,7 +131,7 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
     }
     await route.fulfill({
       json: {
-        endpoint_url: "http://192.168.0.29:8088/v1/files/inference",
+        endpoint_url: "https://ai.teik.pl/v1/files/inference",
         max_tokens: 512,
         connect_timeout_seconds: 5,
         read_timeout_seconds: 120,
@@ -488,7 +488,7 @@ test("images tab imports a labeled batch and exports every labeled image", async
   await page.addInitScript(() => {
     localStorage.setItem("self-checkout-admin-language", "en")
   })
-  await page.route(/\/api\/v1\/utils\/health-check$/, (route) =>
+  await page.route(/\/api\/v1\/utils\/health-check\/$/, (route) =>
     route.fulfill({ json: { status: "ok" } }),
   )
   await page.route(/\/api\/v1\/products\//, (route) =>
@@ -636,7 +636,7 @@ test("images tab has Polish labels", async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem("self-checkout-admin-language", "pl")
   })
-  await page.route(/\/api\/v1\/utils\/health-check$/, (route) =>
+  await page.route(/\/api\/v1\/utils\/health-check\/$/, (route) =>
     route.fulfill({ json: { status: "ok" } }),
   )
   await page.route(/\/api\/v1\/products\//, (route) =>

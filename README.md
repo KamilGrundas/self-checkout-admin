@@ -39,12 +39,14 @@ npm run dev
 The default API URL is configured in `.env`:
 
 ```env
-VITE_API_URL=http://localhost:8000
-VITE_ML_API_URL=http://localhost:8001
+VITE_API_URL=https://dev.api.teik.pl
+VITE_ML_API_URL=https://dev.ml.teik.pl
 ```
 
 Create it from the tracked template with `cp .env.example .env`; local `.env`
-files are intentionally ignored.
+files are intentionally ignored. Browser integration uses the workspace-owned
+DEV deployment at `https://dev.admin.teik.pl`; the API URLs are compiled into
+the Vite build and must not use raw DEV addresses or Compose service names.
 
 ## Build And Checks
 
