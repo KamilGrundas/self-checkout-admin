@@ -9,7 +9,7 @@ test("training displays stage, epoch and progress until completion", async ({
     localStorage.setItem("self-checkout-admin-language", "en")
   })
 
-  await page.route(/\/api\/v1\/utils\/health-check$/, async (route) => {
+  await page.route(/\/api\/v1\/utils\/health-check\/$/, async (route) => {
     await route.fulfill({ json: { status: "ok" } })
   })
 

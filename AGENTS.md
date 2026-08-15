@@ -7,6 +7,9 @@ Read the workspace `../AGENTS.md` first. Inspect Git with `git -C self-checkout-
 The production image must compile both `VITE_API_URL` and `VITE_ML_API_URL`.
 Both values must be browser-accessible URLs; never compile Compose-only DNS
 names into an image intended for access from another host.
+The canonical development values are `https://dev.api.teik.pl` and
+`https://dev.ml.teik.pl`; raw DEV addresses and published Compose ports are not
+valid browser-facing configuration.
 
 Validation commands are `npm run build` (includes TypeScript checking), a non-mutating `npx biome check --no-errors-on-unmatched --files-ignore-unknown=true ./`, and `npm test` for Playwright. The configured `npm run lint` writes fixes, so use it only when formatting changes are intended. Do not hand-edit generated `src/client/**` or `src/routeTree.gen.ts`; regenerate them with their owning tools.
 

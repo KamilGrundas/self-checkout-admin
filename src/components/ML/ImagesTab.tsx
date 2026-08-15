@@ -654,7 +654,7 @@ export function LabelTab() {
             <Input
               id="autolabel-endpoint"
               value={settingsForm.endpoint_url ?? ""}
-              placeholder="http://192.168.0.29:8088/v1/files/inference"
+              placeholder="https://ai.teik.pl/v1/files/inference"
               onChange={(event) =>
                 setSettingsForm((current) => ({
                   ...current,
