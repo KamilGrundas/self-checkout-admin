@@ -185,6 +185,12 @@ export function TrainTab() {
                     ({ds.export_type})
                   </span>
                 )}
+                <span className="ml-2 text-muted-foreground">
+                  {t("createdAt")}:{" "}
+                  {ds.created_at
+                    ? new Date(ds.created_at).toLocaleString()
+                    : "—"}
+                </span>
               </label>
             </div>
           ))

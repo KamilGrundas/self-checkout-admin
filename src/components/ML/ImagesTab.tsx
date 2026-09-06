@@ -4,6 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
+import { Trash2 } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
 
@@ -190,6 +191,7 @@ export function LabelTab() {
   const [moveDialogOpen, setMoveDialogOpen] = useState(false)
   const [finalizeJobId, setFinalizeJobId] = useState<string | null>(null)
   const [pendingMove, setPendingMove] = useState<FinalizeRequest | null>(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const productsQuery = useQuery({
     queryKey: ["products-for-labeling"],
@@ -492,6 +494,28 @@ export function LabelTab() {
     },
   })
 
+  const deleteImagesMutation = useMutation({
+    mutationFn: () =>
+      mlApi
+        .delete("/autolabel/scale/images", {
+          data: { object_names: [...selected] },
+        })
+        .then((response) => response.data),
+    onSuccess: () => {
+      setDeleteDialogOpen(false)
+      setSelected(new Set())
+      void queryClient.invalidateQueries({ queryKey: ["scale-images"] })
+      void queryClient.invalidateQueries({
+        queryKey: ["scale-image-label-counts"],
+      })
+      toast.success(t("imagesDeleted"))
+    },
+    onError: (error) =>
+      toast.error(t("imagesDeleteFailed"), {
+        description: mlErrorMessage(error),
+      }),
+  })
+
   const selectionCountMutation = useMutation({
     mutationFn: (selection: BulkSelection) =>
       mlApi
@@ -767,6 +791,14 @@ export function LabelTab() {
         >
           {t("clearSelection")}
         </Button>
+        <Button
+          variant="destructive"
+          disabled={bulkSelection !== null || selected.size === 0}
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          <Trash2 className="size-4" />
+          {t("deleteImages")} ({selected.size})
+        </Button>
         <LoadingButton
           loading={batchMutation.isPending}
           disabled={bulkSelection === "all_matched"}
@@ -975,6 +1007,36 @@ export function LabelTab() {
               onClick={() => finalizeMutation.mutate(moveRequest)}
             >
               {t("yes")}
+            </LoadingButton>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("deleteImages")}</DialogTitle>
+            <DialogDescription>
+              {t("imagesDeleteDescription").replace(
+                "{count}",
+                String(selected.size),
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              disabled={deleteImagesMutation.isPending}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              {t("cancel")}
+            </Button>
+            <LoadingButton
+              variant="destructive"
+              loading={deleteImagesMutation.isPending}
+              onClick={() => deleteImagesMutation.mutate()}
+            >
+              {t("delete")}
             </LoadingButton>
           </DialogFooter>
         </DialogContent>
