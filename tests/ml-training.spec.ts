@@ -22,6 +22,7 @@ test("training displays stage, epoch and progress until completion", async ({
           release_name: "release-1",
           export_type: "YOLO",
           sample_count: 10,
+          created_at: "2026-08-14T12:30:00Z",
           release_prefix: "long-training/release-1",
           bucket: "training-data",
         },
@@ -76,6 +77,7 @@ test("training displays stage, epoch and progress until completion", async ({
 
   await page.goto("/ml")
   await page.getByRole("tab", { name: "Train" }).click()
+  await expect(page.getByText(/Created At:/)).toBeVisible()
   await page.getByRole("checkbox").check()
   await page.getByRole("button", { name: "Train Classifier" }).click()
 

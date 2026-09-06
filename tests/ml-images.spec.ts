@@ -84,6 +84,7 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
   let importRequested = false
   let finalizeRequested = false
   let finalizeCompleted = false
+  let deletedScaleImages: string[] = []
 
   await page.addInitScript(() => {
     localStorage.setItem("self-checkout-admin-language", "en")
@@ -167,6 +168,10 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
       }),
   )
   await page.route(/\/api\/v1\/autolabel\/scale\/images(?:\?.*)?$/, (route) => {
+    if (route.request().method() === "DELETE") {
+      deletedScaleImages = route.request().postDataJSON().object_names
+      return route.fulfill({ json: { deleted: deletedScaleImages.length } })
+    }
     const filter = new URL(route.request().url()).searchParams.get(
       "label_product_id",
     )
@@ -374,6 +379,12 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
     page.getByRole("img", { name: "raw/scale/banana.jpg" }),
   ).not.toBeVisible()
   await page.getByRole("button", { name: "All (4)" }).click()
+  await page
+    .getByRole("checkbox", { name: "Select image raw/scale/grapes.jpg" })
+    .check()
+  await page.getByRole("button", { name: "Delete images (1)" }).click()
+  await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click()
+  await expect.poll(() => deletedScaleImages).toEqual(["raw/scale/grapes.jpg"])
 
   await page.locator("#label-images").setInputFiles([
     {
@@ -475,6 +486,7 @@ test("images tab imports a labeled batch and exports every labeled image", async
   let importRequested = false
   let exportedNames: string[] = []
   let duplicateDeleted = false
+  let deletedNames: string[] = []
   const labeledImage = (objectName: string) => ({
     object_name: objectName,
     image_url: "/datasets/images/content",
@@ -527,6 +539,11 @@ test("images tab imports a labeled batch and exports every labeled image", async
     }),
   )
   await page.route(/\/datasets\/images(?:\?.*)?$/, async (route) => {
+    if (route.request().method() === "DELETE") {
+      deletedNames = route.request().postDataJSON().object_names
+      await route.fulfill({ json: { deleted: deletedNames.length } })
+      return
+    }
     if (route.request().method() === "GET") {
       const requestUrl = new URL(route.request().url())
       const secondPage = requestUrl.searchParams.get("cursor") === "page-2"
@@ -622,6 +639,11 @@ test("images tab imports a labeled batch and exports every labeled image", async
   await page.getByRole("button", { name: "Export Dataset (2)" }).click()
   await expect
     .poll(() => exportedNames.sort())
+    .toEqual(["labeled/apple-1.jpg", "labeled/apple-2.jpg"])
+  await page.getByRole("button", { name: "Delete images (2)" }).click()
+  await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click()
+  await expect
+    .poll(() => deletedNames.sort())
     .toEqual(["labeled/apple-1.jpg", "labeled/apple-2.jpg"])
 
   await page.getByRole("button", { name: "Detect duplicates (99%)" }).click()

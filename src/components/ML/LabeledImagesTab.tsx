@@ -4,6 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
+import { Trash2 } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
@@ -107,6 +108,7 @@ export function LabeledImagesTab() {
   const [duplicateJobId, setDuplicateJobId] = useState<string | null>(null)
   const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false)
   const [labelProductId, setLabelProductId] = useState("")
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const productsQuery = useQuery({
     queryKey: ["products-for-labeling"],
@@ -309,6 +311,28 @@ export function LabeledImagesTab() {
       }),
   })
 
+  const deleteImagesMutation = useMutation({
+    mutationFn: () =>
+      mlApi
+        .delete("/datasets/images", {
+          data: { object_names: [...selected] },
+        })
+        .then((response) => response.data),
+    onSuccess: () => {
+      setDeleteDialogOpen(false)
+      setSelected(new Set())
+      void queryClient.invalidateQueries({ queryKey: ["labeled-images"] })
+      void queryClient.invalidateQueries({
+        queryKey: ["labeled-image-label-counts"],
+      })
+      toast.success(t("imagesDeleted"))
+    },
+    onError: (error) =>
+      toast.error(t("imagesDeleteFailed"), {
+        description: mlErrorMessage(error),
+      }),
+  })
+
   const toggle = (objectName: string) => {
     setSelected((current) => {
       const next = new Set(current)
@@ -376,6 +400,14 @@ export function LabeledImagesTab() {
         </LoadingButton>
         <Button variant="outline" onClick={() => setSelected(new Set())}>
           {t("clearSelection")}
+        </Button>
+        <Button
+          variant="destructive"
+          disabled={selected.size === 0}
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          <Trash2 className="size-4" />
+          {t("deleteImages")} ({selected.size})
         </Button>
         <LoadingButton
           variant="outline"
@@ -516,6 +548,36 @@ export function LabeledImagesTab() {
               onClick={() => deleteDuplicatesMutation.mutate()}
             >
               {t("yes")}
+            </LoadingButton>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("deleteImages")}</DialogTitle>
+            <DialogDescription>
+              {t("imagesDeleteDescription").replace(
+                "{count}",
+                String(selected.size),
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              disabled={deleteImagesMutation.isPending}
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              {t("cancel")}
+            </Button>
+            <LoadingButton
+              variant="destructive"
+              loading={deleteImagesMutation.isPending}
+              onClick={() => deleteImagesMutation.mutate()}
+            >
+              {t("delete")}
             </LoadingButton>
           </DialogFooter>
         </DialogContent>
