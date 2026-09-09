@@ -2,7 +2,15 @@ import { defineConfig } from "@hey-api/openapi-ts"
 
 export default defineConfig({
   input: "./openapi.json",
-  output: "./src/client",
+  output: {
+    path: "./src/client",
+    postProcess: [
+      {
+        command: "node",
+        args: ["scripts/normalize-generated-client.mjs", "{{path}}"],
+      },
+    ],
+  },
 
   plugins: [
     "@hey-api/typescript",

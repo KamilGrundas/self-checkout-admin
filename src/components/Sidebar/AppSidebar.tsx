@@ -1,6 +1,7 @@
 import {
   BrainCircuit,
   Home,
+  KeyRound,
   MonitorCog,
   Package,
   Radio,
@@ -26,13 +27,13 @@ export function AppSidebar() {
   const { t } = useI18n()
 
   const baseItems: Item[] = [
-    { icon: Home, title: t("dashboard"), path: "/" },
     { icon: Package, title: t("products"), path: "/products" },
     { icon: Tags, title: t("categories"), path: "/categories" },
   ]
 
   const items = currentUser?.is_superuser
     ? [
+        { icon: Home, title: t("dashboard"), path: "/" },
         ...baseItems,
         {
           icon: MonitorCog,
@@ -45,6 +46,7 @@ export function AppSidebar() {
           path: "/live-sessions",
         },
         { icon: Users, title: t("admin"), path: "/admin" },
+        { icon: KeyRound, title: t("apiKeys"), path: "/api-keys" },
         { icon: BrainCircuit, title: t("ml"), path: "/ml" },
       ]
     : baseItems

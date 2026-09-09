@@ -1,4 +1,5 @@
 import axios, { type AxiosError } from "axios"
+import { accessToken } from "@/auth"
 
 const mlApi = axios.create({
   baseURL: `${import.meta.env.VITE_ML_API_URL}/api/v1`,
@@ -6,7 +7,7 @@ const mlApi = axios.create({
 })
 
 mlApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token")
+  const token = accessToken()
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })

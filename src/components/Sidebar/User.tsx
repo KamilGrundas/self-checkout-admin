@@ -81,12 +81,14 @@ export function User({ user }: { user: any }) {
               <UserInfo fullName={user?.full_name} email={user?.email} />
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <RouterLink to="/settings" onClick={handleMenuClick}>
-              <DropdownMenuItem>
-                <Settings />
-                {t("userSettings")}
-              </DropdownMenuItem>
-            </RouterLink>
+            {user.is_superuser && (
+              <RouterLink to="/settings" onClick={handleMenuClick}>
+                <DropdownMenuItem>
+                  <Settings />
+                  {t("userSettings")}
+                </DropdownMenuItem>
+              </RouterLink>
+            )}
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               {t("logOut")}

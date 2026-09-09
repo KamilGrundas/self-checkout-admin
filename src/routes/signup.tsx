@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { authConfig } from "@/auth"
 import { AuthLayout } from "@/components/Common/AuthLayout"
 import {
   Form,
@@ -42,6 +43,7 @@ type FormData = z.infer<typeof formSchema>
 export const Route = createFileRoute("/signup")({
   component: SignUp,
   beforeLoad: async () => {
+    if (!(await authConfig()).signup_enabled) throw redirect({ to: "/login" })
     if (isLoggedIn()) {
       throw redirect({
         to: "/",

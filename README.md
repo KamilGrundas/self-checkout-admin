@@ -7,7 +7,8 @@ React/Vite admin panel for the self-checkout platform. It is based on
 - Categories
 - Checkout counters, active sessions, and per-counter camera/mode settings
 - Native image labeling, labeled-image import, datasets, model metrics, and training
-- Superuser-managed local VLM configuration and scale-image autolabel batches
+- Superuser-managed vision inference provider configuration and scale-image
+  autolabel batches
 
 Authentication, user settings, and superuser user management are kept from the
 template. Camera inventory, inference configuration, thumbnails, and
@@ -19,15 +20,17 @@ counter and take effect from the next checkout session.
 
 `Machine Learning → Images` currently supports only `scale` images. It loads
 thumbnails as authenticated blobs through ML, keeps manual labels separate from
-LLM results, requires confirmation before relabeling manually labeled images,
+vision-inference results, requires confirmation before relabeling manually labeled images,
 and polls durable RQ batch progress. Batch creation uses an idempotency key that
 works even when `crypto.randomUUID` is unavailable on a non-secure development
 origin.
 
-## Requirements
+## Tooling
 
-- Node.js 24.18.0 LTS
-- npm 12.0.1
+`Dockerfile.validation` provides the pinned Node.js and npm environment used
+for linting, builds, and browser tests. The Compose validation service can run
+those checks without installing Node.js or npm on the host. A local Node.js
+installation is optional and only needed for direct Vite development.
 
 ## Local Development
 
@@ -39,14 +42,14 @@ npm run dev
 The default API URL is configured in `.env`:
 
 ```env
-VITE_API_URL=https://dev.api.teik.pl
-VITE_ML_API_URL=https://dev.ml.teik.pl
+VITE_API_URL=http://localhost:8000
+VITE_ML_API_URL=http://localhost:8001
 ```
 
 Create it from the tracked template with `cp .env.example .env`; local `.env`
-files are intentionally ignored. Browser integration uses the workspace-owned
-DEV deployment at `https://dev.admin.teik.pl`; the API URLs are compiled into
-the Vite build and must not use raw DEV addresses or Compose service names.
+files are intentionally ignored. The browser deployment URL is local operator
+configuration. API URLs are compiled into the Vite build and must not use
+Compose service names.
 
 ## Build And Checks
 
@@ -57,8 +60,8 @@ npm test
 ```
 
 `npm run lint` writes formatting changes. Use the non-mutating Biome command
-from `AGENTS.md` for review-only validation. Browser tests and Docker builds run
-through the workspace-controlled dev workflow.
+from `AGENTS.md` for review-only validation. Browser tests and container builds
+use the portable Compose validation service.
 
 ## Regenerate API Client
 

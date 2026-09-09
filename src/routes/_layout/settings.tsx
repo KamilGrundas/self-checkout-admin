@@ -36,6 +36,14 @@ function UserSettings() {
     return null
   }
 
+  if (currentUser.auth_source === "oidc")
+    return (
+      <div className="space-y-4">
+        <h1 className="text-2xl font-bold">{t("userSettings")}</h1>
+        <p>{t("oidcAccountManaged")}</p>
+      </div>
+    )
+
   return (
     <div className="flex flex-col gap-6">
       <div>

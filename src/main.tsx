@@ -7,6 +7,7 @@ import {
 import { createRouter, RouterProvider } from "@tanstack/react-router"
 import { StrictMode } from "react"
 import ReactDOM from "react-dom/client"
+import { accessToken, clearAccessToken } from "@/auth"
 import { ApiClientError } from "./apiError"
 import { client } from "./client/client.gen"
 import { ThemeProvider } from "./components/theme-provider"
@@ -16,7 +17,8 @@ import "./index.css"
 import { routeTree } from "./routeTree.gen"
 
 client.setConfig({
-  auth: () => localStorage.getItem("access_token") || "",
+  auth: (scheme) =>
+    scheme.type === "apiKey" ? undefined : accessToken() || undefined,
   baseUrl: import.meta.env.VITE_API_URL,
 })
 client.interceptors.error.use((error, response) => {
@@ -27,9 +29,9 @@ const handleApiError = (error: Error) => {
   if (
     error instanceof ApiClientError &&
     error.status !== undefined &&
-    [401, 403].includes(error.status)
+    error.status === 401
   ) {
-    localStorage.removeItem("access_token")
+    clearAccessToken()
     window.location.href = "/login"
   }
 }

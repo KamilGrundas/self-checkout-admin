@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
+import { accessToken, logout as endSession } from "@/auth"
 
 import {
   type BodyLoginLoginAccessToken as AccessToken,
@@ -12,7 +13,7 @@ import { handleError } from "@/utils"
 import useCustomToast from "./useCustomToast"
 
 const isLoggedIn = () => {
-  return localStorage.getItem("access_token") !== null
+  return Boolean(accessToken())
 }
 
 const useAuth = () => {
@@ -42,7 +43,8 @@ const useAuth = () => {
     const response = await LoginService.loginAccessToken({
       bodyLoginLoginAccessToken: data,
     })
-    localStorage.setItem("access_token", response.access_token)
+    localStorage.removeItem("access_token")
+    sessionStorage.setItem("access_token", response.access_token)
   }
 
   const loginMutation = useMutation({
@@ -54,8 +56,8 @@ const useAuth = () => {
   })
 
   const logout = () => {
-    localStorage.removeItem("access_token")
-    navigate({ to: "/login" })
+    queryClient.clear()
+    void endSession().catch(() => navigate({ to: "/login" }))
   }
 
   return {

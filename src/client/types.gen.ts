@@ -5,9 +5,111 @@ export type ClientOptions = {
 };
 
 /**
+ * ApiKeyCreate
+ */
+export type ApiKeyCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Role
+     */
+    role?: 'user' | 'admin';
+    /**
+     * Expires In Days
+     */
+    expires_in_days?: number | null;
+};
+
+/**
+ * ApiKeyCreated
+ */
+export type ApiKeyCreated = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Prefix
+     */
+    prefix: string;
+    /**
+     * Scopes
+     */
+    scopes: Array<string>;
+    /**
+     * Expires At
+     */
+    expires_at: string | null;
+    /**
+     * Role
+     */
+    role: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Revoked
+     */
+    revoked: boolean;
+    /**
+     * Key
+     */
+    key: string;
+};
+
+/**
+ * ApiKeyPublic
+ */
+export type ApiKeyPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Prefix
+     */
+    prefix: string;
+    /**
+     * Scopes
+     */
+    scopes: Array<string>;
+    /**
+     * Expires At
+     */
+    expires_at: string | null;
+    /**
+     * Role
+     */
+    role: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Revoked
+     */
+    revoked: boolean;
+};
+
+/**
  * AutolabelSettingsPublic
  */
 export type AutolabelSettingsPublic = {
+    /**
+     * Model Name
+     */
+    model_name?: string;
     /**
      * Endpoint Url
      */
@@ -24,6 +126,10 @@ export type AutolabelSettingsPublic = {
      * Read Timeout Seconds
      */
     read_timeout_seconds?: number;
+    /**
+     * Api Key Configured
+     */
+    api_key_configured?: boolean;
     /**
      * Configured
      */
@@ -35,9 +141,13 @@ export type AutolabelSettingsPublic = {
 };
 
 /**
- * AutolabelSettingsUpdate
+ * AutolabelSettingsRuntime
  */
-export type AutolabelSettingsUpdate = {
+export type AutolabelSettingsRuntime = {
+    /**
+     * Model Name
+     */
+    model_name?: string;
     /**
      * Endpoint Url
      */
@@ -54,6 +164,80 @@ export type AutolabelSettingsUpdate = {
      * Read Timeout Seconds
      */
     read_timeout_seconds?: number;
+    /**
+     * Api Key Configured
+     */
+    api_key_configured?: boolean;
+    /**
+     * Configured
+     */
+    configured: boolean;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+    /**
+     * Api Key Encrypted
+     */
+    api_key_encrypted?: string | null;
+};
+
+/**
+ * AutolabelSettingsUpdate
+ */
+export type AutolabelSettingsUpdate = {
+    /**
+     * Model Name
+     */
+    model_name?: string;
+    /**
+     * Endpoint Url
+     */
+    endpoint_url?: string | null;
+    /**
+     * Max Tokens
+     */
+    max_tokens?: number;
+    /**
+     * Connect Timeout Seconds
+     */
+    connect_timeout_seconds?: number;
+    /**
+     * Read Timeout Seconds
+     */
+    read_timeout_seconds?: number;
+};
+
+/**
+ * AvailableModel
+ */
+export type AvailableModel = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Loaded
+     */
+    loaded?: boolean;
+    /**
+     * Is Vision
+     */
+    is_vision?: boolean | null;
+};
+
+/**
+ * AvailableModels
+ */
+export type AvailableModels = {
+    /**
+     * Models
+     */
+    models: Array<AvailableModel>;
+    /**
+     * Active Model
+     */
+    active_model?: string | null;
 };
 
 /**
@@ -486,6 +670,42 @@ export type HttpValidationError = {
 };
 
 /**
+ * VisionInferenceKeyPublic
+ */
+export type VisionInferenceKeyPublic = {
+    /**
+     * Name
+     */
+    name?: string;
+    /**
+     * Endpoint Url
+     */
+    endpoint_url?: string | null;
+    /**
+     * Configured
+     */
+    configured?: boolean;
+};
+
+/**
+ * VisionInferenceKeyUpdate
+ */
+export type VisionInferenceKeyUpdate = {
+    /**
+     * Endpoint Url
+     */
+    endpoint_url: string;
+    /**
+     * Api Key
+     */
+    api_key?: null;
+    /**
+     * Clear Api Key
+     */
+    clear_api_key?: boolean;
+};
+
+/**
  * ItemCreate
  */
 export type ItemCreate = {
@@ -578,25 +798,13 @@ export type NewPassword = {
 };
 
 /**
- * PrivateUserCreate
+ * OidcIdentityLink
  */
-export type PrivateUserCreate = {
+export type OidcIdentityLink = {
     /**
-     * Email
+     * Subject
      */
-    email: string;
-    /**
-     * Password
-     */
-    password: string;
-    /**
-     * Full Name
-     */
-    full_name: string;
-    /**
-     * Is Verified
-     */
-    is_verified?: boolean;
+    subject: string;
 };
 
 /**
@@ -786,6 +994,10 @@ export type UserPublic = {
      */
     full_name?: string | null;
     /**
+     * Auth Source
+     */
+    auth_source?: string;
+    /**
      * Id
      */
     id: string;
@@ -893,6 +1105,24 @@ export type ValidationError = {
     ctx?: {
         [key: string]: unknown;
     };
+};
+
+/**
+ * VisionInferenceKeyUpdate
+ */
+export type VisionInferenceKeyUpdateWritable = {
+    /**
+     * Endpoint Url
+     */
+    endpoint_url: string;
+    /**
+     * Api Key
+     */
+    api_key?: string | null;
+    /**
+     * Clear Api Key
+     */
+    clear_api_key?: boolean;
 };
 
 export type LoginLoginAccessTokenData = {
@@ -1020,6 +1250,204 @@ export type LoginRecoverPasswordHtmlContentResponses = {
 };
 
 export type LoginRecoverPasswordHtmlContentResponse = LoginRecoverPasswordHtmlContentResponses[keyof LoginRecoverPasswordHtmlContentResponses];
+
+export type LoginAuthConfigData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/login/config';
+};
+
+export type LoginAuthConfigResponses = {
+    /**
+     * Response Login-Auth Config
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type LoginAuthConfigResponse = LoginAuthConfigResponses[keyof LoginAuthConfigResponses];
+
+export type LoginCheckApiKeyData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Scope
+         */
+        scope: string;
+    };
+    url: '/api/v1/login/api-key/check';
+};
+
+export type LoginCheckApiKeyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type LoginCheckApiKeyError = LoginCheckApiKeyErrors[keyof LoginCheckApiKeyErrors];
+
+export type LoginCheckApiKeyResponses = {
+    /**
+     * Response Login-Check Api Key
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type LoginCheckApiKeyResponse = LoginCheckApiKeyResponses[keyof LoginCheckApiKeyResponses];
+
+export type ApiKeysListApiKeysData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/api-keys/';
+};
+
+export type ApiKeysListApiKeysResponses = {
+    /**
+     * Response Api-Keys-List Api Keys
+     *
+     * Successful Response
+     */
+    200: Array<ApiKeyPublic>;
+};
+
+export type ApiKeysListApiKeysResponse = ApiKeysListApiKeysResponses[keyof ApiKeysListApiKeysResponses];
+
+export type ApiKeysCreateApiKeyData = {
+    body: ApiKeyCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/api-keys/';
+};
+
+export type ApiKeysCreateApiKeyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ApiKeysCreateApiKeyError = ApiKeysCreateApiKeyErrors[keyof ApiKeysCreateApiKeyErrors];
+
+export type ApiKeysCreateApiKeyResponses = {
+    /**
+     * Successful Response
+     */
+    201: ApiKeyCreated;
+};
+
+export type ApiKeysCreateApiKeyResponse = ApiKeysCreateApiKeyResponses[keyof ApiKeysCreateApiKeyResponses];
+
+export type ApiKeysRevokeApiKeyData = {
+    body?: never;
+    path: {
+        /**
+         * Key Id
+         */
+        key_id: string;
+    };
+    query?: never;
+    url: '/api/v1/api-keys/{key_id}';
+};
+
+export type ApiKeysRevokeApiKeyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ApiKeysRevokeApiKeyError = ApiKeysRevokeApiKeyErrors[keyof ApiKeysRevokeApiKeyErrors];
+
+export type ApiKeysRevokeApiKeyResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type ApiKeysRevokeApiKeyResponse = ApiKeysRevokeApiKeyResponses[keyof ApiKeysRevokeApiKeyResponses];
+
+export type ApiKeysReadVisionInferenceKeyData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/api-keys/integrations/vision-inference';
+};
+
+export type ApiKeysReadVisionInferenceKeyResponses = {
+    /**
+     * Successful Response
+     */
+    200: VisionInferenceKeyPublic;
+};
+
+export type ApiKeysReadVisionInferenceKeyResponse = ApiKeysReadVisionInferenceKeyResponses[keyof ApiKeysReadVisionInferenceKeyResponses];
+
+export type ApiKeysUpdateVisionInferenceKeyData = {
+    body: VisionInferenceKeyUpdateWritable;
+    path?: never;
+    query?: never;
+    url: '/api/v1/api-keys/integrations/vision-inference';
+};
+
+export type ApiKeysUpdateVisionInferenceKeyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ApiKeysUpdateVisionInferenceKeyError = ApiKeysUpdateVisionInferenceKeyErrors[keyof ApiKeysUpdateVisionInferenceKeyErrors];
+
+export type ApiKeysUpdateVisionInferenceKeyResponses = {
+    /**
+     * Successful Response
+     */
+    200: VisionInferenceKeyPublic;
+};
+
+export type ApiKeysUpdateVisionInferenceKeyResponse = ApiKeysUpdateVisionInferenceKeyResponses[keyof ApiKeysUpdateVisionInferenceKeyResponses];
+
+export type UsersLinkOidcIdentityData = {
+    body: OidcIdentityLink;
+    path: {
+        /**
+         * User Id
+         */
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/v1/users/{user_id}/oidc-identity';
+};
+
+export type UsersLinkOidcIdentityErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UsersLinkOidcIdentityError = UsersLinkOidcIdentityErrors[keyof UsersLinkOidcIdentityErrors];
+
+export type UsersLinkOidcIdentityResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type UsersLinkOidcIdentityResponse = UsersLinkOidcIdentityResponses[keyof UsersLinkOidcIdentityResponses];
 
 export type UsersReadUsersData = {
     body?: never;
@@ -1694,6 +2122,38 @@ export type SystemSettingsUpdateAutolabelSettingsResponses = {
 
 export type SystemSettingsUpdateAutolabelSettingsResponse = SystemSettingsUpdateAutolabelSettingsResponses[keyof SystemSettingsUpdateAutolabelSettingsResponses];
 
+export type SystemSettingsReadAutolabelRuntimeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/system-settings/autolabel/runtime';
+};
+
+export type SystemSettingsReadAutolabelRuntimeResponses = {
+    /**
+     * Successful Response
+     */
+    200: AutolabelSettingsRuntime;
+};
+
+export type SystemSettingsReadAutolabelRuntimeResponse = SystemSettingsReadAutolabelRuntimeResponses[keyof SystemSettingsReadAutolabelRuntimeResponses];
+
+export type SystemSettingsListAutolabelModelsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/system-settings/autolabel/models';
+};
+
+export type SystemSettingsListAutolabelModelsResponses = {
+    /**
+     * Successful Response
+     */
+    200: AvailableModels;
+};
+
+export type SystemSettingsListAutolabelModelsResponse = SystemSettingsListAutolabelModelsResponses[keyof SystemSettingsListAutolabelModelsResponses];
+
 export type CategoriesReadCategoriesData = {
     body?: never;
     path?: never;
@@ -2021,28 +2481,3 @@ export type CheckoutSessionsPayCheckoutSessionResponses = {
 };
 
 export type CheckoutSessionsPayCheckoutSessionResponse = CheckoutSessionsPayCheckoutSessionResponses[keyof CheckoutSessionsPayCheckoutSessionResponses];
-
-export type PrivateCreateUserData = {
-    body: PrivateUserCreate;
-    path?: never;
-    query?: never;
-    url: '/api/v1/private/users/';
-};
-
-export type PrivateCreateUserErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type PrivateCreateUserError = PrivateCreateUserErrors[keyof PrivateCreateUserErrors];
-
-export type PrivateCreateUserResponses = {
-    /**
-     * Successful Response
-     */
-    200: UserPublic;
-};
-
-export type PrivateCreateUserResponse = PrivateCreateUserResponses[keyof PrivateCreateUserResponses];

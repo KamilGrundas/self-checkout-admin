@@ -132,7 +132,7 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
     }
     await route.fulfill({
       json: {
-        endpoint_url: "https://ai.teik.pl/v1/files/inference",
+        endpoint_url: "https://inference.example.test/v1/files/inference",
         max_tokens: 512,
         connect_timeout_seconds: 5,
         read_timeout_seconds: 120,

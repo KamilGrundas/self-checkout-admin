@@ -10,6 +10,8 @@
       "!**/src/client/**/*",
       "!**/src/components/ui/**/*",
       "!**/playwright-report",
+      "!**/test-results/**/*",
+      "!**/openapi.json",
       "!**/playwright.config.ts"
     ]
   },

@@ -27,62 +27,72 @@ function ProductImage({ product }: { product: ProductPublic }) {
 
 const formatPrice = (price: string) => `${Number(price).toFixed(2)} PLN`
 
-export const getProductColumns = (t: TFunction): ColumnDef<ProductPublic>[] => [
-  {
-    id: "image",
-    header: t("image"),
-    cell: ({ row }) => <ProductImage product={row.original} />,
-  },
-  {
-    accessorKey: "name",
-    header: t("name"),
-    cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
-  },
-  {
-    accessorKey: "price",
-    header: t("price"),
-    cell: ({ row }) => (
-      <span className="tabular-nums">{formatPrice(row.original.price)}</span>
-    ),
-  },
-  {
-    accessorKey: "unit",
-    header: t("unit"),
-    cell: ({ row }) => <Badge variant="outline">{row.original.unit}</Badge>,
-  },
-  {
-    accessorKey: "category_name",
-    header: t("category"),
-    cell: ({ row }) => (
-      <div className="flex flex-col">
-        <span>{row.original.category_name}</span>
-        <span className="font-mono text-xs text-muted-foreground">
-          {row.original.category_key}
+export const getProductColumns = (
+  t: TFunction,
+  canManage = false,
+): ColumnDef<ProductPublic>[] => {
+  const columns: ColumnDef<ProductPublic>[] = [
+    {
+      id: "image",
+      header: t("image"),
+      cell: ({ row }) => <ProductImage product={row.original} />,
+    },
+    {
+      accessorKey: "name",
+      header: t("name"),
+      cell: ({ row }) => (
+        <span className="font-medium">{row.original.name}</span>
+      ),
+    },
+    {
+      accessorKey: "price",
+      header: t("price"),
+      cell: ({ row }) => (
+        <span className="tabular-nums">{formatPrice(row.original.price)}</span>
+      ),
+    },
+    {
+      accessorKey: "unit",
+      header: t("unit"),
+      cell: ({ row }) => <Badge variant="outline">{row.original.unit}</Badge>,
+    },
+    {
+      accessorKey: "category_name",
+      header: t("category"),
+      cell: ({ row }) => (
+        <div className="flex flex-col">
+          <span>{row.original.category_name}</span>
+          <span className="font-mono text-xs text-muted-foreground">
+            {row.original.category_key}
+          </span>
+        </div>
+      ),
+    },
+    {
+      accessorKey: "image_url",
+      header: t("status"),
+      cell: ({ row }) => (
+        <span
+          className={cn(
+            "text-sm",
+            row.original.image_url ? "text-green-600" : "text-muted-foreground",
+          )}
+        >
+          {row.original.image_url ? t("imageReady") : t("noImage")}
         </span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "image_url",
-    header: t("status"),
-    cell: ({ row }) => (
-      <span
-        className={cn(
-          "text-sm",
-          row.original.image_url ? "text-green-600" : "text-muted-foreground",
-        )}
-      >
-        {row.original.image_url ? t("imageReady") : t("noImage")}
-      </span>
-    ),
-  },
-  {
-    id: "actions",
-    header: () => <span className="sr-only">{t("actions")}</span>,
-    cell: ({ row }) => (
-      <div className="flex justify-end">
-        <ProductActionsMenu product={row.original} />
-      </div>
-    ),
-  },
-]
+      ),
+    },
+    {
+      id: "actions",
+      header: () => <span className="sr-only">{t("actions")}</span>,
+      cell: ({ row }) => (
+        <div className="flex justify-end">
+          <ProductActionsMenu product={row.original} />
+        </div>
+      ),
+    },
+  ]
+  return canManage
+    ? columns
+    : columns.filter((column) => column.id !== "actions")
+}

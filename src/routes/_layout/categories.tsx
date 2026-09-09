@@ -8,6 +8,7 @@ import AddCategory from "@/components/Categories/AddCategory"
 import { getCategoryColumns } from "@/components/Categories/columns"
 import { DataTable } from "@/components/Common/DataTable"
 import PendingCatalog from "@/components/Pending/PendingCatalog"
+import useAuth from "@/hooks/useAuth"
 import { useI18n } from "@/i18n"
 
 function getCategoriesQueryOptions() {
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/_layout/categories")({
 function CategoriesTableContent() {
   const { data: categories } = useSuspenseQuery(getCategoriesQueryOptions())
   const { t } = useI18n()
+  const { user } = useAuth()
 
   if (categories.data.length === 0) {
     return (
@@ -44,7 +46,12 @@ function CategoriesTableContent() {
     )
   }
 
-  return <DataTable columns={getCategoryColumns(t)} data={categories.data} />
+  return (
+    <DataTable
+      columns={getCategoryColumns(t, !!user?.is_superuser)}
+      data={categories.data}
+    />
+  )
 }
 
 function CategoriesTable() {
@@ -59,6 +66,7 @@ function CategoriesTable() {
 
 function Categories() {
   const { t } = useI18n()
+  const { user } = useAuth()
 
   return (
     <div className="flex flex-col gap-6">
@@ -69,7 +77,7 @@ function Categories() {
           </h1>
           <p className="text-muted-foreground">{t("categoriesDescription")}</p>
         </div>
-        <AddCategory />
+        {user?.is_superuser && <AddCategory />}
       </div>
       <CategoriesTable />
     </div>

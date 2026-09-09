@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { ArrowLeft, Pencil, Plus, Trash2 } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { accessToken } from "@/auth"
 
 import {
   type CheckoutSessionCartItem,
@@ -71,7 +72,7 @@ function LiveSessionDetail() {
   const wsRef = useRef<WebSocket | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token")
+    const token = accessToken()
     if (!token) {
       setError("Not authenticated")
       setStatus("closed")

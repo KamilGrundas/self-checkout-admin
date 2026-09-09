@@ -8,6 +8,7 @@ import { DataTable } from "@/components/Common/DataTable"
 import PendingCatalog from "@/components/Pending/PendingCatalog"
 import AddProduct from "@/components/Products/AddProduct"
 import { getProductColumns } from "@/components/Products/columns"
+import useAuth from "@/hooks/useAuth"
 import { useI18n } from "@/i18n"
 
 function getProductsQueryOptions() {
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/_layout/products")({
 function ProductsTableContent() {
   const { data: products } = useSuspenseQuery(getProductsQueryOptions())
   const { t } = useI18n()
+  const { user } = useAuth()
 
   if (products.data.length === 0) {
     return (
@@ -44,7 +46,12 @@ function ProductsTableContent() {
     )
   }
 
-  return <DataTable columns={getProductColumns(t)} data={products.data} />
+  return (
+    <DataTable
+      columns={getProductColumns(t, !!user?.is_superuser)}
+      data={products.data}
+    />
+  )
 }
 
 function ProductsTable() {
@@ -71,6 +78,7 @@ function ProductsTable() {
 
 function Products() {
   const { t } = useI18n()
+  const { user } = useAuth()
 
   return (
     <div className="flex flex-col gap-6">
@@ -79,7 +87,7 @@ function Products() {
           <h1 className="text-2xl font-bold tracking-tight">{t("products")}</h1>
           <p className="text-muted-foreground">{t("productsDescription")}</p>
         </div>
-        <AddProduct />
+        {user?.is_superuser && <AddProduct />}
       </div>
       <ProductsTable />
     </div>

@@ -114,6 +114,7 @@ interface Batch {
 }
 
 interface SettingsForm {
+  model_name: string
   endpoint_url: string | null
   max_tokens: number
   connect_timeout_seconds: number
@@ -123,6 +124,7 @@ interface SettingsForm {
 type BulkSelection = "all_non_empty" | "all_matched"
 
 const defaultSettings: SettingsForm = {
+  model_name: "",
   endpoint_url: null,
   max_tokens: 512,
   connect_timeout_seconds: 5,
@@ -185,6 +187,9 @@ export function LabelTab() {
   const [autolabelRunning, setAutolabelRunning] = useState(false)
   const [settingsForm, setSettingsForm] =
     useState<SettingsForm>(defaultSettings)
+  const [modelDefaultEndpoint, setModelDefaultEndpoint] = useState<
+    string | null
+  >(null)
   const [batchId, setBatchId] = useState<string | null>(null)
   const [files, setFiles] = useState<File[]>([])
   const [labelProductId, setLabelProductId] = useState("")
@@ -207,11 +212,36 @@ export function LabelTab() {
     if (!settingsQuery.data) return
     setSettingsForm({
       endpoint_url: settingsQuery.data.endpoint_url ?? null,
+      model_name: settingsQuery.data.model_name ?? "",
       max_tokens: settingsQuery.data.max_tokens ?? 512,
       connect_timeout_seconds: settingsQuery.data.connect_timeout_seconds ?? 5,
       read_timeout_seconds: settingsQuery.data.read_timeout_seconds ?? 120,
     })
   }, [settingsQuery.data])
+
+  const modelsQuery = useQuery({
+    queryKey: ["autolabel-models", settingsQuery.data?.endpoint_url],
+    queryFn: () => SystemSettingsService.systemSettingsListAutolabelModels(),
+    enabled: !!settingsQuery.data?.endpoint_url,
+    retry: false,
+    refetchOnWindowFocus: false,
+  })
+
+  useEffect(() => {
+    if (
+      !settingsQuery.data ||
+      !modelsQuery.data ||
+      modelDefaultEndpoint === settingsQuery.data.endpoint_url
+    )
+      return
+    const active = modelsQuery.data.models.find(
+      (model) =>
+        model.id === modelsQuery.data.active_model && model.is_vision !== false,
+    )
+    if (active)
+      setSettingsForm((current) => ({ ...current, model_name: active.id }))
+    setModelDefaultEndpoint(settingsQuery.data.endpoint_url ?? null)
+  }, [modelDefaultEndpoint, settingsQuery.data, modelsQuery.data])
 
   const imagesQuery = useInfiniteQuery({
     queryKey: ["scale-images", labelProductId],
@@ -678,7 +708,7 @@ export function LabelTab() {
             <Input
               id="autolabel-endpoint"
               value={settingsForm.endpoint_url ?? ""}
-              placeholder="https://ai.teik.pl/v1/files/inference"
+              placeholder="http://localhost:11434/v1/chat/completions"
               onChange={(event) =>
                 setSettingsForm((current) => ({
                   ...current,
@@ -686,6 +716,58 @@ export function LabelTab() {
                 }))
               }
             />
+          </div>
+          <div className="md:col-span-4 flex flex-col gap-2">
+            <Label htmlFor="autolabel-model">{t("autolabelModel")}</Label>
+            <select
+              id="autolabel-model"
+              className="h-10 rounded-md border bg-background px-3"
+              value={settingsForm.model_name}
+              onChange={(event) =>
+                setSettingsForm((current) => ({
+                  ...current,
+                  model_name: event.target.value,
+                }))
+              }
+            >
+              <option value="">{t("autolabelSelectModel")}</option>
+              {settingsForm.model_name &&
+                !modelsQuery.data?.models.some(
+                  (model) => model.id === settingsForm.model_name,
+                ) && (
+                  <option value={settingsForm.model_name}>
+                    {settingsForm.model_name} ({t("autolabelSavedModel")})
+                  </option>
+                )}
+              {modelsQuery.data?.models.map((model) => (
+                <option
+                  key={model.id}
+                  value={model.id}
+                  disabled={model.is_vision === false}
+                >
+                  {model.id}
+                  {model.loaded ? ` (${t("autolabelLoadedModel")})` : ""}
+                </option>
+              ))}
+            </select>
+            <Button
+              variant="outline"
+              disabled={
+                modelsQuery.isFetching || !settingsQuery.data?.endpoint_url
+              }
+              onClick={() => void modelsQuery.refetch()}
+            >
+              {t("autolabelRefreshModels")}
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              {t("autolabelModelHelp")}
+            </p>
+            {modelsQuery.isError && (
+              <p role="alert">{t("autolabelModelsError")}</p>
+            )}
+            <a className="underline" href="/api-keys">
+              {t("autolabelManageKeys")}
+            </a>
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="max-tokens">{t("maxTokens")}</Label>

@@ -23,6 +23,34 @@ const STORAGE_KEY = "self-checkout-admin-language"
 
 const translations = {
   en: {
+    oidcAccountManaged:
+      "Manage your profile, password and MFA through your identity provider. Application access is assigned through its groups.",
+    apiKeys: "API keys",
+    apiKeysAdminOnly: "Administrator access required.",
+    apiKeysDescription:
+      "Create a separate key for each application and choose its permissions. Admin keys can also manage users and create other keys.",
+    apiKeyName: "Application name",
+    apiKeyDays: "Valid for days (blank for no limit)",
+    apiKeyScopes: "Access scopes",
+    apiKeyCreate: "Create key",
+    apiKeyOnce:
+      "Download the key now. Its secret cannot be retrieved again. Store it securely and do not put it in frontend code.",
+    apiKeyDownload: "Download key",
+    apiKeySaved: "Saved — hide key",
+    apiKeyError: "The operation failed. Check your permissions and try again.",
+    apiKeyRevoke: "Revoke",
+    apiKeyRevoked: "Revoked",
+
+    ssoTitle: "Sign in to Self-checkout",
+    ssoSignIn: "Sign in with",
+    ssoCompleting: "Checking sign-in…",
+    ssoEmailRequired:
+      "Your identity-provider account needs a valid email address. Ask your administrator to complete your profile.",
+    ssoFailed:
+      "Sign-in failed or you do not have access. Contact your administrator.",
+    ssoConfigFailed: "Sign-in configuration is unavailable. Try again later.",
+    ssoBackToLogin: "Back to sign-in",
+
     actions: "Actions",
     addCategory: "Add Category",
     addCounter: "Add Counter",
@@ -76,6 +104,34 @@ const translations = {
     image: "Image",
     imageReady: "Image ready",
     images: "Images",
+    apiKeysSelfCheckout: "Self-checkout access keys",
+    apiKeysIntegrations: "Integration keys",
+    apiKeyRole: "Permissions",
+    apiKeyUserRole: "User — read catalog",
+    apiKeyAdminRole: "Admin — manage application and ML",
+    apiKeyNoExpiry: "No expiration",
+    apiKeyUnlimitedHint: "Blank for no limit",
+    apiKeyExternalHelp:
+      "This key grants self-checkout access to the vision inference provider. Its permissions and expiration are managed there.",
+    apiKeySaveEndpointFirst:
+      "Save the vision inference endpoint in ML → Label first.",
+    autolabelSelectModel: "Select a model",
+    autolabelSavedModel: "saved selection",
+    autolabelLoadedModel: "currently loaded",
+    autolabelRefreshModels: "Refresh models",
+    autolabelModelsError:
+      "Could not fetch models. Save the endpoint and check the token in API Keys.",
+    autolabelManageKeys: "Manage the vision inference token in API Keys",
+    autolabelModel: "Vision model",
+    autolabelModelHelp:
+      "The currently loaded vision model is selected by default. Save the configuration to use your choice for labeling.",
+    autolabelApiKey: "Vision inference API token",
+    visionInferenceProvider: "Vision inference provider",
+    autolabelKeySaved: "Token saved — leave blank to keep it",
+    autolabelKeyEmpty: "No token saved",
+    autolabelKeyHelp:
+      "The token is never displayed after saving. Changing the endpoint removes the saved token; enter it again for the new address.",
+    autolabelClearKey: "Remove the saved token when saving",
     autolabelConfiguration: "Autolabel configuration",
     autolabelSettingsSaved: "Autolabel configuration saved",
     autolabelSettingsSaveFailed: "Could not save autolabel configuration",
@@ -287,6 +343,36 @@ const translations = {
     yoloDatasets: "YOLO Datasets",
   },
   pl: {
+    oidcAccountManaged:
+      "Profilem, hasłem i MFA zarządzaj w swoim dostawcy tożsamości. Dostęp do aplikacji jest przydzielany przez jego grupy.",
+    apiKeys: "Klucze API",
+    apiKeysAdminOnly: "Wymagany dostęp administratora.",
+    apiKeysDescription:
+      "Utwórz osobny klucz dla każdej aplikacji i wybierz jego uprawnienia. Klucze admin mogą także zarządzać użytkownikami i tworzyć kolejne klucze.",
+    apiKeyName: "Nazwa aplikacji",
+    apiKeyDays: "Ważność w dniach (puste = bez limitu)",
+    apiKeyScopes: "Zakres dostępu",
+    apiKeyCreate: "Utwórz klucz",
+    apiKeyOnce:
+      "Pobierz klucz teraz. Jego sekretu nie można ponownie odczytać. Przechowuj go bezpiecznie, poza kodem frontendu.",
+    apiKeyDownload: "Pobierz klucz",
+    apiKeySaved: "Zapisano — ukryj klucz",
+    apiKeyError:
+      "Operacja nie powiodła się. Sprawdź uprawnienia i spróbuj ponownie.",
+    apiKeyRevoke: "Unieważnij",
+    apiKeyRevoked: "Unieważniony",
+
+    ssoTitle: "Zaloguj się do Self-checkout",
+    ssoSignIn: "Zaloguj przez",
+    ssoCompleting: "Sprawdzanie logowania…",
+    ssoEmailRequired:
+      "Konto u dostawcy tożsamości wymaga poprawnego adresu e-mail. Poproś administratora o uzupełnienie profilu.",
+    ssoFailed:
+      "Logowanie nie powiodło się lub nie masz dostępu. Skontaktuj się z administratorem.",
+    ssoConfigFailed:
+      "Konfiguracja logowania jest niedostępna. Spróbuj ponownie później.",
+    ssoBackToLogin: "Wróć do logowania",
+
     actions: "Akcje",
     addCategory: "Dodaj kategorię",
     addCounter: "Dodaj kasę",
@@ -340,6 +426,34 @@ const translations = {
     image: "Obraz",
     imageReady: "Obraz gotowy",
     images: "Obrazy",
+    apiKeysSelfCheckout: "Klucze dostępu do self-checkout",
+    apiKeysIntegrations: "Klucze integracji",
+    apiKeyRole: "Uprawnienia",
+    apiKeyUserRole: "User — odczyt katalogu",
+    apiKeyAdminRole: "Admin — zarządzanie aplikacją i ML",
+    apiKeyNoExpiry: "Bez terminu ważności",
+    apiKeyUnlimitedHint: "Puste = bez limitu",
+    apiKeyExternalHelp:
+      "Ten klucz zapewnia self-checkout dostęp do dostawcy inference wizji. Jego uprawnienia i ważność ustawia się u dostawcy.",
+    apiKeySaveEndpointFirst:
+      "Najpierw zapisz endpoint dostawcy inference wizji w ML → Label.",
+    autolabelSelectModel: "Wybierz model",
+    autolabelSavedModel: "zapisany wybór",
+    autolabelLoadedModel: "aktualnie załadowany",
+    autolabelRefreshModels: "Odśwież modele",
+    autolabelModelsError:
+      "Nie udało się pobrać modeli. Zapisz endpoint i sprawdź token w API Keys.",
+    autolabelManageKeys: "Zarządzaj tokenem inference wizji w API Keys",
+    autolabelModel: "Model wizyjny",
+    autolabelModelHelp:
+      "Domyślnie wybrany jest aktualnie załadowany model wizyjny. Zapisz konfigurację, aby używać wybranego modelu do etykietowania.",
+    autolabelApiKey: "Token API inference wizji",
+    visionInferenceProvider: "Dostawca inference wizji",
+    autolabelKeySaved: "Token zapisany — pozostaw puste, aby go zachować",
+    autolabelKeyEmpty: "Brak zapisanego tokena",
+    autolabelKeyHelp:
+      "Po zapisaniu token nie jest wyświetlany. Zmiana endpointu usuwa zapisany token; wpisz go ponownie dla nowego adresu.",
+    autolabelClearKey: "Usuń zapisany token przy zapisie",
     autolabelConfiguration: "Konfiguracja automatycznego etykietowania",
     autolabelSettingsSaved:
       "Konfiguracja automatycznego etykietowania została zapisana",
