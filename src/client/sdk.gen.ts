@@ -2,7 +2,7 @@
 
 import { buildClientParams, type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysReadVisionInferenceKeyResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ApiKeysUpdateVisionInferenceKeyResponses, AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPaymentWritable, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginAuthConfigResponses, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, LoginCheckCheckoutCounterApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, OidcIdentityLink, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsListAutolabelModelsResponses, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersLinkOidcIdentityErrors, UsersLinkOidcIdentityResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses, VisionInferenceKeyUpdateWritable } from './types.gen';
+import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysReadVisionInferenceKeyResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ApiKeysUpdateVisionInferenceKeyResponses, AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPaymentWritable, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, LoginCheckCheckoutCounterApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginRegistrationConfigResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, PrivateCreateUserErrors, PrivateCreateUserResponses, PrivateUserCreate, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsListAutolabelModelsResponses, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses, VisionInferenceKeyUpdateWritable } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -114,12 +114,12 @@ export class LoginService {
     }
 
     /**
-     * Auth Config
+     * Registration Config
      */
-    public static authConfig<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<LoginAuthConfigResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<LoginAuthConfigResponses, unknown, ThrowOnError, 'data'>({
+    public static registrationConfig<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<LoginRegistrationConfigResponses, unknown, ThrowOnError, 'data'> {
+        return (options?.client ?? client).get<LoginRegistrationConfigResponses, unknown, ThrowOnError, 'data'>({
             responseStyle: 'data',
-            url: '/api/v1/login/config',
+            url: '/api/v1/login/registration-config',
             ...options
         });
     }
@@ -241,28 +241,6 @@ export class ApiKeysService {
 }
 
 export class UsersService {
-    /**
-     * Link Oidc Identity
-     */
-    public static linkOidcIdentity<ThrowOnError extends boolean = true>(parameters: {
-        user_id: string;
-        oidcIdentityLink: OidcIdentityLink;
-    }, options?: Options<never, ThrowOnError>): RequestResult<UsersLinkOidcIdentityResponses, UsersLinkOidcIdentityErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'user_id' }, { key: 'oidcIdentityLink', map: 'body' }] }]);
-        return (options?.client ?? client).put<UsersLinkOidcIdentityResponses, UsersLinkOidcIdentityErrors, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/users/{user_id}/oidc-identity',
-            ...options,
-            ...params,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options?.headers,
-                ...params.headers
-            }
-        });
-    }
-
     /**
      * Read Users
      *
@@ -1015,6 +993,30 @@ export class CheckoutSessionsService {
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/checkout-sessions/{id}/pay',
+            ...options,
+            ...params,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options?.headers,
+                ...params.headers
+            }
+        });
+    }
+}
+
+export class PrivateService {
+    /**
+     * Create User
+     *
+     * Create a new user.
+     */
+    public static createUser<ThrowOnError extends boolean = true>(parameters: {
+        privateUserCreate: PrivateUserCreate;
+    }, options?: Options<never, ThrowOnError>): RequestResult<PrivateCreateUserResponses, PrivateCreateUserErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ key: 'privateUserCreate', map: 'body' }] }]);
+        return (options?.client ?? client).post<PrivateCreateUserResponses, PrivateCreateUserErrors, ThrowOnError, 'data'>({
+            responseStyle: 'data',
+            url: '/api/v1/private/users/',
             ...options,
             ...params,
             headers: {

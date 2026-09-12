@@ -1384,20 +1384,33 @@ export const NewPasswordSchema = {
     title: 'NewPassword'
 } as const;
 
-export const OidcIdentityLinkSchema = {
+export const PrivateUserCreateSchema = {
     properties: {
-        subject: {
+        email: {
             type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Subject'
+            title: 'Email'
+        },
+        password: {
+            type: 'string',
+            title: 'Password'
+        },
+        full_name: {
+            type: 'string',
+            title: 'Full Name'
+        },
+        is_verified: {
+            type: 'boolean',
+            title: 'Is Verified',
+            default: false
         }
     },
     type: 'object',
     required: [
-        'subject'
+        'email',
+        'password',
+        'full_name'
     ],
-    title: 'OidcIdentityLink'
+    title: 'PrivateUserCreate'
 } as const;
 
 export const ProductCreateSchema = {
@@ -1771,11 +1784,6 @@ export const UserPublicSchema = {
                 }
             ],
             title: 'Full Name'
-        },
-        auth_source: {
-            type: 'string',
-            title: 'Auth Source',
-            default: 'local'
         },
         id: {
             type: 'string',

@@ -1,17 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useQuery } from "@tanstack/react-query"
 import {
   createFileRoute,
   Link as RouterLink,
   redirect,
 } from "@tanstack/react-router"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { authConfig, startOidcLogin } from "@/auth"
 import type { BodyLoginLoginAccessToken as AccessToken } from "@/client"
 import { AuthLayout } from "@/components/Common/AuthLayout"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -24,7 +20,6 @@ import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { PasswordInput } from "@/components/ui/password-input"
 import useAuth, { isLoggedIn } from "@/hooks/useAuth"
-import { useI18n } from "@/i18n"
 
 const formSchema = z.object({
   username: z.email(),
@@ -56,9 +51,6 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const { loginMutation } = useAuth()
-  const { t } = useI18n()
-  const [ssoError, setSsoError] = useState(false)
-  const config = useQuery({ queryKey: ["authConfig"], queryFn: authConfig })
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -73,27 +65,6 @@ function Login() {
     if (loginMutation.isPending) return
     loginMutation.mutate(data)
   }
-
-  if (!config.data)
-    return (
-      <AuthLayout>
-        <p role="status">
-          {config.isError ? t("ssoConfigFailed") : t("ssoCompleting")}
-        </p>
-      </AuthLayout>
-    )
-  if (config.data.mode === "oidc")
-    return (
-      <AuthLayout>
-        <h1 className="text-2xl font-bold">{t("ssoTitle")}</h1>
-        {ssoError && <p role="alert">{t("ssoFailed")}</p>}
-        <Button
-          onClick={() => void startOidcLogin().catch(() => setSsoError(true))}
-        >
-          {t("ssoSignIn")} {config.data.oidc?.label}
-        </Button>
-      </AuthLayout>
-    )
 
   return (
     <AuthLayout>
@@ -156,15 +127,6 @@ function Login() {
               Log In
             </LoadingButton>
           </div>
-
-          {config.data.signup_enabled && (
-            <div className="text-center text-sm">
-              Don't have an account yet?{" "}
-              <RouterLink to="/signup" className="underline underline-offset-4">
-                Sign up
-              </RouterLink>
-            </div>
-          )}
         </form>
       </Form>
     </AuthLayout>

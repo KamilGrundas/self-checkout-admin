@@ -23,7 +23,6 @@ import { Route as LayoutLiveSessionsRouteImport } from './routes/_layout/live-se
 import { Route as LayoutMlRouteImport } from './routes/_layout/ml'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as LayoutLiveSessionsSessionIdRouteImport } from './routes/_layout/live-sessions_.$sessionId'
 
 const LayoutRoute = LayoutRouteImport.update({
@@ -95,11 +94,6 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/auth/callback',
-  path: '/auth/callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LayoutLiveSessionsSessionIdRoute =
   LayoutLiveSessionsSessionIdRouteImport.update({
     id: '/live-sessions_/$sessionId',
@@ -121,7 +115,6 @@ export interface FileRoutesByFullPath {
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/live-sessions/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
 export interface FileRoutesByTo {
@@ -137,7 +130,6 @@ export interface FileRoutesByTo {
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/': typeof LayoutIndexRoute
   '/live-sessions/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
@@ -156,7 +148,6 @@ export interface FileRoutesById {
   '/_layout/ml': typeof LayoutMlRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/live-sessions_/$sessionId': typeof LayoutLiveSessionsSessionIdRoute
 }
@@ -176,7 +167,6 @@ export interface FileRouteTypes {
     | '/ml'
     | '/products'
     | '/settings'
-    | '/auth/callback'
     | '/live-sessions/$sessionId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -192,7 +182,6 @@ export interface FileRouteTypes {
     | '/ml'
     | '/products'
     | '/settings'
-    | '/auth/callback'
     | '/'
     | '/live-sessions/$sessionId'
   id:
@@ -210,7 +199,6 @@ export interface FileRouteTypes {
     | '/_layout/ml'
     | '/_layout/products'
     | '/_layout/settings'
-    | '/auth/callback'
     | '/_layout/'
     | '/_layout/live-sessions_/$sessionId'
   fileRoutesById: FileRoutesById
@@ -221,7 +209,6 @@ export interface RootRouteChildren {
   RecoverPasswordRoute: typeof RecoverPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
-  AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -324,13 +311,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/auth/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_layout/live-sessions_/$sessionId': {
       id: '/_layout/live-sessions_/$sessionId'
       path: '/live-sessions/$sessionId'
@@ -376,7 +356,6 @@ const rootRouteChildren: RootRouteChildren = {
   RecoverPasswordRoute: RecoverPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
-  AuthCallbackRoute: AuthCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

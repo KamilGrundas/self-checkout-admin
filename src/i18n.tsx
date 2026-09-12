@@ -23,8 +23,6 @@ const STORAGE_KEY = "self-checkout-admin-language"
 
 const translations = {
   en: {
-    oidcAccountManaged:
-      "Manage your profile, password and MFA through your identity provider. Application access is assigned through its groups.",
     apiKeys: "API keys",
     apiKeysAdminOnly: "Administrator access required.",
     apiKeysDescription:
@@ -40,16 +38,6 @@ const translations = {
     apiKeyError: "The operation failed. Check your permissions and try again.",
     apiKeyRevoke: "Revoke",
     apiKeyRevoked: "Revoked",
-
-    ssoTitle: "Sign in to Self-checkout",
-    ssoSignIn: "Sign in with",
-    ssoCompleting: "Checking sign-in…",
-    ssoEmailRequired:
-      "Your identity-provider account needs a valid email address. Ask your administrator to complete your profile.",
-    ssoFailed:
-      "Sign-in failed or you do not have access. Contact your administrator.",
-    ssoConfigFailed: "Sign-in configuration is unavailable. Try again later.",
-    ssoBackToLogin: "Back to sign-in",
 
     actions: "Actions",
     addCategory: "Add Category",
@@ -346,8 +334,6 @@ const translations = {
     yoloDatasets: "YOLO Datasets",
   },
   pl: {
-    oidcAccountManaged:
-      "Profilem, hasłem i MFA zarządzaj w swoim dostawcy tożsamości. Dostęp do aplikacji jest przydzielany przez jego grupy.",
     apiKeys: "Klucze API",
     apiKeysAdminOnly: "Wymagany dostęp administratora.",
     apiKeysDescription:
@@ -364,17 +350,6 @@ const translations = {
       "Operacja nie powiodła się. Sprawdź uprawnienia i spróbuj ponownie.",
     apiKeyRevoke: "Unieważnij",
     apiKeyRevoked: "Unieważniony",
-
-    ssoTitle: "Zaloguj się do Self-checkout",
-    ssoSignIn: "Zaloguj przez",
-    ssoCompleting: "Sprawdzanie logowania…",
-    ssoEmailRequired:
-      "Konto u dostawcy tożsamości wymaga poprawnego adresu e-mail. Poproś administratora o uzupełnienie profilu.",
-    ssoFailed:
-      "Logowanie nie powiodło się lub nie masz dostępu. Skontaktuj się z administratorem.",
-    ssoConfigFailed:
-      "Konfiguracja logowania jest niedostępna. Spróbuj ponownie później.",
-    ssoBackToLogin: "Wróć do logowania",
 
     actions: "Akcje",
     addCategory: "Dodaj kategorię",

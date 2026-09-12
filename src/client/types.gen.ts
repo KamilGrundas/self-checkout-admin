@@ -741,13 +741,25 @@ export type NewPassword = {
 };
 
 /**
- * OidcIdentityLink
+ * PrivateUserCreate
  */
-export type OidcIdentityLink = {
+export type PrivateUserCreate = {
     /**
-     * Subject
+     * Email
      */
-    subject: string;
+    email: string;
+    /**
+     * Password
+     */
+    password: string;
+    /**
+     * Full Name
+     */
+    full_name: string;
+    /**
+     * Is Verified
+     */
+    is_verified?: boolean;
 };
 
 /**
@@ -936,10 +948,6 @@ export type UserPublic = {
      * Full Name
      */
     full_name?: string | null;
-    /**
-     * Auth Source
-     */
-    auth_source?: string;
     /**
      * Id
      */
@@ -1237,25 +1245,25 @@ export type LoginRecoverPasswordHtmlContentResponses = {
 
 export type LoginRecoverPasswordHtmlContentResponse = LoginRecoverPasswordHtmlContentResponses[keyof LoginRecoverPasswordHtmlContentResponses];
 
-export type LoginAuthConfigData = {
+export type LoginRegistrationConfigData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/login/config';
+    url: '/api/v1/login/registration-config';
 };
 
-export type LoginAuthConfigResponses = {
+export type LoginRegistrationConfigResponses = {
     /**
-     * Response Login-Auth Config
+     * Response Login-Registration Config
      *
      * Successful Response
      */
     200: {
-        [key: string]: unknown;
+        [key: string]: boolean;
     };
 };
 
-export type LoginAuthConfigResponse = LoginAuthConfigResponses[keyof LoginAuthConfigResponses];
+export type LoginRegistrationConfigResponse = LoginRegistrationConfigResponses[keyof LoginRegistrationConfigResponses];
 
 export type LoginCheckApiKeyData = {
     body?: never;
@@ -1442,36 +1450,6 @@ export type ApiKeysUpdateVisionInferenceKeyResponses = {
 };
 
 export type ApiKeysUpdateVisionInferenceKeyResponse = ApiKeysUpdateVisionInferenceKeyResponses[keyof ApiKeysUpdateVisionInferenceKeyResponses];
-
-export type UsersLinkOidcIdentityData = {
-    body: OidcIdentityLink;
-    path: {
-        /**
-         * User Id
-         */
-        user_id: string;
-    };
-    query?: never;
-    url: '/api/v1/users/{user_id}/oidc-identity';
-};
-
-export type UsersLinkOidcIdentityErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type UsersLinkOidcIdentityError = UsersLinkOidcIdentityErrors[keyof UsersLinkOidcIdentityErrors];
-
-export type UsersLinkOidcIdentityResponses = {
-    /**
-     * Successful Response
-     */
-    200: Message;
-};
-
-export type UsersLinkOidcIdentityResponse = UsersLinkOidcIdentityResponses[keyof UsersLinkOidcIdentityResponses];
 
 export type UsersReadUsersData = {
     body?: never;
@@ -2510,3 +2488,28 @@ export type CheckoutSessionsPayCheckoutSessionResponses = {
 };
 
 export type CheckoutSessionsPayCheckoutSessionResponse = CheckoutSessionsPayCheckoutSessionResponses[keyof CheckoutSessionsPayCheckoutSessionResponses];
+
+export type PrivateCreateUserData = {
+    body: PrivateUserCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/private/users/';
+};
+
+export type PrivateCreateUserErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PrivateCreateUserError = PrivateCreateUserErrors[keyof PrivateCreateUserErrors];
+
+export type PrivateCreateUserResponses = {
+    /**
+     * Successful Response
+     */
+    200: UserPublic;
+};
+
+export type PrivateCreateUserResponse = PrivateCreateUserResponses[keyof PrivateCreateUserResponses];

@@ -57,7 +57,7 @@ const useAuth = () => {
 
   const logout = () => {
     queryClient.clear()
-    void endSession().catch(() => navigate({ to: "/login" }))
+    endSession()
   }
 
   return {

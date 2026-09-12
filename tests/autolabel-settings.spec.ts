@@ -25,7 +25,6 @@ async function mockApi(page: Page) {
           email: "admin@example.com",
           is_active: true,
           is_superuser: true,
-          auth_source: "oidc",
         },
       })
     if (method === "PUT" || method === "POST")

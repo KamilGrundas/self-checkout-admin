@@ -1,72 +1,9 @@
 import { expect, test } from "@playwright/test"
 
-test("local mode shows only local sign-in", async ({ page }) => {
-  await page.route("**/api/v1/login/config", (route) =>
-    route.fulfill({
-      json: { mode: "local", signup_enabled: false, oidc: null },
-    }),
-  )
+test("login shows local password credentials", async ({ page }) => {
   await page.goto("/login")
   await expect(page.getByTestId("email-input")).toBeVisible()
   await expect(page.getByTestId("password-input")).toBeVisible()
-  await expect(page.getByRole("link", { name: "Sign up" })).toHaveCount(0)
-  await expect(
-    page.getByRole("button", { name: /Single sign-on/ }),
-  ).toHaveCount(0)
-})
-
-test("OIDC mode hides passwords and uses authorization code with PKCE", async ({
-  page,
-}) => {
-  await page.route("**/api/v1/login/config", (route) =>
-    route.fulfill({
-      json: {
-        mode: "oidc",
-        signup_enabled: false,
-        oidc: {
-          issuer: "https://identity.example/",
-          client_id: "test-client",
-          label: "Single sign-on",
-        },
-      },
-    }),
-  )
-  await page.route(
-    "https://identity.example/.well-known/openid-configuration",
-    (route) =>
-      route.fulfill({
-        json: {
-          issuer: "https://identity.example/",
-          authorization_endpoint: "https://identity.example/authorize",
-          token_endpoint: "https://identity.example/token",
-          jwks_uri: "https://identity.example/keys",
-          userinfo_endpoint: "https://identity.example/userinfo",
-        },
-      }),
-  )
-  await page.route("https://identity.example/authorize?**", (route) =>
-    route.fulfill({ body: "Identity provider" }),
-  )
-  await page.goto("/login")
-  await expect(page.getByTestId("password-input")).toHaveCount(0)
-  await page.getByRole("button", { name: /Single sign-on/ }).click()
-  await page.waitForURL("https://identity.example/authorize?**")
-  const url = new URL(page.url())
-  expect(url.searchParams.get("response_type")).toBe("code")
-  expect(url.searchParams.get("code_challenge_method")).toBe("S256")
-  expect(url.searchParams.get("code_challenge")).toBeTruthy()
-  expect(url.searchParams.get("state")).toBeTruthy()
-  expect(url.searchParams.has("client_secret")).toBe(false)
-})
-
-test("configuration failure does not fall back to local sign-in", async ({
-  page,
-}) => {
-  await page.route("**/api/v1/login/config", (route) =>
-    route.fulfill({ status: 503, body: "Unavailable" }),
-  )
-  await page.goto("/login")
-  await expect(page.getByTestId("password-input")).toHaveCount(0)
 })
 
 async function mockRole(page: import("@playwright/test").Page, admin: boolean) {
@@ -81,7 +18,6 @@ async function mockRole(page: import("@playwright/test").Page, admin: boolean) {
         full_name: "Catalog Reader",
         is_active: true,
         is_superuser: admin,
-        auth_source: "oidc",
       },
     }),
   )
