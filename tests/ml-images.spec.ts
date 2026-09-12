@@ -364,8 +364,7 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
     },
   )
 
-  await page.goto("/ml")
-  await page.getByRole("tab", { name: "Label" }).click()
+  await page.goto("/label")
   await expect(
     page.getByRole("img", { name: "raw/scale/banana.jpg" }),
   ).toBeVisible()
@@ -443,6 +442,12 @@ test("scale images configure, test, queue, poll and restore a batch", async ({
     page.getByLabel("Label sessions/session-1/captures/0001-product.jpg"),
   ).toHaveValue("banana-id")
   await expect(page.getByLabel("Label raw/scale/grapes.jpg")).toHaveValue("")
+  await expect(page.getByLabel("Label raw/scale/banana.jpg")).toHaveClass(
+    /bg-emerald-50/,
+  )
+  await expect(page.getByLabel("Label raw/scale/grapes.jpg")).toHaveClass(
+    /bg-red-50/,
+  )
   await expect(page.getByRole("progressbar")).toHaveAttribute(
     "aria-valuenow",
     "3",
@@ -612,7 +617,7 @@ test("images tab imports a labeled batch and exports every labeled image", async
     },
   )
 
-  await page.goto("/ml")
+  await page.goto("/label")
   await page.getByRole("tab", { name: "Images" }).click()
   await expect(page.getByRole("button", { name: "All (2)" })).toBeVisible()
   await expect(page.getByRole("button", { name: "Apple (2)" })).toBeVisible()
@@ -682,8 +687,7 @@ test("images tab has Polish labels", async ({ page }) => {
     route.fulfill({ status: 404, json: { detail: "none" } }),
   )
 
-  await page.goto("/ml")
-  await page.getByRole("tab", { name: "Label" }).click()
+  await page.goto("/label")
 
   await expect(
     page.getByText("Konfiguracja automatycznego etykietowania"),

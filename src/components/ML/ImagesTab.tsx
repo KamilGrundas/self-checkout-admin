@@ -42,6 +42,7 @@ type ItemStatus =
   | "matched"
   | "unmatched"
   | "failed"
+  | "cancelled"
 
 interface AutolabelResult {
   state: "matched" | "unmatched" | "failed"
@@ -104,12 +105,19 @@ interface BatchItem {
 
 interface Batch {
   batch_id: string
-  status: "queued" | "processing" | "completed" | "failed"
+  status: "queued" | "processing" | "completed" | "failed" | "cancelled"
   total: number
   completed: number
   matched: number
   unmatched: number
   failed: number
+  cancelled: number
+  provider_cancellation:
+    | "available"
+    | "not_supported"
+    | "unavailable"
+    | "requested"
+    | "not_requested"
   items: BatchItem[]
 }
 
@@ -276,7 +284,8 @@ export function LabelTab() {
   useEffect(() => {
     if (
       activeBatch?.status === "completed" ||
-      activeBatch?.status === "failed"
+      activeBatch?.status === "failed" ||
+      activeBatch?.status === "cancelled"
     ) {
       setAutolabelRunning(false)
       void queryClient.invalidateQueries({ queryKey: ["scale-images"] })
@@ -341,6 +350,31 @@ export function LabelTab() {
       setBulkSelectionCount(0)
       queryClient.setQueryData(["scale-autolabel-latest"], batch)
       toast.success(t("autolabelBatchStarted"))
+    },
+    onError: (error) =>
+      toast.error(t("autolabelBatchFailed"), {
+        description: mlErrorMessage(error),
+      }),
+  })
+
+  const cancelBatchMutation = useMutation({
+    mutationFn: () =>
+      mlApi
+        .post<Batch>(`/autolabel/scale/batches/${batchId}/cancel`)
+        .then((response) => response.data),
+    onSuccess: (batch) => {
+      setAutolabelRunning(false)
+      queryClient.setQueryData(["scale-autolabel-latest"], batch)
+      void queryClient.invalidateQueries({ queryKey: ["scale-images"] })
+      if (batch.provider_cancellation === "requested") {
+        toast.success(t("autolabelBatchCancelledProvider"))
+      } else if (batch.provider_cancellation === "not_supported") {
+        toast.warning(t("autolabelBatchCancelledLocalOnly"))
+      } else if (batch.provider_cancellation === "unavailable") {
+        toast.warning(t("autolabelBatchCancelledProviderUnavailable"))
+      } else {
+        toast.success(t("autolabelBatchCancelled"))
+      }
     },
     onError: (error) =>
       toast.error(t("autolabelBatchFailed"), {
@@ -529,20 +563,16 @@ export function LabelTab() {
     setBulkSelectionCount(0)
   }
 
-  const submitBatch = (retryOnly = false) => {
-    const useBulkSelection = !retryOnly && bulkSelection === "all_non_empty"
-    const objectNames = retryOnly
-      ? images
-          .filter((image) => ["failed", "unmatched"].includes(image.status))
-          .map((image) => image.object_name)
-      : [...selected]
+  const submitBatch = () => {
+    const useBulkSelection = bulkSelection === "all_non_empty"
+    const objectNames = [...selected]
     if (!useBulkSelection && objectNames.length === 0) {
-      toast.error(t(retryOnly ? "noRetryableImages" : "noImagesSelected"))
+      toast.error(t("noImagesSelected"))
       return
     }
     batchMutation.mutate({
       objectNames,
-      retryOnly,
+      retryOnly: false,
       selection: useBulkSelection ? "all_non_empty" : "explicit",
     })
   }
@@ -571,9 +601,28 @@ export function LabelTab() {
           matched: "statusMatched",
           unmatched: "statusUnmatched",
           failed: "statusFailed",
+          cancelled: "statusCancelled",
         } as const
       )[status],
     )
+
+  const labelStatusClass = (status: ItemStatus) =>
+    (
+      ({
+        matched:
+          "border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/30",
+        queued:
+          "border-orange-200 bg-orange-50 dark:border-orange-900 dark:bg-orange-950/30",
+        processing:
+          "border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30",
+        failed:
+          "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/30",
+        cancelled:
+          "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/30",
+        unlabeled: "",
+        unmatched: "",
+      }) as const
+    )[status]
 
   return (
     <div className="flex flex-col gap-6 pt-4">
@@ -616,20 +665,10 @@ export function LabelTab() {
       <div className="flex flex-wrap items-center gap-2">
         <Button
           variant="outline"
-          onClick={() => {
-            setBulkSelection(null)
-            setBulkSelectionCount(0)
-            setSelected(new Set(images.map((image) => image.object_name)))
-          }}
-        >
-          {t("selectCurrentPage")}
-        </Button>
-        <Button
-          variant="outline"
           disabled={selectionCountMutation.isPending}
           onClick={() => selectionCountMutation.mutate("all_non_empty")}
         >
-          {t("selectAllForAutolabeling")}
+          {t("selectAll")}
         </Button>
         <Button
           variant="outline"
@@ -661,7 +700,7 @@ export function LabelTab() {
           disabled={
             !settingsQuery.data?.configured || bulkSelection === "all_matched"
           }
-          onClick={() => submitBatch(false)}
+          onClick={submitBatch}
         >
           {t("startAutolabeling")} (
           {bulkSelection === "all_non_empty"
@@ -670,11 +709,15 @@ export function LabelTab() {
           )
         </LoadingButton>
         <Button
-          variant="outline"
-          disabled={!settingsQuery.data?.configured}
-          onClick={() => submitBatch(true)}
+          variant="destructive"
+          disabled={
+            cancelBatchMutation.isPending ||
+            !activeBatch ||
+            !["queued", "processing"].includes(activeBatch.status)
+          }
+          onClick={() => cancelBatchMutation.mutate()}
         >
-          {t("retryFailedUnmatched")}
+          {t("cancelAutolabeling")}
         </Button>
         <LoadingButton
           loading={finalizeMutation.isPending}
@@ -801,7 +844,7 @@ export function LabelTab() {
                   </TableCell>
                   <TableCell>
                     <select
-                      className="h-9 min-w-48 rounded-md border bg-background px-3 text-sm"
+                      className={`h-9 min-w-48 rounded-md border px-3 text-sm ${labelStatusClass(status)}`}
                       aria-label={`${t("label")} ${image.object_name}`}
                       value={productId ?? ""}
                       onChange={(event) =>
@@ -826,7 +869,9 @@ export function LabelTab() {
                   <TableCell>
                     <Badge
                       variant={
-                        status === "failed" ? "destructive" : "secondary"
+                        status === "failed" || status === "cancelled"
+                          ? "destructive"
+                          : "secondary"
                       }
                     >
                       {statusText(status)}

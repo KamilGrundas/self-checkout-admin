@@ -18,6 +18,7 @@ async function mockApi(page: Page) {
       model_name: "active-model",
       active_model: "active-model",
       model_loaded: true,
+      read_timeout_seconds: 600,
     },
   ]
   await page.route("**/api/v1/**", async (route) => {
@@ -62,6 +63,7 @@ async function mockApi(page: Page) {
             model_name: null,
             active_model: null,
             model_loaded: false,
+            read_timeout_seconds: 120,
           },
         ]
       }
@@ -133,6 +135,22 @@ test("integrations add providers, select models, and show model status", async (
   ).not.toContain("test-only-token")
 })
 
+test("integration editor uses the saved timeout and allows up to 6000 seconds", async ({
+  page,
+}) => {
+  const writes = await mockApi(page)
+  await page.goto("/integrations")
+  await page.getByLabel("Actions").click()
+  await page.getByRole("menuitem", { name: "Edit integration" }).click()
+  const timeout = page.locator("#read-timeout-provider-1")
+  await expect(timeout).toHaveValue("600")
+  await expect(timeout).toHaveAttribute("max", "6000")
+  await timeout.fill("6000")
+  await page.getByRole("button", { name: "Save configuration" }).click()
+  await expect.poll(() => writes.length).toBe(1)
+  expect(writes[0].body.read_timeout_seconds).toBe(6000)
+})
+
 test("autolabel is unavailable until an integration is configured and active", async ({
   page,
 }) => {
@@ -140,8 +158,7 @@ test("autolabel is unavailable until an integration is configured and active", a
   await page.route("**/api/v1/system-settings/autolabel", (route) =>
     route.fulfill({ json: { configured: false } }),
   )
-  await page.goto("/ml")
-  await page.getByRole("tab", { name: "Label", exact: true }).click()
+  await page.goto("/label")
   await expect(
     page.getByText(/Configure a vision inference provider/),
   ).toBeVisible()

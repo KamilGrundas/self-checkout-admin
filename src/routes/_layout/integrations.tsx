@@ -295,6 +295,10 @@ function IntegrationActions({
   const [readTimeout, setReadTimeout] = useState(
     integration.read_timeout_seconds,
   )
+  const openEditor = () => {
+    setReadTimeout(integration.read_timeout_seconds)
+    setOpen(true)
+  }
   const update = useMutation({
     mutationFn: () =>
       integrationsApi<VisionIntegration>(integration.id, {
@@ -318,7 +322,7 @@ function IntegrationActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={() => setOpen(true)}>
+          <DropdownMenuItem onSelect={openEditor}>
             <Pencil />
             {t("editIntegration")}
           </DropdownMenuItem>
@@ -338,7 +342,7 @@ function IntegrationActions({
             id={`read-timeout-${integration.id}`}
             type="number"
             min={1}
-            max={600}
+            max={6000}
             value={readTimeout}
             onChange={(event) => setReadTimeout(Number(event.target.value))}
           />
@@ -346,7 +350,7 @@ function IntegrationActions({
         {update.isError ? <p role="alert">{t("integrationError")}</p> : null}
         <DialogFooter>
           <Button
-            disabled={update.isPending || readTimeout < 1 || readTimeout > 600}
+            disabled={update.isPending || readTimeout < 1 || readTimeout > 6000}
             onClick={() => update.mutate()}
           >
             {t("saveConfiguration")}

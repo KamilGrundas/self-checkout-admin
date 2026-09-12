@@ -20,6 +20,7 @@ import { Route as LayoutApiKeysRouteImport } from './routes/_layout/api-keys'
 import { Route as LayoutCategoriesRouteImport } from './routes/_layout/categories'
 import { Route as LayoutCheckoutCountersRouteImport } from './routes/_layout/checkout-counters'
 import { Route as LayoutIntegrationsRouteImport } from './routes/_layout/integrations'
+import { Route as LayoutLabelRouteImport } from './routes/_layout/label'
 import { Route as LayoutLiveSessionsRouteImport } from './routes/_layout/live-sessions'
 import { Route as LayoutMlRouteImport } from './routes/_layout/ml'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
@@ -80,6 +81,11 @@ const LayoutIntegrationsRoute = LayoutIntegrationsRouteImport.update({
   path: '/integrations',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutLabelRoute = LayoutLabelRouteImport.update({
+  id: '/label',
+  path: '/label',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutLiveSessionsRoute = LayoutLiveSessionsRouteImport.update({
   id: '/live-sessions',
   path: '/live-sessions',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/integrations': typeof LayoutIntegrationsRoute
+  '/label': typeof LayoutLabelRoute
   '/live-sessions': typeof LayoutLiveSessionsRoute
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/categories': typeof LayoutCategoriesRoute
   '/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/integrations': typeof LayoutIntegrationsRoute
+  '/label': typeof LayoutLabelRoute
   '/live-sessions': typeof LayoutLiveSessionsRoute
   '/ml': typeof LayoutMlRoute
   '/products': typeof LayoutProductsRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/_layout/categories': typeof LayoutCategoriesRoute
   '/_layout/checkout-counters': typeof LayoutCheckoutCountersRoute
   '/_layout/integrations': typeof LayoutIntegrationsRoute
+  '/_layout/label': typeof LayoutLabelRoute
   '/_layout/live-sessions': typeof LayoutLiveSessionsRoute
   '/_layout/ml': typeof LayoutMlRoute
   '/_layout/products': typeof LayoutProductsRoute
@@ -173,6 +182,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout-counters'
     | '/integrations'
+    | '/label'
     | '/live-sessions'
     | '/ml'
     | '/products'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/checkout-counters'
     | '/integrations'
+    | '/label'
     | '/live-sessions'
     | '/ml'
     | '/products'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/_layout/categories'
     | '/_layout/checkout-counters'
     | '/_layout/integrations'
+    | '/_layout/label'
     | '/_layout/live-sessions'
     | '/_layout/ml'
     | '/_layout/products'
@@ -302,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIntegrationsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/label': {
+      id: '/_layout/label'
+      path: '/label'
+      fullPath: '/label'
+      preLoaderRoute: typeof LayoutLabelRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/live-sessions': {
       id: '/_layout/live-sessions'
       path: '/live-sessions'
@@ -346,6 +365,7 @@ interface LayoutRouteChildren {
   LayoutCategoriesRoute: typeof LayoutCategoriesRoute
   LayoutCheckoutCountersRoute: typeof LayoutCheckoutCountersRoute
   LayoutIntegrationsRoute: typeof LayoutIntegrationsRoute
+  LayoutLabelRoute: typeof LayoutLabelRoute
   LayoutLiveSessionsRoute: typeof LayoutLiveSessionsRoute
   LayoutMlRoute: typeof LayoutMlRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
@@ -360,6 +380,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCategoriesRoute: LayoutCategoriesRoute,
   LayoutCheckoutCountersRoute: LayoutCheckoutCountersRoute,
   LayoutIntegrationsRoute: LayoutIntegrationsRoute,
+  LayoutLabelRoute: LayoutLabelRoute,
   LayoutLiveSessionsRoute: LayoutLiveSessionsRoute,
   LayoutMlRoute: LayoutMlRoute,
   LayoutProductsRoute: LayoutProductsRoute,

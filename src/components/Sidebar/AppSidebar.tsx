@@ -6,6 +6,7 @@ import {
   Package,
   Plug,
   Radio,
+  Tag,
   Tags,
   Users,
 } from "lucide-react"
@@ -49,6 +50,7 @@ export function AppSidebar() {
         { icon: Users, title: t("admin"), path: "/admin" },
         { icon: Plug, title: t("integrations"), path: "/integrations" },
         { icon: KeyRound, title: t("apiKeys"), path: "/api-keys" },
+        { icon: Tag, title: t("label"), path: "/label" },
         { icon: BrainCircuit, title: t("ml"), path: "/ml" },
       ]
     : baseItems
