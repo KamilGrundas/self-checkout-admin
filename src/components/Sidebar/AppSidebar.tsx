@@ -4,6 +4,7 @@ import {
   KeyRound,
   MonitorCog,
   Package,
+  Plug,
   Radio,
   Tags,
   Users,
@@ -46,6 +47,7 @@ export function AppSidebar() {
           path: "/live-sessions",
         },
         { icon: Users, title: t("admin"), path: "/admin" },
+        { icon: Plug, title: t("integrations"), path: "/integrations" },
         { icon: KeyRound, title: t("apiKeys"), path: "/api-keys" },
         { icon: BrainCircuit, title: t("ml"), path: "/ml" },
       ]

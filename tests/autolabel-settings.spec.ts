@@ -1,20 +1,25 @@
 import { expect, type Page, test } from "@playwright/test"
 
+test.use({ storageState: { cookies: [], origins: [] } })
+
 async function mockApi(page: Page) {
   await page.addInitScript(() =>
     sessionStorage.setItem("access_token", "test-session"),
   )
   const writes: Array<{ path: string; body: Record<string, unknown> }> = []
-  let settings = {
-    endpoint_url: "https://ai.example.test/v1/chat/completions",
-    model_name: "saved-model",
-    max_tokens: 512,
-    connect_timeout_seconds: 5,
-    read_timeout_seconds: 120,
-    configured: true,
-    api_key_configured: true,
-  }
-  let keyConfigured = true
+  let integrations = [
+    {
+      id: "provider-1",
+      name: "Vision one",
+      endpoint_url: "https://vision.example.test/v1/chat/completions",
+      api_key_configured: true,
+      active: true,
+      configured: true,
+      model_name: "active-model",
+      active_model: "active-model",
+      model_loaded: true,
+    },
+  ]
   await page.route("**/api/v1/**", async (route) => {
     const path = new URL(route.request().url()).pathname
     const method = route.request().method()
@@ -27,9 +32,9 @@ async function mockApi(page: Page) {
           is_superuser: true,
         },
       })
-    if (method === "PUT" || method === "POST")
+    if (method === "PATCH" || method === "PUT" || method === "POST")
       writes.push({ path, body: route.request().postDataJSON() })
-    if (path.endsWith("/autolabel/models"))
+    if (path.endsWith("/vision-inference-integrations/provider-1/models"))
       return route.fulfill({
         json: {
           models: [
@@ -40,24 +45,37 @@ async function mockApi(page: Page) {
         },
       })
     if (path.endsWith("/system-settings/autolabel")) {
-      if (method === "PUT")
-        settings = { ...settings, ...route.request().postDataJSON() }
-      return route.fulfill({ json: settings })
+      return route.fulfill({ json: { configured: integrations[0].configured } })
     }
-    if (path.endsWith("/integrations/vision-inference")) {
-      if (method === "PUT") {
+    if (path.endsWith("/vision-inference-integrations/")) {
+      if (method === "POST") {
         const body = route.request().postDataJSON()
-        keyConfigured = body.clear_api_key
-          ? false
-          : keyConfigured || !!body.api_key
+        integrations = [
+          ...integrations,
+          {
+            id: "provider-2",
+            name: body.name,
+            endpoint_url: body.endpoint_url,
+            api_key_configured: true,
+            active: false,
+            configured: false,
+            model_name: null,
+            active_model: null,
+            model_loaded: false,
+          },
+        ]
       }
       return route.fulfill({
-        json: {
-          name: "Vision inference provider",
-          endpoint_url: settings.endpoint_url,
-          configured: keyConfigured,
-        },
+        json: method === "POST" ? integrations.at(-1) : integrations,
       })
+    }
+    if (path.endsWith("/vision-inference-integrations/provider-1")) {
+      if (method === "PATCH")
+        integrations[0] = {
+          ...integrations[0],
+          ...route.request().postDataJSON(),
+        }
+      return route.fulfill({ json: integrations[0] })
     }
     if (path.endsWith("/api-keys/"))
       return route.fulfill({
@@ -79,68 +97,57 @@ async function mockApi(page: Page) {
   return writes
 }
 
-test("model list defaults to loaded model and preserves an explicit choice on refresh", async ({
+test("integrations add providers, select models, and show model status", async ({
   page,
 }) => {
   const writes = await mockApi(page)
-  await page.goto("/ml")
-  await page.getByRole("tab", { name: "Label", exact: true }).click()
-  await expect(page.locator("#autolabel-endpoint")).toHaveAttribute(
+  await page.goto("/integrations")
+  await expect(page.locator("#integration-endpoint")).toHaveAttribute(
     "placeholder",
-    "http://localhost:11434/v1/chat/completions",
+    "https://vision_inference.com/v1/chat/completions",
   )
-  const model = page.locator("#autolabel-model")
+  await expect(page.getByText("Loaded model detected")).toBeVisible()
+  const model = page.locator("#integration-model-provider-1")
   await expect(model).toHaveValue("active-model")
-  await expect(page.locator("#autolabel-api-key")).toHaveCount(0)
   await model.selectOption("saved-model")
-  await page
-    .getByRole("button", { name: /Refresh models|Odśwież modele/ })
-    .click()
-  await expect(model).toHaveValue("saved-model")
-  await page
-    .getByRole("button", { name: /Save configuration|Zapisz konfigurację/ })
-    .click()
   await expect.poll(() => writes.length).toBe(1)
   expect(writes[0].body.model_name).toBe("saved-model")
-  expect(writes[0].body).not.toHaveProperty("api_key")
+  await page.locator("#integration-name").fill("Vision two")
   await page
-    .getByRole("link", {
-      name: /Manage the vision inference token|Zarządzaj tokenem/,
-    })
+    .locator("#integration-endpoint")
+    .fill("https://other.example.test/v1/chat/completions")
+  await page.locator("#integration-api-key").fill("test-only-token")
+  await page
+    .getByRole("button", { name: /Add integration|Dodaj integrację/ })
     .click()
-  await expect(page).toHaveURL(/\/api-keys$/)
-})
-
-test("API Keys manages the integration credential without exposing it", async ({
-  page,
-}) => {
-  const writes = await mockApi(page)
-  await page.goto("/api-keys")
-  const token = page.locator("#vision-inference-api-key")
-  await expect(token).toHaveAttribute("type", "password")
-  await expect(token).toHaveValue("")
-  await token.fill("test-only-token")
-  const save = page.getByRole("button", {
-    name: /Save configuration|Zapisz konfigurację/,
-  })
-  await save.click()
-  await expect.poll(() => writes.length).toBe(1)
-  expect(writes[0].path).toContain("/api-keys/integrations/vision-inference")
-  expect(writes[0].body.api_key).toBe("test-only-token")
-  await expect(token).toHaveValue("")
-  await save.click()
   await expect.poll(() => writes.length).toBe(2)
-  expect(writes[1].body.api_key).toBeNull()
-  await page.locator("#vision-inference-clear-key").check()
-  await save.click()
-  await expect.poll(() => writes.length).toBe(3)
-  expect(writes[2].body.clear_api_key).toBe(true)
+  expect(writes[1].body).toMatchObject({
+    name: "Vision two",
+    api_key: "test-only-token",
+  })
   expect(await page.evaluate(() => JSON.stringify(localStorage))).not.toContain(
     "test-only-token",
   )
   expect(
     await page.evaluate(() => JSON.stringify(sessionStorage)),
   ).not.toContain("test-only-token")
+})
+
+test("autolabel is unavailable until an integration is configured and active", async ({
+  page,
+}) => {
+  await mockApi(page)
+  await page.route("**/api/v1/system-settings/autolabel", (route) =>
+    route.fulfill({ json: { configured: false } }),
+  )
+  await page.goto("/ml")
+  await page.getByRole("tab", { name: "Label", exact: true }).click()
+  await expect(
+    page.getByText(/Configure a vision inference provider/),
+  ).toBeVisible()
+  await expect(
+    page.getByRole("button", { name: /Start autolabeling/ }),
+  ).toBeDisabled()
 })
 
 test("new keys select user or admin with optional validity", async ({

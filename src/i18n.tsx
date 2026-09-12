@@ -24,6 +24,22 @@ const STORAGE_KEY = "self-checkout-admin-language"
 const translations = {
   en: {
     apiKeys: "API keys",
+    integrations: "Integrations",
+    integrationsDescription:
+      "Manage OpenAI-compatible vision inference providers used for autolabeling.",
+    addVisionIntegration: "Add vision inference provider",
+    addIntegration: "Add integration",
+    integrationName: "Name",
+    integrationActive: "Active",
+    activateIntegration: "Activate for autolabeling",
+    apiKeyConfigured: "API key saved",
+    modelDetected: "Loaded model detected",
+    modelNotDetected: "No loaded model detected",
+    noIntegrations: "No vision inference providers configured yet.",
+    integrationError: "Could not update the vision inference provider.",
+    editIntegration: "Edit integration",
+    autolabelUnavailable:
+      "Configure a vision inference provider, select its model, and activate it in Integrations before using autolabeling.",
     apiKeysAdminOnly: "Administrator access required.",
     apiKeysDescription:
       "Create a separate key for each application and choose its permissions. Admin keys can also manage users and create other keys.",
@@ -335,6 +351,22 @@ const translations = {
   },
   pl: {
     apiKeys: "Klucze API",
+    integrations: "Integracje",
+    integrationsDescription:
+      "Zarządzaj dostawcami inference wizji zgodnymi z OpenAI, używanymi do automatycznego etykietowania.",
+    addVisionIntegration: "Dodaj dostawcę inference wizji",
+    addIntegration: "Dodaj integrację",
+    integrationName: "Nazwa",
+    integrationActive: "Aktywna",
+    activateIntegration: "Uaktywnij do automatycznego etykietowania",
+    apiKeyConfigured: "Klucz API zapisany",
+    modelDetected: "Wykryto załadowany model",
+    modelNotDetected: "Nie wykryto załadowanego modelu",
+    noIntegrations: "Nie skonfigurowano jeszcze dostawcy inference wizji.",
+    integrationError: "Nie udało się zaktualizować dostawcy inference wizji.",
+    editIntegration: "Edytuj integrację",
+    autolabelUnavailable:
+      "Przed użyciem automatycznego etykietowania skonfiguruj dostawcę inference wizji, wybierz jego model i uaktywnij go w Integracjach.",
     apiKeysAdminOnly: "Wymagany dostęp administratora.",
     apiKeysDescription:
       "Utwórz osobny klucz dla każdej aplikacji i wybierz jego uprawnienia. Klucze admin mogą także zarządzać użytkownikami i tworzyć kolejne klucze.",

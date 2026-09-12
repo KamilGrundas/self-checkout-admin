@@ -7,12 +7,22 @@ React/Vite admin panel for the self-checkout platform. It is based on
 - Categories
 - Checkout counters, active sessions, and per-counter camera/mode settings
 - Native image labeling, labeled-image import, datasets, model metrics, and training
-- Superuser-managed vision inference provider configuration and scale-image
-  autolabel batches
+- Superuser-managed OpenAI-compatible vision inference integrations and
+  scale-image autolabel batches
 
 Authentication, user settings, and superuser user management are kept from the
-template. Camera inventory, inference configuration, thumbnails, and
+template. Camera inventory, vision inference integrations, thumbnails, and
 autolabeling actions are restricted by the backend/ML superuser checks.
+
+Vision inference providers are configured in **Integrations**, not API Keys or
+the ML label tab. Each integration contains a display name, a full
+OpenAI-compatible chat-completions endpoint, and a write-only API key. The
+integration card lets an administrator select a vision model and shows whether
+the provider reports a currently loaded model. Autolabeling is enabled only
+after a complete integration has been activated. The backend contract is the
+administrator-only `/api/v1/vision-inference-integrations` collection with
+model discovery and activation operations; API keys must never be returned to
+the browser.
 
 The checkout-counter page polls for the latest camera inventory reported by the
 native client. Camera selections and mode/language edits are stored on the
