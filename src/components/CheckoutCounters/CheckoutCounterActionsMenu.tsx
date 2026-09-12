@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import DeleteCheckoutCounter from "./DeleteCheckoutCounter"
 import EditCheckoutCounter from "./EditCheckoutCounter"
+import RotateCheckoutCounterApiKey from "./RotateCheckoutCounterApiKey"
 
 interface CheckoutCounterActionsMenuProps {
   counter: CheckoutCounterPublic
@@ -30,6 +31,10 @@ export const CheckoutCounterActionsMenu = ({
       <DropdownMenuContent align="end">
         <EditCheckoutCounter
           counter={counter}
+          onSuccess={() => setOpen(false)}
+        />
+        <RotateCheckoutCounterApiKey
+          id={counter.id}
           onSuccess={() => setOpen(false)}
         />
         <DeleteCheckoutCounter

@@ -355,6 +355,16 @@ export type CheckoutCameraInfo = {
 };
 
 /**
+ * CheckoutCounterApiKeyCreated
+ */
+export type CheckoutCounterApiKeyCreated = {
+    /**
+     * Api Key
+     */
+    api_key: string;
+};
+
+/**
  * CheckoutCounterCreate
  */
 export type CheckoutCounterCreate = {
@@ -362,10 +372,49 @@ export type CheckoutCounterCreate = {
      * Name
      */
     name: string;
+};
+
+/**
+ * CheckoutCounterCreated
+ */
+export type CheckoutCounterCreated = {
+    ml_mode?: CheckoutMlMode;
     /**
-     * Password
+     * Shelf Camera Device Id
      */
-    password: string;
+    shelf_camera_device_id?: string | null;
+    /**
+     * Scale Camera Device Id
+     */
+    scale_camera_device_id?: string | null;
+    /**
+     * Language
+     */
+    language?: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Available Cameras
+     */
+    available_cameras?: Array<CheckoutCameraInfo>;
+    /**
+     * Available Cameras Updated At
+     */
+    available_cameras_updated_at?: string | null;
+    /**
+     * Api Key
+     */
+    api_key: string;
 };
 
 /**
@@ -408,33 +457,6 @@ export type CheckoutCounterPublic = {
 };
 
 /**
- * CheckoutCounterSelfSettingsUpdate
- */
-export type CheckoutCounterSelfSettingsUpdate = {
-    /**
-     * Counter Id
-     */
-    counter_id: string;
-    /**
-     * Password
-     */
-    password: string;
-    ml_mode?: CheckoutMlMode | null;
-    /**
-     * Shelf Camera Device Id
-     */
-    shelf_camera_device_id?: string | null;
-    /**
-     * Scale Camera Device Id
-     */
-    scale_camera_device_id?: string | null;
-    /**
-     * Language
-     */
-    language?: string | null;
-};
-
-/**
  * CheckoutCounterSettingsBase
  */
 export type CheckoutCounterSettingsBase = {
@@ -461,10 +483,6 @@ export type CheckoutCounterUpdate = {
      * Name
      */
     name?: string | null;
-    /**
-     * Password
-     */
-    password?: string | null;
     ml_mode?: CheckoutMlMode | null;
     /**
      * Shelf Camera Device Id
@@ -539,18 +557,6 @@ export type CheckoutSessionCartItem = {
  */
 export type CheckoutSessionCartUpdate = {
     /**
-     * Counter Id
-     */
-    counter_id: string;
-    /**
-     * Password
-     */
-    password: string;
-    /**
-     * Client Id
-     */
-    client_id: string;
-    /**
      * Cart
      */
     cart?: Array<CheckoutSessionCartItem>;
@@ -568,36 +574,13 @@ export type CheckoutSessionConnect = {
      * Camera Discovery Succeeded
      */
     camera_discovery_succeeded?: boolean;
-    /**
-     * Counter Id
-     */
-    counter_id: string;
-    /**
-     * Password
-     */
-    password: string;
-    /**
-     * Client Id
-     */
-    client_id: string;
 };
 
 /**
  * CheckoutSessionPayment
  */
 export type CheckoutSessionPayment = {
-    /**
-     * Counter Id
-     */
-    counter_id: string;
-    /**
-     * Password
-     */
-    password: string;
-    /**
-     * Client Id
-     */
-    client_id: string;
+    [key: string]: unknown;
 };
 
 /**
@@ -609,10 +592,6 @@ export type CheckoutSessionPaymentStatus = 'pending' | 'paid';
  * CheckoutSessionPublic
  */
 export type CheckoutSessionPublic = {
-    /**
-     * Client Id
-     */
-    client_id: string;
     /**
      * Closed
      */
@@ -667,42 +646,6 @@ export type HttpValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
-};
-
-/**
- * VisionInferenceKeyPublic
- */
-export type VisionInferenceKeyPublic = {
-    /**
-     * Name
-     */
-    name?: string;
-    /**
-     * Endpoint Url
-     */
-    endpoint_url?: string | null;
-    /**
-     * Configured
-     */
-    configured?: boolean;
-};
-
-/**
- * VisionInferenceKeyUpdate
- */
-export type VisionInferenceKeyUpdate = {
-    /**
-     * Endpoint Url
-     */
-    endpoint_url: string;
-    /**
-     * Api Key
-     */
-    api_key?: null;
-    /**
-     * Clear Api Key
-     */
-    clear_api_key?: boolean;
 };
 
 /**
@@ -1108,6 +1051,49 @@ export type ValidationError = {
 };
 
 /**
+ * VisionInferenceKeyPublic
+ */
+export type VisionInferenceKeyPublic = {
+    /**
+     * Name
+     */
+    name?: string;
+    /**
+     * Endpoint Url
+     */
+    endpoint_url?: string | null;
+    /**
+     * Configured
+     */
+    configured?: boolean;
+};
+
+/**
+ * VisionInferenceKeyUpdate
+ */
+export type VisionInferenceKeyUpdate = {
+    /**
+     * Endpoint Url
+     */
+    endpoint_url: string;
+    /**
+     * Api Key
+     */
+    api_key?: null;
+    /**
+     * Clear Api Key
+     */
+    clear_api_key?: boolean;
+};
+
+/**
+ * CheckoutSessionPayment
+ */
+export type CheckoutSessionPaymentWritable = {
+    [key: string]: unknown;
+};
+
+/**
  * VisionInferenceKeyUpdate
  */
 export type VisionInferenceKeyUpdateWritable = {
@@ -1304,6 +1290,44 @@ export type LoginCheckApiKeyResponses = {
 };
 
 export type LoginCheckApiKeyResponse = LoginCheckApiKeyResponses[keyof LoginCheckApiKeyResponses];
+
+export type LoginCheckCheckoutCounterApiKeyData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Scope
+         */
+        scope: string;
+        /**
+         * Checkout Session Id
+         */
+        checkout_session_id?: string | null;
+    };
+    url: '/api/v1/login/checkout-key/check';
+};
+
+export type LoginCheckCheckoutCounterApiKeyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type LoginCheckCheckoutCounterApiKeyError = LoginCheckCheckoutCounterApiKeyErrors[keyof LoginCheckCheckoutCounterApiKeyErrors];
+
+export type LoginCheckCheckoutCounterApiKeyResponses = {
+    /**
+     * Response Login-Check Checkout Counter Api Key
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type LoginCheckCheckoutCounterApiKeyResponse = LoginCheckCheckoutCounterApiKeyResponses[keyof LoginCheckCheckoutCounterApiKeyResponses];
 
 export type ApiKeysListApiKeysData = {
     body?: never;
@@ -2291,7 +2315,7 @@ export type CheckoutCountersCreateCheckoutCounterResponses = {
     /**
      * Successful Response
      */
-    200: CheckoutCounterPublic;
+    200: CheckoutCounterCreated;
 };
 
 export type CheckoutCountersCreateCheckoutCounterResponse = CheckoutCountersCreateCheckoutCounterResponses[keyof CheckoutCountersCreateCheckoutCounterResponses];
@@ -2356,30 +2380,35 @@ export type CheckoutCountersUpdateCheckoutCounterResponses = {
 
 export type CheckoutCountersUpdateCheckoutCounterResponse = CheckoutCountersUpdateCheckoutCounterResponses[keyof CheckoutCountersUpdateCheckoutCounterResponses];
 
-export type CheckoutCountersUpdateSelfCheckoutCounterSettingsData = {
-    body: CheckoutCounterSelfSettingsUpdate;
-    path?: never;
+export type CheckoutCountersRotateCheckoutCounterApiKeyData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
     query?: never;
-    url: '/api/v1/checkout-counters/me/settings';
+    url: '/api/v1/checkout-counters/{id}/api-key/rotate';
 };
 
-export type CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors = {
+export type CheckoutCountersRotateCheckoutCounterApiKeyErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type CheckoutCountersUpdateSelfCheckoutCounterSettingsError = CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors[keyof CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors];
+export type CheckoutCountersRotateCheckoutCounterApiKeyError = CheckoutCountersRotateCheckoutCounterApiKeyErrors[keyof CheckoutCountersRotateCheckoutCounterApiKeyErrors];
 
-export type CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses = {
+export type CheckoutCountersRotateCheckoutCounterApiKeyResponses = {
     /**
      * Successful Response
      */
-    200: CheckoutCounterPublic;
+    200: CheckoutCounterApiKeyCreated;
 };
 
-export type CheckoutCountersUpdateSelfCheckoutCounterSettingsResponse = CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses[keyof CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses];
+export type CheckoutCountersRotateCheckoutCounterApiKeyResponse = CheckoutCountersRotateCheckoutCounterApiKeyResponses[keyof CheckoutCountersRotateCheckoutCounterApiKeyResponses];
 
 export type CheckoutSessionsListActiveCheckoutSessionsData = {
     body?: never;
@@ -2453,7 +2482,7 @@ export type CheckoutSessionsUpdateCheckoutSessionCartResponses = {
 export type CheckoutSessionsUpdateCheckoutSessionCartResponse = CheckoutSessionsUpdateCheckoutSessionCartResponses[keyof CheckoutSessionsUpdateCheckoutSessionCartResponses];
 
 export type CheckoutSessionsPayCheckoutSessionData = {
-    body: CheckoutSessionPayment;
+    body: CheckoutSessionPaymentWritable;
     path: {
         /**
          * Id

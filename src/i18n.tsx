@@ -80,6 +80,9 @@ const translations = {
       "This checkout counter will be permanently removed.",
     counterDescription:
       "Create a self-checkout kiosk credential used by the client app.",
+    rotateCounterKey: "Rotate counter key",
+    rotateCounterKeyDescription:
+      "The current client will be disconnected and its key will stop working.",
     counterNameRequired: "Counter name is required",
     counterUpdated: "Checkout counter updated successfully",
     shelfCamera: "Shelf camera",
@@ -104,7 +107,7 @@ const translations = {
     image: "Image",
     imageReady: "Image ready",
     images: "Images",
-    apiKeysSelfCheckout: "Self-checkout access keys",
+    apiKeysSelfCheckout: "Application API keys",
     apiKeysIntegrations: "Integration keys",
     apiKeyRole: "Permissions",
     apiKeyUserRole: "User — read catalog",
@@ -401,6 +404,9 @@ const translations = {
     counterDeleteDescription: "Ta kasa samoobsługowa zostanie trwale usunięta.",
     counterDescription:
       "Utwórz dane dostępowe kasy samoobsługowej używane przez aplikację klienta.",
+    rotateCounterKey: "Rotuj klucz kasy",
+    rotateCounterKeyDescription:
+      "Bieżący klient zostanie rozłączony, a jego klucz przestanie działać.",
     counterNameRequired: "Nazwa kasy jest wymagana",
     counterUpdated: "Kasa samoobsługowa została zaktualizowana",
     shelfCamera: "Kamera półki",
@@ -426,7 +432,7 @@ const translations = {
     image: "Obraz",
     imageReady: "Obraz gotowy",
     images: "Obrazy",
-    apiKeysSelfCheckout: "Klucze dostępu do self-checkout",
+    apiKeysSelfCheckout: "Klucze API aplikacji",
     apiKeysIntegrations: "Klucze integracji",
     apiKeyRole: "Uprawnienia",
     apiKeyUserRole: "User — odczyt katalogu",

@@ -640,6 +640,20 @@ export const CheckoutCameraInfoSchema = {
     title: 'CheckoutCameraInfo'
 } as const;
 
+export const CheckoutCounterApiKeyCreatedSchema = {
+    properties: {
+        api_key: {
+            type: 'string',
+            title: 'Api Key'
+        }
+    },
+    type: 'object',
+    required: [
+        'api_key'
+    ],
+    title: 'CheckoutCounterApiKeyCreated'
+} as const;
+
 export const CheckoutCounterCreateSchema = {
     properties: {
         name: {
@@ -647,20 +661,106 @@ export const CheckoutCounterCreateSchema = {
             maxLength: 255,
             minLength: 1,
             title: 'Name'
+        }
+    },
+    type: 'object',
+    required: [
+        'name'
+    ],
+    title: 'CheckoutCounterCreate'
+} as const;
+
+export const CheckoutCounterCreatedSchema = {
+    properties: {
+        ml_mode: {
+            $ref: '#/components/schemas/CheckoutMlMode',
+            default: 'off'
         },
-        password: {
+        shelf_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Shelf Camera Device Id'
+        },
+        scale_camera_device_id: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Scale Camera Device Id'
+        },
+        language: {
+            type: 'string',
+            maxLength: 8,
+            minLength: 2,
+            title: 'Language',
+            default: 'pl'
+        },
+        name: {
             type: 'string',
             maxLength: 255,
             minLength: 1,
-            title: 'Password'
+            title: 'Name'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        created_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Created At'
+        },
+        available_cameras: {
+            items: {
+                $ref: '#/components/schemas/CheckoutCameraInfo'
+            },
+            type: 'array',
+            title: 'Available Cameras'
+        },
+        available_cameras_updated_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Available Cameras Updated At'
+        },
+        api_key: {
+            type: 'string',
+            title: 'Api Key'
         }
     },
     type: 'object',
     required: [
         'name',
-        'password'
+        'id',
+        'api_key'
     ],
-    title: 'CheckoutCounterCreate'
+    title: 'CheckoutCounterCreated'
 } as const;
 
 export const CheckoutCounterPublicSchema = {
@@ -751,75 +851,6 @@ export const CheckoutCounterPublicSchema = {
     title: 'CheckoutCounterPublic'
 } as const;
 
-export const CheckoutCounterSelfSettingsUpdateSchema = {
-    properties: {
-        counter_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Counter Id'
-        },
-        password: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Password'
-        },
-        ml_mode: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/CheckoutMlMode'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        shelf_camera_device_id: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 255
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Shelf Camera Device Id'
-        },
-        scale_camera_device_id: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 255
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Scale Camera Device Id'
-        },
-        language: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 8,
-                    minLength: 2
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Language'
-        }
-    },
-    type: 'object',
-    required: [
-        'counter_id',
-        'password'
-    ],
-    title: 'CheckoutCounterSelfSettingsUpdate'
-} as const;
-
 export const CheckoutCounterSettingsBaseSchema = {
     properties: {
         ml_mode: {
@@ -876,19 +907,6 @@ export const CheckoutCounterUpdateSchema = {
                 }
             ],
             title: 'Name'
-        },
-        password: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 255,
-                    minLength: 1
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Password'
         },
         ml_mode: {
             anyOf: [
@@ -1037,23 +1055,6 @@ export const CheckoutSessionCartItemSchema = {
 
 export const CheckoutSessionCartUpdateSchema = {
     properties: {
-        counter_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Counter Id'
-        },
-        password: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Password'
-        },
-        client_id: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Client Id'
-        },
         cart: {
             items: {
                 $ref: '#/components/schemas/CheckoutSessionCartItem'
@@ -1063,11 +1064,6 @@ export const CheckoutSessionCartUpdateSchema = {
         }
     },
     type: 'object',
-    required: [
-        'counter_id',
-        'password',
-        'client_id'
-    ],
     title: 'CheckoutSessionCartUpdate'
 } as const;
 
@@ -1085,60 +1081,14 @@ export const CheckoutSessionConnectSchema = {
             type: 'boolean',
             title: 'Camera Discovery Succeeded',
             default: true
-        },
-        counter_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Counter Id'
-        },
-        password: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Password'
-        },
-        client_id: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Client Id'
         }
     },
     type: 'object',
-    required: [
-        'counter_id',
-        'password',
-        'client_id'
-    ],
     title: 'CheckoutSessionConnect'
 } as const;
 
 export const CheckoutSessionPaymentSchema = {
-    properties: {
-        counter_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Counter Id'
-        },
-        password: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Password'
-        },
-        client_id: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Client Id'
-        }
-    },
     type: 'object',
-    required: [
-        'counter_id',
-        'password',
-        'client_id'
-    ],
     title: 'CheckoutSessionPayment'
 } as const;
 
@@ -1153,12 +1103,6 @@ export const CheckoutSessionPaymentStatusSchema = {
 
 export const CheckoutSessionPublicSchema = {
     properties: {
-        client_id: {
-            type: 'string',
-            maxLength: 255,
-            minLength: 1,
-            title: 'Client Id'
-        },
         closed: {
             type: 'boolean',
             title: 'Closed',
@@ -1227,7 +1171,6 @@ export const CheckoutSessionPublicSchema = {
     },
     type: 'object',
     required: [
-        'client_id',
         'id',
         'counter_id',
         'cart',
@@ -1270,61 +1213,6 @@ export const HTTPValidationErrorSchema = {
     },
     type: 'object',
     title: 'HTTPValidationError'
-} as const;
-
-export const VisionInferenceKeyPublicSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            title: 'Name',
-            default: 'VisionInference'
-        },
-        endpoint_url: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Endpoint Url'
-        },
-        configured: {
-            type: 'boolean',
-            title: 'Configured',
-            default: false
-        }
-    },
-    type: 'object',
-    title: 'VisionInferenceKeyPublic'
-} as const;
-
-export const VisionInferenceKeyUpdateSchema = {
-    properties: {
-        endpoint_url: {
-            type: 'string',
-            title: 'Endpoint Url'
-        },
-        api_key: {
-            anyOf: [
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Api Key'
-        },
-        clear_api_key: {
-            type: 'boolean',
-            title: 'Clear Api Key',
-            default: false
-        }
-    },
-    type: 'object',
-    required: [
-        'endpoint_url'
-    ],
-    title: 'VisionInferenceKeyUpdate'
 } as const;
 
 export const ItemCreateSchema = {
@@ -2098,6 +1986,66 @@ export const ValidationErrorSchema = {
         'type'
     ],
     title: 'ValidationError'
+} as const;
+
+export const VisionInferenceKeyPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name',
+            default: 'Vision inference provider'
+        },
+        endpoint_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Endpoint Url'
+        },
+        configured: {
+            type: 'boolean',
+            title: 'Configured',
+            default: false
+        }
+    },
+    type: 'object',
+    title: 'VisionInferenceKeyPublic'
+} as const;
+
+export const VisionInferenceKeyUpdateSchema = {
+    properties: {
+        endpoint_url: {
+            type: 'string',
+            title: 'Endpoint Url'
+        },
+        api_key: {
+            anyOf: [
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Api Key'
+        },
+        clear_api_key: {
+            type: 'boolean',
+            title: 'Clear Api Key',
+            default: false
+        }
+    },
+    type: 'object',
+    required: [
+        'endpoint_url'
+    ],
+    title: 'VisionInferenceKeyUpdate'
+} as const;
+
+export const CheckoutSessionPaymentWritableSchema = {
+    type: 'object',
+    title: 'CheckoutSessionPayment'
 } as const;
 
 export const VisionInferenceKeyUpdateWritableSchema = {

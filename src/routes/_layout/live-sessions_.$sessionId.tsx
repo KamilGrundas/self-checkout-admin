@@ -188,7 +188,6 @@ function LiveSessionDetail() {
         <>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <Stat label="Counter" value={session.counter_id.slice(0, 8)} />
-            <Stat label="Client" value={session.client_id.slice(0, 12)} />
             <Stat label="Items" value={String(session.cart.length)} />
             <Stat label="Total" value={total.toFixed(2)} />
           </div>

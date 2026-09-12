@@ -2,7 +2,7 @@
 
 import { buildClientParams, type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysReadVisionInferenceKeyResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ApiKeysUpdateVisionInferenceKeyResponses, AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCounterSelfSettingsUpdate, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors, CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPayment, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, VisionInferenceKeyUpdateWritable, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginAuthConfigResponses, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, OidcIdentityLink, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsListAutolabelModelsResponses, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersLinkOidcIdentityErrors, UsersLinkOidcIdentityResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses } from './types.gen';
+import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysReadVisionInferenceKeyResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ApiKeysUpdateVisionInferenceKeyResponses, AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPaymentWritable, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginAuthConfigResponses, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, LoginCheckCheckoutCounterApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, OidcIdentityLink, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsListAutolabelModelsResponses, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersLinkOidcIdentityErrors, UsersLinkOidcIdentityResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses, VisionInferenceKeyUpdateWritable } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -138,6 +138,22 @@ export class LoginService {
             ...params
         });
     }
+
+    /**
+     * Check Checkout Counter Api Key
+     */
+    public static checkCheckoutCounterApiKey<ThrowOnError extends boolean = true>(parameters: {
+        scope: string;
+        checkout_session_id?: string | null;
+    }, options?: Options<never, ThrowOnError>): RequestResult<LoginCheckCheckoutCounterApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'query', key: 'scope' }, { in: 'query', key: 'checkout_session_id' }] }]);
+        return (options?.client ?? client).post<LoginCheckCheckoutCounterApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, ThrowOnError, 'data'>({
+            responseStyle: 'data',
+            url: '/api/v1/login/checkout-key/check',
+            ...options,
+            ...params
+        });
+    }
 }
 
 export class ApiKeysService {
@@ -191,7 +207,7 @@ export class ApiKeysService {
     }
 
     /**
-     * Read VisionInference Key
+     * Read Vision Inference Key
      */
     public static apiKeysReadVisionInferenceKey<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<ApiKeysReadVisionInferenceKeyResponses, unknown, ThrowOnError, 'data'> {
         return (options?.client ?? client).get<ApiKeysReadVisionInferenceKeyResponses, unknown, ThrowOnError, 'data'>({
@@ -203,12 +219,12 @@ export class ApiKeysService {
     }
 
     /**
-     * Update VisionInference Key
+     * Update Vision Inference Key
      */
     public static apiKeysUpdateVisionInferenceKey<ThrowOnError extends boolean = true>(parameters: {
-        integrationKeyUpdateWritable: VisionInferenceKeyUpdateWritable;
+        visionInferenceKeyUpdateWritable: VisionInferenceKeyUpdateWritable;
     }, options?: Options<never, ThrowOnError>): RequestResult<ApiKeysUpdateVisionInferenceKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'integrationKeyUpdateWritable', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ key: 'visionInferenceKeyUpdateWritable', map: 'body' }] }]);
         return (options?.client ?? client).put<ApiKeysUpdateVisionInferenceKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }],
@@ -915,22 +931,18 @@ export class CheckoutCountersService {
     }
 
     /**
-     * Update Self Checkout Counter Settings
+     * Rotate Checkout Counter Api Key
      */
-    public static checkoutCountersUpdateSelfCheckoutCounterSettings<ThrowOnError extends boolean = true>(parameters: {
-        checkoutCounterSelfSettingsUpdate: CheckoutCounterSelfSettingsUpdate;
-    }, options?: Options<never, ThrowOnError>): RequestResult<CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses, CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'checkoutCounterSelfSettingsUpdate', map: 'body' }] }]);
-        return (options?.client ?? client).put<CheckoutCountersUpdateSelfCheckoutCounterSettingsResponses, CheckoutCountersUpdateSelfCheckoutCounterSettingsErrors, ThrowOnError, 'data'>({
+    public static checkoutCountersRotateCheckoutCounterApiKey<ThrowOnError extends boolean = true>(parameters: {
+        id: string;
+    }, options?: Options<never, ThrowOnError>): RequestResult<CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }] }]);
+        return (options?.client ?? client).post<CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
-            url: '/api/v1/checkout-counters/me/settings',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/checkout-counters/{id}/api-key/rotate',
             ...options,
-            ...params,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options?.headers,
-                ...params.headers
-            }
+            ...params
         });
     }
 }
@@ -957,6 +969,7 @@ export class CheckoutSessionsService {
         const params = buildClientParams([parameters], [{ args: [{ key: 'checkoutSessionConnect', map: 'body' }] }]);
         return (options?.client ?? client).post<CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsConnectCheckoutSessionErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/checkout-sessions/connect',
             ...options,
             ...params,
@@ -978,6 +991,7 @@ export class CheckoutSessionsService {
         const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'checkoutSessionCartUpdate', map: 'body' }] }]);
         return (options?.client ?? client).put<CheckoutSessionsUpdateCheckoutSessionCartResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/checkout-sessions/{id}/cart',
             ...options,
             ...params,
@@ -994,11 +1008,12 @@ export class CheckoutSessionsService {
      */
     public static checkoutSessionsPayCheckoutSession<ThrowOnError extends boolean = true>(parameters: {
         id: string;
-        checkoutSessionPayment: CheckoutSessionPayment;
+        checkoutSessionPaymentWritable: CheckoutSessionPaymentWritable;
     }, options?: Options<never, ThrowOnError>): RequestResult<CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsPayCheckoutSessionErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'checkoutSessionPayment', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'checkoutSessionPaymentWritable', map: 'body' }] }]);
         return (options?.client ?? client).post<CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsPayCheckoutSessionErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/checkout-sessions/{id}/pay',
             ...options,
             ...params,

@@ -47,7 +47,6 @@ const NO_CAMERA_VALUE = "__none__"
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Counter name is required" }),
-  password: z.string().optional(),
   ml_mode: z.enum(["off", "label", "on"]),
   shelf_camera_device_id: z.string().optional(),
   scale_camera_device_id: z.string().optional(),
@@ -132,7 +131,6 @@ const EditCheckoutCounter = ({
     mode: "onBlur",
     defaultValues: {
       name: counter.name,
-      password: "",
       ml_mode: counter.ml_mode ?? "off",
       shelf_camera_device_id: counter.shelf_camera_device_id ?? "",
       scale_camera_device_id: counter.scale_camera_device_id ?? "",
@@ -144,7 +142,6 @@ const EditCheckoutCounter = ({
     mutationFn: (data: FormData) => {
       const requestBody: CheckoutCounterUpdate = {
         name: data.name,
-        password: data.password || undefined,
         ml_mode: data.ml_mode,
         shelf_camera_device_id: data.shelf_camera_device_id?.trim() || null,
         scale_camera_device_id: data.scale_camera_device_id?.trim() || null,
@@ -202,22 +199,6 @@ const EditCheckoutCounter = ({
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("newPassword")}</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <p className="text-xs text-muted-foreground">
-                      {t("newPasswordHelp")}
-                    </p>
                     <FormMessage />
                   </FormItem>
                 )}

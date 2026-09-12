@@ -65,7 +65,6 @@ function LiveSessions() {
             <TableRow>
               <TableHead>Session</TableHead>
               <TableHead>Counter</TableHead>
-              <TableHead>Client</TableHead>
               <TableHead>Items</TableHead>
               <TableHead>Total</TableHead>
               <TableHead>Updated</TableHead>
@@ -85,9 +84,6 @@ function LiveSessions() {
                   </TableCell>
                   <TableCell className="font-mono text-xs">
                     {s.counter_id.slice(0, 8)}
-                  </TableCell>
-                  <TableCell className="font-mono text-xs">
-                    {s.client_id.slice(0, 12)}
                   </TableCell>
                   <TableCell>{s.cart.length}</TableCell>
                   <TableCell>{total.toFixed(2)}</TableCell>
