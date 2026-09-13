@@ -217,7 +217,7 @@ export const AutolabelSettingsPublicSchema = {
         },
         read_timeout_seconds: {
             type: 'integer',
-            maximum: 600,
+            maximum: 6000,
             minimum: 1,
             title: 'Read Timeout Seconds',
             default: 120
@@ -287,7 +287,7 @@ export const AutolabelSettingsRuntimeSchema = {
         },
         read_timeout_seconds: {
             type: 'integer',
-            maximum: 600,
+            maximum: 6000,
             minimum: 1,
             title: 'Read Timeout Seconds',
             default: 120
@@ -330,52 +330,6 @@ export const AutolabelSettingsRuntimeSchema = {
         'configured'
     ],
     title: 'AutolabelSettingsRuntime'
-} as const;
-
-export const AutolabelSettingsUpdateSchema = {
-    properties: {
-        model_name: {
-            type: 'string',
-            maxLength: 512,
-            title: 'Model Name',
-            default: ''
-        },
-        endpoint_url: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 2048
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Endpoint Url'
-        },
-        max_tokens: {
-            type: 'integer',
-            maximum: 4096,
-            minimum: 1,
-            title: 'Max Tokens',
-            default: 512
-        },
-        connect_timeout_seconds: {
-            type: 'integer',
-            maximum: 30,
-            minimum: 1,
-            title: 'Connect Timeout Seconds',
-            default: 5
-        },
-        read_timeout_seconds: {
-            type: 'integer',
-            maximum: 600,
-            minimum: 1,
-            title: 'Read Timeout Seconds',
-            default: 120
-        }
-    },
-    type: 'object',
-    title: 'AutolabelSettingsUpdate'
 } as const;
 
 export const AvailableModelSchema = {
@@ -511,6 +465,15 @@ export const Body_products_upload_product_imageSchema = {
     title: 'Body_products-upload_product_image'
 } as const;
 
+export const CatalogLanguageSchema = {
+    type: 'string',
+    enum: [
+        'en',
+        'pl'
+    ],
+    title: 'CatalogLanguage'
+} as const;
+
 export const CategoriesPublicSchema = {
     properties: {
         data: {
@@ -563,6 +526,28 @@ export const CategoryPublicSchema = {
             minLength: 1,
             title: 'Key'
         },
+        name_en: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name En'
+        },
+        name_pl: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name Pl'
+        },
         id: {
             type: 'string',
             format: 'uuid',
@@ -604,6 +589,32 @@ export const CategoryUpdateSchema = {
                 }
             ],
             title: 'Name'
+        },
+        name_en: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name En'
+        },
+        name_pl: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name Pl'
         }
     },
     type: 'object',
@@ -1088,6 +1099,7 @@ export const CheckoutSessionConnectSchema = {
 } as const;
 
 export const CheckoutSessionPaymentSchema = {
+    properties: {},
     type: 'object',
     title: 'CheckoutSessionPayment'
 } as const;
@@ -1384,35 +1396,6 @@ export const NewPasswordSchema = {
     title: 'NewPassword'
 } as const;
 
-export const PrivateUserCreateSchema = {
-    properties: {
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        password: {
-            type: 'string',
-            title: 'Password'
-        },
-        full_name: {
-            type: 'string',
-            title: 'Full Name'
-        },
-        is_verified: {
-            type: 'boolean',
-            title: 'Is Verified',
-            default: false
-        }
-    },
-    type: 'object',
-    required: [
-        'email',
-        'password',
-        'full_name'
-    ],
-    title: 'PrivateUserCreate'
-} as const;
-
 export const ProductCreateSchema = {
     properties: {
         name: {
@@ -1523,6 +1506,28 @@ export const ProductPublicSchema = {
             ],
             title: 'Thumbnail Url'
         },
+        name_en: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name En'
+        },
+        name_pl: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name Pl'
+        },
         id: {
             type: 'string',
             format: 'uuid',
@@ -1536,6 +1541,28 @@ export const ProductPublicSchema = {
         category_name: {
             type: 'string',
             title: 'Category Name'
+        },
+        category_name_en: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Category Name En'
+        },
+        category_name_pl: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Category Name Pl'
         },
         category_key: {
             type: 'string',
@@ -1590,6 +1617,32 @@ export const ProductUpdateSchema = {
                 }
             ],
             title: 'Name'
+        },
+        name_en: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name En'
+        },
+        name_pl: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255,
+                    minLength: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name Pl'
         },
         price: {
             anyOf: [
@@ -1996,14 +2049,104 @@ export const ValidationErrorSchema = {
     title: 'ValidationError'
 } as const;
 
-export const VisionInferenceKeyPublicSchema = {
+export const VisionInferenceIntegrationCreateSchema = {
     properties: {
         name: {
             type: 'string',
-            title: 'Name',
-            default: 'Vision inference provider'
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name'
         },
         endpoint_url: {
+            type: 'string',
+            maxLength: 2048,
+            title: 'Endpoint Url'
+        },
+        model_name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 512
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Model Name'
+        },
+        read_timeout_seconds: {
+            type: 'integer',
+            maximum: 6000,
+            minimum: 1,
+            title: 'Read Timeout Seconds',
+            default: 120
+        },
+        api_key: {
+            type: 'string',
+            maxLength: 4096,
+            minLength: 1,
+            title: 'Api Key'
+        }
+    },
+    type: 'object',
+    required: [
+        'name',
+        'endpoint_url',
+        'api_key'
+    ],
+    title: 'VisionInferenceIntegrationCreate'
+} as const;
+
+export const VisionInferenceIntegrationPublicSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            maxLength: 255,
+            minLength: 1,
+            title: 'Name'
+        },
+        endpoint_url: {
+            type: 'string',
+            maxLength: 2048,
+            title: 'Endpoint Url'
+        },
+        model_name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 512
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Model Name'
+        },
+        read_timeout_seconds: {
+            type: 'integer',
+            maximum: 6000,
+            minimum: 1,
+            title: 'Read Timeout Seconds',
+            default: 120
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        api_key_configured: {
+            type: 'boolean',
+            title: 'Api Key Configured'
+        },
+        configured: {
+            type: 'boolean',
+            title: 'Configured'
+        },
+        active: {
+            type: 'boolean',
+            title: 'Active'
+        },
+        active_model: {
             anyOf: [
                 {
                     type: 'string'
@@ -2012,78 +2155,79 @@ export const VisionInferenceKeyPublicSchema = {
                     type: 'null'
                 }
             ],
-            title: 'Endpoint Url'
+            title: 'Active Model'
         },
-        configured: {
+        model_loaded: {
             type: 'boolean',
-            title: 'Configured',
-            default: false
-        }
-    },
-    type: 'object',
-    title: 'VisionInferenceKeyPublic'
-} as const;
-
-export const VisionInferenceKeyUpdateSchema = {
-    properties: {
-        endpoint_url: {
-            type: 'string',
-            title: 'Endpoint Url'
-        },
-        api_key: {
-            anyOf: [
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Api Key'
-        },
-        clear_api_key: {
-            type: 'boolean',
-            title: 'Clear Api Key',
+            title: 'Model Loaded',
             default: false
         }
     },
     type: 'object',
     required: [
-        'endpoint_url'
+        'name',
+        'endpoint_url',
+        'id',
+        'api_key_configured',
+        'configured',
+        'active'
     ],
-    title: 'VisionInferenceKeyUpdate'
+    title: 'VisionInferenceIntegrationPublic'
 } as const;
 
-export const CheckoutSessionPaymentWritableSchema = {
-    type: 'object',
-    title: 'CheckoutSessionPayment'
-} as const;
-
-export const VisionInferenceKeyUpdateWritableSchema = {
+export const VisionInferenceIntegrationUpdateSchema = {
     properties: {
-        endpoint_url: {
-            type: 'string',
-            title: 'Endpoint Url'
-        },
-        api_key: {
+        name: {
             anyOf: [
                 {
                     type: 'string',
-                    format: 'password',
-                    writeOnly: true
+                    maxLength: 255,
+                    minLength: 1
                 },
                 {
                     type: 'null'
                 }
             ],
-            title: 'Api Key'
+            title: 'Name'
         },
-        clear_api_key: {
-            type: 'boolean',
-            title: 'Clear Api Key',
-            default: false
+        endpoint_url: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 2048
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Endpoint Url'
+        },
+        model_name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 512
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Model Name'
+        },
+        read_timeout_seconds: {
+            anyOf: [
+                {
+                    type: 'integer',
+                    maximum: 6000,
+                    minimum: 1
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Read Timeout Seconds'
         }
     },
     type: 'object',
-    required: [
-        'endpoint_url'
-    ],
-    title: 'VisionInferenceKeyUpdate'
+    title: 'VisionInferenceIntegrationUpdate'
 } as const;

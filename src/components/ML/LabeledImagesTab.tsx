@@ -99,7 +99,7 @@ function Thumbnail({ image }: { image: LabeledImage }) {
 }
 
 export function LabeledImagesTab() {
-  const { t } = useI18n()
+  const { language, t } = useI18n()
   const queryClient = useQueryClient()
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [productId, setProductId] = useState("")
@@ -111,8 +111,8 @@ export function LabeledImagesTab() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const productsQuery = useQuery({
-    queryKey: ["products-for-labeling"],
-    queryFn: () => ProductsService.readProducts({ limit: 500 }),
+    queryKey: ["products-for-labeling", language],
+    queryFn: () => ProductsService.readProducts({ limit: 500, language }),
   })
   const products = productsQuery.data?.data ?? []
   const imagesQuery = useInfiniteQuery({

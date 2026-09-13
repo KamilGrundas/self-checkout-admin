@@ -2,7 +2,7 @@
 
 import { buildClientParams, type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysReadVisionInferenceKeyResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ApiKeysUpdateVisionInferenceKeyResponses, AutolabelSettingsUpdate, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPaymentWritable, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, LoginCheckCheckoutCounterApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginRegistrationConfigResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, PrivateCreateUserErrors, PrivateCreateUserResponses, PrivateUserCreate, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsListAutolabelModelsResponses, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, SystemSettingsUpdateAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses, VisionInferenceKeyUpdateWritable } from './types.gen';
+import type { ApiKeyCreate, ApiKeysCreateApiKeyErrors, ApiKeysCreateApiKeyResponses, ApiKeysListApiKeysResponses, ApiKeysRevokeApiKeyErrors, ApiKeysRevokeApiKeyResponses, BodyLoginLoginAccessToken, BodyProductsUploadProductImage, CatalogLanguage, CategoriesCreateCategoryErrors, CategoriesCreateCategoryResponses, CategoriesDeleteCategoryErrors, CategoriesDeleteCategoryResponses, CategoriesReadCategoriesErrors, CategoriesReadCategoriesResponses, CategoriesUpdateCategoryErrors, CategoriesUpdateCategoryResponses, CategoryCreate, CategoryUpdate, CheckoutCounterCreate, CheckoutCountersCreateCheckoutCounterErrors, CheckoutCountersCreateCheckoutCounterResponses, CheckoutCountersDeleteCheckoutCounterErrors, CheckoutCountersDeleteCheckoutCounterResponses, CheckoutCountersReadCheckoutCountersResponses, CheckoutCountersRotateCheckoutCounterApiKeyErrors, CheckoutCountersRotateCheckoutCounterApiKeyResponses, CheckoutCountersUpdateCheckoutCounterErrors, CheckoutCountersUpdateCheckoutCounterResponses, CheckoutCounterUpdate, CheckoutSessionCartUpdate, CheckoutSessionConnect, CheckoutSessionPayment, CheckoutSessionsConnectCheckoutSessionErrors, CheckoutSessionsConnectCheckoutSessionResponses, CheckoutSessionsListActiveCheckoutSessionsResponses, CheckoutSessionsPayCheckoutSessionErrors, CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsUpdateCheckoutSessionCartErrors, CheckoutSessionsUpdateCheckoutSessionCartResponses, ItemCreate, ItemsCreateItemErrors, ItemsCreateItemResponses, ItemsDeleteItemErrors, ItemsDeleteItemResponses, ItemsReadItemErrors, ItemsReadItemResponses, ItemsReadItemsErrors, ItemsReadItemsResponses, ItemsUpdateItemErrors, ItemsUpdateItemResponses, ItemUpdate, LoginCheckApiKeyErrors, LoginCheckApiKeyResponses, LoginCheckCheckoutCounterApiKeyErrors, LoginCheckCheckoutCounterApiKeyResponses, LoginLoginAccessTokenErrors, LoginLoginAccessTokenResponses, LoginRecoverPasswordErrors, LoginRecoverPasswordHtmlContentErrors, LoginRecoverPasswordHtmlContentResponses, LoginRecoverPasswordResponses, LoginRegistrationConfigResponses, LoginResetPasswordErrors, LoginResetPasswordResponses, LoginTestTokenResponses, NewPassword, ProductCreate, ProductsCreateProductErrors, ProductsCreateProductResponses, ProductsDeleteProductErrors, ProductsDeleteProductResponses, ProductsReadProductErrors, ProductsReadProductResponses, ProductsReadProductsErrors, ProductsReadProductsResponses, ProductsUpdateProductErrors, ProductsUpdateProductResponses, ProductsUploadProductImageErrors, ProductsUploadProductImageResponses, ProductUpdate, SystemSettingsReadAutolabelRuntimeResponses, SystemSettingsReadAutolabelSettingsResponses, UpdatePassword, UserCreate, UserRegister, UsersCreateUserErrors, UsersCreateUserResponses, UsersDeleteUserErrors, UsersDeleteUserMeResponses, UsersDeleteUserResponses, UsersReadUserByIdErrors, UsersReadUserByIdResponses, UsersReadUserMeResponses, UsersReadUsersErrors, UsersReadUsersResponses, UsersRegisterUserErrors, UsersRegisterUserResponses, UsersUpdatePasswordMeErrors, UsersUpdatePasswordMeResponses, UsersUpdateUserErrors, UsersUpdateUserMeErrors, UsersUpdateUserMeResponses, UsersUpdateUserResponses, UserUpdate, UserUpdateMe, UtilsHealthCheckResponses, UtilsTestEmailErrors, UtilsTestEmailResponses, VisionInferenceIntegrationCreate, VisionInferenceIntegrationsActivateIntegrationErrors, VisionInferenceIntegrationsActivateIntegrationResponses, VisionInferenceIntegrationsCreateIntegrationErrors, VisionInferenceIntegrationsCreateIntegrationResponses, VisionInferenceIntegrationsListIntegrationsResponses, VisionInferenceIntegrationsListModelsErrors, VisionInferenceIntegrationsListModelsResponses, VisionInferenceIntegrationsUpdateIntegrationErrors, VisionInferenceIntegrationsUpdateIntegrationResponses, VisionInferenceIntegrationUpdate } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -203,39 +203,6 @@ export class ApiKeysService {
             url: '/api/v1/api-keys/{key_id}',
             ...options,
             ...params
-        });
-    }
-
-    /**
-     * Read Vision Inference Key
-     */
-    public static apiKeysReadVisionInferenceKey<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<ApiKeysReadVisionInferenceKeyResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<ApiKeysReadVisionInferenceKeyResponses, unknown, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/api-keys/integrations/vision-inference',
-            ...options
-        });
-    }
-
-    /**
-     * Update Vision Inference Key
-     */
-    public static apiKeysUpdateVisionInferenceKey<ThrowOnError extends boolean = true>(parameters: {
-        visionInferenceKeyUpdateWritable: VisionInferenceKeyUpdateWritable;
-    }, options?: Options<never, ThrowOnError>): RequestResult<ApiKeysUpdateVisionInferenceKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'visionInferenceKeyUpdateWritable', map: 'body' }] }]);
-        return (options?.client ?? client).put<ApiKeysUpdateVisionInferenceKeyResponses, ApiKeysUpdateVisionInferenceKeyErrors, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/api-keys/integrations/vision-inference',
-            ...options,
-            ...params,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options?.headers,
-                ...params.headers
-            }
         });
     }
 }
@@ -584,8 +551,13 @@ export class ProductsService {
     public static readProducts<ThrowOnError extends boolean = true>(parameters?: {
         skip?: number;
         limit?: number;
+        language?: CatalogLanguage;
     }, options?: Options<never, ThrowOnError>): RequestResult<ProductsReadProductsResponses, ProductsReadProductsErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'query', key: 'skip' }, { in: 'query', key: 'limit' }] }]);
+        const params = buildClientParams([parameters], [{ args: [
+                    { in: 'query', key: 'skip' },
+                    { in: 'query', key: 'limit' },
+                    { in: 'query', key: 'language' }
+                ] }]);
         return (options?.client ?? client).get<ProductsReadProductsResponses, ProductsReadProductsErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -601,9 +573,10 @@ export class ProductsService {
      * Create new product.
      */
     public static createProduct<ThrowOnError extends boolean = true>(parameters: {
+        language?: CatalogLanguage;
         productCreate: ProductCreate;
     }, options?: Options<never, ThrowOnError>): RequestResult<ProductsCreateProductResponses, ProductsCreateProductErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'productCreate', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ in: 'query', key: 'language' }, { key: 'productCreate', map: 'body' }] }]);
         return (options?.client ?? client).post<ProductsCreateProductResponses, ProductsCreateProductErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -643,8 +616,9 @@ export class ProductsService {
      */
     public static readProduct<ThrowOnError extends boolean = true>(parameters: {
         id: string;
+        language?: CatalogLanguage;
     }, options?: Options<never, ThrowOnError>): RequestResult<ProductsReadProductResponses, ProductsReadProductErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { in: 'query', key: 'language' }] }]);
         return (options?.client ?? client).get<ProductsReadProductResponses, ProductsReadProductErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -661,9 +635,14 @@ export class ProductsService {
      */
     public static updateProduct<ThrowOnError extends boolean = true>(parameters: {
         id: string;
+        language?: CatalogLanguage;
         productUpdate: ProductUpdate;
     }, options?: Options<never, ThrowOnError>): RequestResult<ProductsUpdateProductResponses, ProductsUpdateProductErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'productUpdate', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [
+                    { in: 'path', key: 'id' },
+                    { in: 'query', key: 'language' },
+                    { key: 'productUpdate', map: 'body' }
+                ] }]);
         return (options?.client ?? client).put<ProductsUpdateProductResponses, ProductsUpdateProductErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -685,9 +664,14 @@ export class ProductsService {
      */
     public static uploadProductImage<ThrowOnError extends boolean = true>(parameters: {
         id: string;
+        language?: CatalogLanguage;
         bodyProductsUploadProductImage: BodyProductsUploadProductImage;
     }, options?: Options<never, ThrowOnError>): RequestResult<ProductsUploadProductImageResponses, ProductsUploadProductImageErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'bodyProductsUploadProductImage', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [
+                    { in: 'path', key: 'id' },
+                    { in: 'query', key: 'language' },
+                    { key: 'bodyProductsUploadProductImage', map: 'body' }
+                ] }]);
         return (options?.client ?? client).post<ProductsUploadProductImageResponses, ProductsUploadProductImageErrors, ThrowOnError, 'data'>({
             ...formDataBodySerializer,
             responseStyle: 'data',
@@ -718,16 +702,42 @@ export class SystemSettingsService {
     }
 
     /**
-     * Update Autolabel Settings
+     * Read Autolabel Runtime
      */
-    public static systemSettingsUpdateAutolabelSettings<ThrowOnError extends boolean = true>(parameters: {
-        autolabelSettingsUpdate: AutolabelSettingsUpdate;
-    }, options?: Options<never, ThrowOnError>): RequestResult<SystemSettingsUpdateAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'autolabelSettingsUpdate', map: 'body' }] }]);
-        return (options?.client ?? client).put<SystemSettingsUpdateAutolabelSettingsResponses, SystemSettingsUpdateAutolabelSettingsErrors, ThrowOnError, 'data'>({
+    public static systemSettingsReadAutolabelRuntime<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<SystemSettingsReadAutolabelRuntimeResponses, unknown, ThrowOnError, 'data'> {
+        return (options?.client ?? client).get<SystemSettingsReadAutolabelRuntimeResponses, unknown, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/system-settings/autolabel',
+            url: '/api/v1/system-settings/autolabel/runtime',
+            ...options
+        });
+    }
+}
+
+export class VisionInferenceIntegrationsService {
+    /**
+     * List Integrations
+     */
+    public static visionInferenceIntegrationsListIntegrations<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<VisionInferenceIntegrationsListIntegrationsResponses, unknown, ThrowOnError, 'data'> {
+        return (options?.client ?? client).get<VisionInferenceIntegrationsListIntegrationsResponses, unknown, ThrowOnError, 'data'>({
+            responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/vision-inference-integrations/',
+            ...options
+        });
+    }
+
+    /**
+     * Create Integration
+     */
+    public static visionInferenceIntegrationsCreateIntegration<ThrowOnError extends boolean = true>(parameters: {
+        visionInferenceIntegrationCreate: VisionInferenceIntegrationCreate;
+    }, options?: Options<never, ThrowOnError>): RequestResult<VisionInferenceIntegrationsCreateIntegrationResponses, VisionInferenceIntegrationsCreateIntegrationErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ key: 'visionInferenceIntegrationCreate', map: 'body' }] }]);
+        return (options?.client ?? client).post<VisionInferenceIntegrationsCreateIntegrationResponses, VisionInferenceIntegrationsCreateIntegrationErrors, ThrowOnError, 'data'>({
+            responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/vision-inference-integrations/',
             ...options,
             ...params,
             headers: {
@@ -739,26 +749,56 @@ export class SystemSettingsService {
     }
 
     /**
-     * Read Autolabel Runtime
+     * Update Integration
      */
-    public static systemSettingsReadAutolabelRuntime<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<SystemSettingsReadAutolabelRuntimeResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<SystemSettingsReadAutolabelRuntimeResponses, unknown, ThrowOnError, 'data'>({
+    public static visionInferenceIntegrationsUpdateIntegration<ThrowOnError extends boolean = true>(parameters: {
+        integration_id: string;
+        visionInferenceIntegrationUpdate: VisionInferenceIntegrationUpdate;
+    }, options?: Options<never, ThrowOnError>): RequestResult<VisionInferenceIntegrationsUpdateIntegrationResponses, VisionInferenceIntegrationsUpdateIntegrationErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'integration_id' }, { key: 'visionInferenceIntegrationUpdate', map: 'body' }] }]);
+        return (options?.client ?? client).patch<VisionInferenceIntegrationsUpdateIntegrationResponses, VisionInferenceIntegrationsUpdateIntegrationErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/system-settings/autolabel/runtime',
-            ...options
+            url: '/api/v1/vision-inference-integrations/{integration_id}',
+            ...options,
+            ...params,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options?.headers,
+                ...params.headers
+            }
         });
     }
 
     /**
-     * List Autolabel Models
+     * Activate Integration
      */
-    public static systemSettingsListAutolabelModels<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<SystemSettingsListAutolabelModelsResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<SystemSettingsListAutolabelModelsResponses, unknown, ThrowOnError, 'data'>({
+    public static visionInferenceIntegrationsActivateIntegration<ThrowOnError extends boolean = true>(parameters: {
+        integration_id: string;
+    }, options?: Options<never, ThrowOnError>): RequestResult<VisionInferenceIntegrationsActivateIntegrationResponses, VisionInferenceIntegrationsActivateIntegrationErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'integration_id' }] }]);
+        return (options?.client ?? client).post<VisionInferenceIntegrationsActivateIntegrationResponses, VisionInferenceIntegrationsActivateIntegrationErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }],
-            url: '/api/v1/system-settings/autolabel/models',
-            ...options
+            url: '/api/v1/vision-inference-integrations/{integration_id}/activate',
+            ...options,
+            ...params
+        });
+    }
+
+    /**
+     * List Models
+     */
+    public static visionInferenceIntegrationsListModels<ThrowOnError extends boolean = true>(parameters: {
+        integration_id: string;
+    }, options?: Options<never, ThrowOnError>): RequestResult<VisionInferenceIntegrationsListModelsResponses, VisionInferenceIntegrationsListModelsErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'integration_id' }] }]);
+        return (options?.client ?? client).get<VisionInferenceIntegrationsListModelsResponses, VisionInferenceIntegrationsListModelsErrors, ThrowOnError, 'data'>({
+            responseStyle: 'data',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/vision-inference-integrations/{integration_id}/models',
+            ...options,
+            ...params
         });
     }
 }
@@ -767,12 +807,16 @@ export class CategoriesService {
     /**
      * Read Categories
      */
-    public static readCategories<ThrowOnError extends boolean = true>(options?: Options<never, ThrowOnError>): RequestResult<CategoriesReadCategoriesResponses, unknown, ThrowOnError, 'data'> {
-        return (options?.client ?? client).get<CategoriesReadCategoriesResponses, unknown, ThrowOnError, 'data'>({
+    public static readCategories<ThrowOnError extends boolean = true>(parameters?: {
+        language?: CatalogLanguage;
+    }, options?: Options<never, ThrowOnError>): RequestResult<CategoriesReadCategoriesResponses, CategoriesReadCategoriesErrors, ThrowOnError, 'data'> {
+        const params = buildClientParams([parameters], [{ args: [{ in: 'query', key: 'language' }] }]);
+        return (options?.client ?? client).get<CategoriesReadCategoriesResponses, CategoriesReadCategoriesErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/categories/',
-            ...options
+            ...options,
+            ...params
         });
     }
 
@@ -780,9 +824,10 @@ export class CategoriesService {
      * Create Category
      */
     public static createCategory<ThrowOnError extends boolean = true>(parameters: {
+        language?: CatalogLanguage;
         categoryCreate: CategoryCreate;
     }, options?: Options<never, ThrowOnError>): RequestResult<CategoriesCreateCategoryResponses, CategoriesCreateCategoryErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'categoryCreate', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ in: 'query', key: 'language' }, { key: 'categoryCreate', map: 'body' }] }]);
         return (options?.client ?? client).post<CategoriesCreateCategoryResponses, CategoriesCreateCategoryErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -818,9 +863,14 @@ export class CategoriesService {
      */
     public static updateCategory<ThrowOnError extends boolean = true>(parameters: {
         id: string;
+        language?: CatalogLanguage;
         categoryUpdate: CategoryUpdate;
     }, options?: Options<never, ThrowOnError>): RequestResult<CategoriesUpdateCategoryResponses, CategoriesUpdateCategoryErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'categoryUpdate', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [
+                    { in: 'path', key: 'id' },
+                    { in: 'query', key: 'language' },
+                    { key: 'categoryUpdate', map: 'body' }
+                ] }]);
         return (options?.client ?? client).put<CategoriesUpdateCategoryResponses, CategoriesUpdateCategoryErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
@@ -986,37 +1036,13 @@ export class CheckoutSessionsService {
      */
     public static checkoutSessionsPayCheckoutSession<ThrowOnError extends boolean = true>(parameters: {
         id: string;
-        checkoutSessionPaymentWritable: CheckoutSessionPaymentWritable;
+        checkoutSessionPayment: CheckoutSessionPayment;
     }, options?: Options<never, ThrowOnError>): RequestResult<CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsPayCheckoutSessionErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'checkoutSessionPaymentWritable', map: 'body' }] }]);
+        const params = buildClientParams([parameters], [{ args: [{ in: 'path', key: 'id' }, { key: 'checkoutSessionPayment', map: 'body' }] }]);
         return (options?.client ?? client).post<CheckoutSessionsPayCheckoutSessionResponses, CheckoutSessionsPayCheckoutSessionErrors, ThrowOnError, 'data'>({
             responseStyle: 'data',
             security: [{ scheme: 'bearer', type: 'http' }, { name: 'X-API-Key', type: 'apiKey' }],
             url: '/api/v1/checkout-sessions/{id}/pay',
-            ...options,
-            ...params,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options?.headers,
-                ...params.headers
-            }
-        });
-    }
-}
-
-export class PrivateService {
-    /**
-     * Create User
-     *
-     * Create a new user.
-     */
-    public static createUser<ThrowOnError extends boolean = true>(parameters: {
-        privateUserCreate: PrivateUserCreate;
-    }, options?: Options<never, ThrowOnError>): RequestResult<PrivateCreateUserResponses, PrivateCreateUserErrors, ThrowOnError, 'data'> {
-        const params = buildClientParams([parameters], [{ args: [{ key: 'privateUserCreate', map: 'body' }] }]);
-        return (options?.client ?? client).post<PrivateCreateUserResponses, PrivateCreateUserErrors, ThrowOnError, 'data'>({
-            responseStyle: 'data',
-            url: '/api/v1/private/users/',
             ...options,
             ...params,
             headers: {

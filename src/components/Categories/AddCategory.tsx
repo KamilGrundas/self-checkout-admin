@@ -41,7 +41,7 @@ const AddCategory = () => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { t } = useI18n()
+  const { language, t } = useI18n()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -51,7 +51,7 @@ const AddCategory = () => {
 
   const mutation = useMutation({
     mutationFn: (data: CategoryCreate) =>
-      CategoriesService.createCategory({ categoryCreate: data }),
+      CategoriesService.createCategory({ categoryCreate: data, language }),
     onSuccess: () => {
       showSuccessToast(t("categoryCreated"))
       form.reset()

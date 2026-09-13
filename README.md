@@ -14,6 +14,13 @@ Authentication, user settings, and superuser user management are kept from the
 template. Camera inventory, vision inference integrations, thumbnails, and
 autolabeling actions are restricted by the backend/ML superuser checks.
 
+The administrator's existing interface-language selector also selects the
+catalog language for that browser session. Product and category lists use that
+language; creating or editing the regular name field stores it as the English
+or Polish translation accordingly. When the selected translation is empty, the
+available translation is shown instead. The translation controls on product and
+category editing remain available to superusers.
+
 Vision inference providers are configured in **Integrations**, not API Keys or
 the ML label tab. Each integration contains a display name, a full
 OpenAI-compatible chat-completions endpoint, and a write-only API key. The

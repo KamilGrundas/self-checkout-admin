@@ -11,10 +11,10 @@ import PendingCatalog from "@/components/Pending/PendingCatalog"
 import useAuth from "@/hooks/useAuth"
 import { useI18n } from "@/i18n"
 
-function getCategoriesQueryOptions() {
+function getCategoriesQueryOptions(language: "en" | "pl") {
   return {
-    queryFn: () => CategoriesService.readCategories(),
-    queryKey: ["categories"],
+    queryFn: () => CategoriesService.readCategories({ language }),
+    queryKey: ["categories", language],
   }
 }
 
@@ -30,8 +30,10 @@ export const Route = createFileRoute("/_layout/categories")({
 })
 
 function CategoriesTableContent() {
-  const { data: categories } = useSuspenseQuery(getCategoriesQueryOptions())
-  const { t } = useI18n()
+  const { language, t } = useI18n()
+  const { data: categories } = useSuspenseQuery(
+    getCategoriesQueryOptions(language),
+  )
   const { user } = useAuth()
 
   if (categories.data.length === 0) {

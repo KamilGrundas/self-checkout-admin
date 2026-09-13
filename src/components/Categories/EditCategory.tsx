@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Pencil } from "lucide-react"
-import { useState } from "react"
+import { Languages, Pencil } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -33,6 +33,8 @@ import { handleError } from "@/utils"
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Category name is required" }),
+  name_en: z.string(),
+  name_pl: z.string(),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -44,22 +46,47 @@ interface EditCategoryProps {
 
 const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [showTranslations, setShowTranslations] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { t } = useI18n()
+  const { language, t } = useI18n()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: { name: category.name },
+    defaultValues: {
+      name: category.name,
+      name_en: category.name_en ?? "",
+      name_pl: category.name_pl ?? "",
+    },
   })
 
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+    form.reset({
+      name: category.name,
+      name_en: category.name_en ?? "",
+      name_pl: category.name_pl ?? "",
+    })
+    setShowTranslations(false)
+  }, [category, form, isOpen])
+
   const mutation = useMutation({
-    mutationFn: (data: FormData) =>
-      CategoriesService.updateCategory({
+    mutationFn: (data: FormData) => {
+      const categoryUpdate = {
+        ...(form.formState.dirtyFields.name ? { name: data.name } : {}),
+        ...(showTranslations
+          ? { name_en: data.name_en || null, name_pl: data.name_pl || null }
+          : {}),
+      }
+      return CategoriesService.updateCategory({
         id: category.id,
-        categoryUpdate: data,
-      }),
+        categoryUpdate,
+        language,
+      })
+    },
     onSuccess: () => {
       showSuccessToast(t("categoryUpdated"))
       setIsOpen(false)
@@ -108,6 +135,46 @@ const EditCategory = ({ category, onSuccess }: EditCategoryProps) => {
                   </FormItem>
                 )}
               />
+              <Button
+                className="w-fit"
+                type="button"
+                variant="outline"
+                onClick={() => setShowTranslations(true)}
+              >
+                <Languages className="mr-2" />
+                {t("addTranslation")}
+              </Button>
+              {showTranslations && (
+                <div className="grid gap-4 rounded-md border p-4">
+                  <p className="text-sm font-medium">{t("translations")}</p>
+                  <FormField
+                    control={form.control}
+                    name="name_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("english")}</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Fruit" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="name_pl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("polish")}</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Owoce" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
             </div>
             <DialogFooter>
               <DialogClose asChild>

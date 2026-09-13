@@ -183,32 +183,6 @@ export type AutolabelSettingsRuntime = {
 };
 
 /**
- * AutolabelSettingsUpdate
- */
-export type AutolabelSettingsUpdate = {
-    /**
-     * Model Name
-     */
-    model_name?: string;
-    /**
-     * Endpoint Url
-     */
-    endpoint_url?: string | null;
-    /**
-     * Max Tokens
-     */
-    max_tokens?: number;
-    /**
-     * Connect Timeout Seconds
-     */
-    connect_timeout_seconds?: number;
-    /**
-     * Read Timeout Seconds
-     */
-    read_timeout_seconds?: number;
-};
-
-/**
  * AvailableModel
  */
 export type AvailableModel = {
@@ -281,6 +255,11 @@ export type BodyProductsUploadProductImage = {
 };
 
 /**
+ * CatalogLanguage
+ */
+export type CatalogLanguage = 'en' | 'pl';
+
+/**
  * CategoriesPublic
  */
 export type CategoriesPublic = {
@@ -317,6 +296,14 @@ export type CategoryPublic = {
      */
     key: string;
     /**
+     * Name En
+     */
+    name_en?: string | null;
+    /**
+     * Name Pl
+     */
+    name_pl?: string | null;
+    /**
      * Id
      */
     id: string;
@@ -334,6 +321,14 @@ export type CategoryUpdate = {
      * Name
      */
     name?: string | null;
+    /**
+     * Name En
+     */
+    name_en?: string | null;
+    /**
+     * Name Pl
+     */
+    name_pl?: string | null;
 };
 
 /**
@@ -741,28 +736,6 @@ export type NewPassword = {
 };
 
 /**
- * PrivateUserCreate
- */
-export type PrivateUserCreate = {
-    /**
-     * Email
-     */
-    email: string;
-    /**
-     * Password
-     */
-    password: string;
-    /**
-     * Full Name
-     */
-    full_name: string;
-    /**
-     * Is Verified
-     */
-    is_verified?: boolean;
-};
-
-/**
  * ProductCreate
  */
 export type ProductCreate = {
@@ -811,6 +784,14 @@ export type ProductPublic = {
      */
     thumbnail_url?: string | null;
     /**
+     * Name En
+     */
+    name_en?: string | null;
+    /**
+     * Name Pl
+     */
+    name_pl?: string | null;
+    /**
      * Id
      */
     id: string;
@@ -822,6 +803,14 @@ export type ProductPublic = {
      * Category Name
      */
     category_name: string;
+    /**
+     * Category Name En
+     */
+    category_name_en?: string | null;
+    /**
+     * Category Name Pl
+     */
+    category_name_pl?: string | null;
     /**
      * Category Key
      */
@@ -845,6 +834,14 @@ export type ProductUpdate = {
      * Name
      */
     name?: string | null;
+    /**
+     * Name En
+     */
+    name_en?: string | null;
+    /**
+     * Name Pl
+     */
+    name_pl?: string | null;
     /**
      * Price
      */
@@ -1059,64 +1056,97 @@ export type ValidationError = {
 };
 
 /**
- * VisionInferenceKeyPublic
+ * VisionInferenceIntegrationCreate
  */
-export type VisionInferenceKeyPublic = {
+export type VisionInferenceIntegrationCreate = {
     /**
      * Name
      */
-    name?: string;
+    name: string;
+    /**
+     * Endpoint Url
+     */
+    endpoint_url: string;
+    /**
+     * Model Name
+     */
+    model_name?: string | null;
+    /**
+     * Read Timeout Seconds
+     */
+    read_timeout_seconds?: number;
+    /**
+     * Api Key
+     */
+    api_key: string;
+};
+
+/**
+ * VisionInferenceIntegrationPublic
+ */
+export type VisionInferenceIntegrationPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Endpoint Url
+     */
+    endpoint_url: string;
+    /**
+     * Model Name
+     */
+    model_name?: string | null;
+    /**
+     * Read Timeout Seconds
+     */
+    read_timeout_seconds?: number;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Api Key Configured
+     */
+    api_key_configured: boolean;
+    /**
+     * Configured
+     */
+    configured: boolean;
+    /**
+     * Active
+     */
+    active: boolean;
+    /**
+     * Active Model
+     */
+    active_model?: string | null;
+    /**
+     * Model Loaded
+     */
+    model_loaded?: boolean;
+};
+
+/**
+ * VisionInferenceIntegrationUpdate
+ */
+export type VisionInferenceIntegrationUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
     /**
      * Endpoint Url
      */
     endpoint_url?: string | null;
     /**
-     * Configured
+     * Model Name
      */
-    configured?: boolean;
-};
-
-/**
- * VisionInferenceKeyUpdate
- */
-export type VisionInferenceKeyUpdate = {
+    model_name?: string | null;
     /**
-     * Endpoint Url
+     * Read Timeout Seconds
      */
-    endpoint_url: string;
-    /**
-     * Api Key
-     */
-    api_key?: null;
-    /**
-     * Clear Api Key
-     */
-    clear_api_key?: boolean;
-};
-
-/**
- * CheckoutSessionPayment
- */
-export type CheckoutSessionPaymentWritable = {
-    [key: string]: unknown;
-};
-
-/**
- * VisionInferenceKeyUpdate
- */
-export type VisionInferenceKeyUpdateWritable = {
-    /**
-     * Endpoint Url
-     */
-    endpoint_url: string;
-    /**
-     * Api Key
-     */
-    api_key?: string | null;
-    /**
-     * Clear Api Key
-     */
-    clear_api_key?: boolean;
+    read_timeout_seconds?: number | null;
 };
 
 export type LoginLoginAccessTokenData = {
@@ -1409,47 +1439,6 @@ export type ApiKeysRevokeApiKeyResponses = {
 };
 
 export type ApiKeysRevokeApiKeyResponse = ApiKeysRevokeApiKeyResponses[keyof ApiKeysRevokeApiKeyResponses];
-
-export type ApiKeysReadVisionInferenceKeyData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/v1/api-keys/integrations/vision-inference';
-};
-
-export type ApiKeysReadVisionInferenceKeyResponses = {
-    /**
-     * Successful Response
-     */
-    200: VisionInferenceKeyPublic;
-};
-
-export type ApiKeysReadVisionInferenceKeyResponse = ApiKeysReadVisionInferenceKeyResponses[keyof ApiKeysReadVisionInferenceKeyResponses];
-
-export type ApiKeysUpdateVisionInferenceKeyData = {
-    body: VisionInferenceKeyUpdateWritable;
-    path?: never;
-    query?: never;
-    url: '/api/v1/api-keys/integrations/vision-inference';
-};
-
-export type ApiKeysUpdateVisionInferenceKeyErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type ApiKeysUpdateVisionInferenceKeyError = ApiKeysUpdateVisionInferenceKeyErrors[keyof ApiKeysUpdateVisionInferenceKeyErrors];
-
-export type ApiKeysUpdateVisionInferenceKeyResponses = {
-    /**
-     * Successful Response
-     */
-    200: VisionInferenceKeyPublic;
-};
-
-export type ApiKeysUpdateVisionInferenceKeyResponse = ApiKeysUpdateVisionInferenceKeyResponses[keyof ApiKeysUpdateVisionInferenceKeyResponses];
 
 export type UsersReadUsersData = {
     body?: never;
@@ -1916,6 +1905,7 @@ export type ProductsReadProductsData = {
          * Limit
          */
         limit?: number;
+        language?: CatalogLanguage;
     };
     url: '/api/v1/products/';
 };
@@ -1941,7 +1931,9 @@ export type ProductsReadProductsResponse = ProductsReadProductsResponses[keyof P
 export type ProductsCreateProductData = {
     body: ProductCreate;
     path?: never;
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/products/';
 };
 
@@ -2001,7 +1993,9 @@ export type ProductsReadProductData = {
          */
         id: string;
     };
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/products/{id}';
 };
 
@@ -2031,7 +2025,9 @@ export type ProductsUpdateProductData = {
          */
         id: string;
     };
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/products/{id}';
 };
 
@@ -2061,7 +2057,9 @@ export type ProductsUploadProductImageData = {
          */
         id: string;
     };
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/products/{id}/image';
 };
 
@@ -2099,31 +2097,6 @@ export type SystemSettingsReadAutolabelSettingsResponses = {
 
 export type SystemSettingsReadAutolabelSettingsResponse = SystemSettingsReadAutolabelSettingsResponses[keyof SystemSettingsReadAutolabelSettingsResponses];
 
-export type SystemSettingsUpdateAutolabelSettingsData = {
-    body: AutolabelSettingsUpdate;
-    path?: never;
-    query?: never;
-    url: '/api/v1/system-settings/autolabel';
-};
-
-export type SystemSettingsUpdateAutolabelSettingsErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type SystemSettingsUpdateAutolabelSettingsError = SystemSettingsUpdateAutolabelSettingsErrors[keyof SystemSettingsUpdateAutolabelSettingsErrors];
-
-export type SystemSettingsUpdateAutolabelSettingsResponses = {
-    /**
-     * Successful Response
-     */
-    200: AutolabelSettingsPublic;
-};
-
-export type SystemSettingsUpdateAutolabelSettingsResponse = SystemSettingsUpdateAutolabelSettingsResponses[keyof SystemSettingsUpdateAutolabelSettingsResponses];
-
 export type SystemSettingsReadAutolabelRuntimeData = {
     body?: never;
     path?: never;
@@ -2140,28 +2113,156 @@ export type SystemSettingsReadAutolabelRuntimeResponses = {
 
 export type SystemSettingsReadAutolabelRuntimeResponse = SystemSettingsReadAutolabelRuntimeResponses[keyof SystemSettingsReadAutolabelRuntimeResponses];
 
-export type SystemSettingsListAutolabelModelsData = {
+export type VisionInferenceIntegrationsListIntegrationsData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/v1/system-settings/autolabel/models';
+    url: '/api/v1/vision-inference-integrations/';
 };
 
-export type SystemSettingsListAutolabelModelsResponses = {
+export type VisionInferenceIntegrationsListIntegrationsResponses = {
+    /**
+     * Response Vision-Inference-Integrations-List Integrations
+     *
+     * Successful Response
+     */
+    200: Array<VisionInferenceIntegrationPublic>;
+};
+
+export type VisionInferenceIntegrationsListIntegrationsResponse = VisionInferenceIntegrationsListIntegrationsResponses[keyof VisionInferenceIntegrationsListIntegrationsResponses];
+
+export type VisionInferenceIntegrationsCreateIntegrationData = {
+    body: VisionInferenceIntegrationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/vision-inference-integrations/';
+};
+
+export type VisionInferenceIntegrationsCreateIntegrationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type VisionInferenceIntegrationsCreateIntegrationError = VisionInferenceIntegrationsCreateIntegrationErrors[keyof VisionInferenceIntegrationsCreateIntegrationErrors];
+
+export type VisionInferenceIntegrationsCreateIntegrationResponses = {
+    /**
+     * Successful Response
+     */
+    201: VisionInferenceIntegrationPublic;
+};
+
+export type VisionInferenceIntegrationsCreateIntegrationResponse = VisionInferenceIntegrationsCreateIntegrationResponses[keyof VisionInferenceIntegrationsCreateIntegrationResponses];
+
+export type VisionInferenceIntegrationsUpdateIntegrationData = {
+    body: VisionInferenceIntegrationUpdate;
+    path: {
+        /**
+         * Integration Id
+         */
+        integration_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vision-inference-integrations/{integration_id}';
+};
+
+export type VisionInferenceIntegrationsUpdateIntegrationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type VisionInferenceIntegrationsUpdateIntegrationError = VisionInferenceIntegrationsUpdateIntegrationErrors[keyof VisionInferenceIntegrationsUpdateIntegrationErrors];
+
+export type VisionInferenceIntegrationsUpdateIntegrationResponses = {
+    /**
+     * Successful Response
+     */
+    200: VisionInferenceIntegrationPublic;
+};
+
+export type VisionInferenceIntegrationsUpdateIntegrationResponse = VisionInferenceIntegrationsUpdateIntegrationResponses[keyof VisionInferenceIntegrationsUpdateIntegrationResponses];
+
+export type VisionInferenceIntegrationsActivateIntegrationData = {
+    body?: never;
+    path: {
+        /**
+         * Integration Id
+         */
+        integration_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vision-inference-integrations/{integration_id}/activate';
+};
+
+export type VisionInferenceIntegrationsActivateIntegrationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type VisionInferenceIntegrationsActivateIntegrationError = VisionInferenceIntegrationsActivateIntegrationErrors[keyof VisionInferenceIntegrationsActivateIntegrationErrors];
+
+export type VisionInferenceIntegrationsActivateIntegrationResponses = {
+    /**
+     * Successful Response
+     */
+    200: VisionInferenceIntegrationPublic;
+};
+
+export type VisionInferenceIntegrationsActivateIntegrationResponse = VisionInferenceIntegrationsActivateIntegrationResponses[keyof VisionInferenceIntegrationsActivateIntegrationResponses];
+
+export type VisionInferenceIntegrationsListModelsData = {
+    body?: never;
+    path: {
+        /**
+         * Integration Id
+         */
+        integration_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vision-inference-integrations/{integration_id}/models';
+};
+
+export type VisionInferenceIntegrationsListModelsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type VisionInferenceIntegrationsListModelsError = VisionInferenceIntegrationsListModelsErrors[keyof VisionInferenceIntegrationsListModelsErrors];
+
+export type VisionInferenceIntegrationsListModelsResponses = {
     /**
      * Successful Response
      */
     200: AvailableModels;
 };
 
-export type SystemSettingsListAutolabelModelsResponse = SystemSettingsListAutolabelModelsResponses[keyof SystemSettingsListAutolabelModelsResponses];
+export type VisionInferenceIntegrationsListModelsResponse = VisionInferenceIntegrationsListModelsResponses[keyof VisionInferenceIntegrationsListModelsResponses];
 
 export type CategoriesReadCategoriesData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/categories/';
 };
+
+export type CategoriesReadCategoriesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CategoriesReadCategoriesError = CategoriesReadCategoriesErrors[keyof CategoriesReadCategoriesErrors];
 
 export type CategoriesReadCategoriesResponses = {
     /**
@@ -2175,7 +2276,9 @@ export type CategoriesReadCategoriesResponse = CategoriesReadCategoriesResponses
 export type CategoriesCreateCategoryData = {
     body: CategoryCreate;
     path?: never;
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/categories/';
 };
 
@@ -2235,7 +2338,9 @@ export type CategoriesUpdateCategoryData = {
          */
         id: string;
     };
-    query?: never;
+    query?: {
+        language?: CatalogLanguage;
+    };
     url: '/api/v1/categories/{id}';
 };
 
@@ -2460,7 +2565,7 @@ export type CheckoutSessionsUpdateCheckoutSessionCartResponses = {
 export type CheckoutSessionsUpdateCheckoutSessionCartResponse = CheckoutSessionsUpdateCheckoutSessionCartResponses[keyof CheckoutSessionsUpdateCheckoutSessionCartResponses];
 
 export type CheckoutSessionsPayCheckoutSessionData = {
-    body: CheckoutSessionPaymentWritable;
+    body: CheckoutSessionPayment;
     path: {
         /**
          * Id
@@ -2488,28 +2593,3 @@ export type CheckoutSessionsPayCheckoutSessionResponses = {
 };
 
 export type CheckoutSessionsPayCheckoutSessionResponse = CheckoutSessionsPayCheckoutSessionResponses[keyof CheckoutSessionsPayCheckoutSessionResponses];
-
-export type PrivateCreateUserData = {
-    body: PrivateUserCreate;
-    path?: never;
-    query?: never;
-    url: '/api/v1/private/users/';
-};
-
-export type PrivateCreateUserErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type PrivateCreateUserError = PrivateCreateUserErrors[keyof PrivateCreateUserErrors];
-
-export type PrivateCreateUserResponses = {
-    /**
-     * Successful Response
-     */
-    200: UserPublic;
-};
-
-export type PrivateCreateUserResponse = PrivateCreateUserResponses[keyof PrivateCreateUserResponses];

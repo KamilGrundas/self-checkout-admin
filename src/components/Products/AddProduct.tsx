@@ -57,11 +57,11 @@ const AddProduct = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { t } = useI18n()
+  const { language, t } = useI18n()
 
   const { data: categories } = useQuery({
-    queryFn: () => CategoriesService.readCategories(),
-    queryKey: ["categories"],
+    queryFn: () => CategoriesService.readCategories({ language }),
+    queryKey: ["categories", language],
   })
 
   const form = useForm<FormData>({
@@ -85,11 +85,13 @@ const AddProduct = () => {
       }
       const product = await ProductsService.createProduct({
         productCreate: requestBody,
+        language,
       })
       if (imageFile) {
         return ProductsService.uploadProductImage({
           id: product.id,
           bodyProductsUploadProductImage: { file: imageFile },
+          language,
         })
       }
       return product

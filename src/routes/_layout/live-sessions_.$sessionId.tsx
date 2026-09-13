@@ -30,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useI18n } from "@/i18n"
 
 export const Route = createFileRoute("/_layout/live-sessions_/$sessionId")({
   component: LiveSessionDetail,
@@ -291,9 +292,10 @@ function AddProductDialog({
   onClose: () => void
   onSubmit: (productId: string, quantity: number) => void
 }) {
+  const { language } = useI18n()
   const { data, isLoading } = useQuery({
-    queryKey: ["products", "all-for-admin-cart"],
-    queryFn: () => ProductsService.readProducts({ limit: 500 }),
+    queryKey: ["products", "all-for-admin-cart", language],
+    queryFn: () => ProductsService.readProducts({ limit: 500, language }),
     enabled: open,
   })
   const [search, setSearch] = useState("")

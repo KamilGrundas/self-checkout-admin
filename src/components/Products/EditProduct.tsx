@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Pencil } from "lucide-react"
-import { useState } from "react"
+import { Languages, Pencil } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -46,6 +46,8 @@ import { handleError } from "@/utils"
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Product name is required" }),
+  name_en: z.string(),
+  name_pl: z.string(),
   price: z.string().min(1, { message: "Price is required" }),
   unit: z.enum(["kg", "pcs"]),
   category_id: z.string().min(1, { message: "Category is required" }),
@@ -60,14 +62,15 @@ interface EditProductProps {
 
 const EditProduct = ({ product, onSuccess }: EditProductProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [showTranslations, setShowTranslations] = useState(false)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { t } = useI18n()
+  const { language, t } = useI18n()
 
   const { data: categories } = useQuery({
-    queryFn: () => CategoriesService.readCategories(),
-    queryKey: ["categories"],
+    queryFn: () => CategoriesService.readCategories({ language }),
+    queryKey: ["categories", language],
   })
 
   const form = useForm<FormData>({
@@ -75,28 +78,53 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
     mode: "onBlur",
     defaultValues: {
       name: product.name,
+      name_en: product.name_en ?? "",
+      name_pl: product.name_pl ?? "",
       price: product.price,
       unit: product.unit,
       category_id: product.category_id,
     },
   })
 
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+    form.reset({
+      name: product.name,
+      name_en: product.name_en ?? "",
+      name_pl: product.name_pl ?? "",
+      price: product.price,
+      unit: product.unit,
+      category_id: product.category_id,
+    })
+    setShowTranslations(false)
+  }, [form, isOpen, product])
+
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
       const requestBody: ProductUpdate = {
-        name: data.name,
         price: data.price,
         unit: data.unit as ProductUnit,
         category_id: data.category_id,
       }
+      if (form.formState.dirtyFields.name) {
+        requestBody.name = data.name
+      }
+      if (showTranslations) {
+        requestBody.name_en = data.name_en || null
+        requestBody.name_pl = data.name_pl || null
+      }
       const updatedProduct = await ProductsService.updateProduct({
         id: product.id,
         productUpdate: requestBody,
+        language,
       })
       if (imageFile) {
         return ProductsService.uploadProductImage({
           id: updatedProduct.id,
           bodyProductsUploadProductImage: { file: imageFile },
+          language,
         })
       }
       return updatedProduct
@@ -149,6 +177,46 @@ const EditProduct = ({ product, onSuccess }: EditProductProps) => {
                   </FormItem>
                 )}
               />
+              <Button
+                className="w-fit"
+                type="button"
+                variant="outline"
+                onClick={() => setShowTranslations(true)}
+              >
+                <Languages className="mr-2" />
+                {t("addTranslation")}
+              </Button>
+              {showTranslations && (
+                <div className="grid gap-4 rounded-md border p-4">
+                  <p className="text-sm font-medium">{t("translations")}</p>
+                  <FormField
+                    control={form.control}
+                    name="name_en"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("english")}</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Apple" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="name_pl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t("polish")}</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Jabłko" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FormField
                   control={form.control}

@@ -11,10 +11,11 @@ import { getProductColumns } from "@/components/Products/columns"
 import useAuth from "@/hooks/useAuth"
 import { useI18n } from "@/i18n"
 
-function getProductsQueryOptions() {
+function getProductsQueryOptions(language: "en" | "pl") {
   return {
-    queryFn: () => ProductsService.readProducts({ skip: 0, limit: 100 }),
-    queryKey: ["products"],
+    queryFn: () =>
+      ProductsService.readProducts({ skip: 0, limit: 100, language }),
+    queryKey: ["products", language],
   }
 }
 
@@ -30,8 +31,8 @@ export const Route = createFileRoute("/_layout/products")({
 })
 
 function ProductsTableContent() {
-  const { data: products } = useSuspenseQuery(getProductsQueryOptions())
-  const { t } = useI18n()
+  const { language, t } = useI18n()
+  const { data: products } = useSuspenseQuery(getProductsQueryOptions(language))
   const { user } = useAuth()
 
   if (products.data.length === 0) {
